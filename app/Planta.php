@@ -15,6 +15,14 @@ class Planta extends Model
      */
     public $timestamps = false;
 
+    protected $fillable = [
+        'nome', 'nomeCientifico', 'caracteristicas', 'tamanho', 'fruto', 'folha', 'familia', 'genero', 'especie', 'propriedades', 'avisos', 'cultivo', 'fotos'
+    ];
+
+    /*
+     * Relacionamentos:
+     */
+
     public function nomePopular()
     {
         return $this->hasMany(NomePopular::class, 'plantas_id', 'id');

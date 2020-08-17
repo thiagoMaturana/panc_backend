@@ -14,4 +14,18 @@ class Ingrediente extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    protected $fillable = [
+        'nome'
+    ];
+
+
+    /*
+     * Relacionamentos:
+     */
+    
+    public function receitas()
+	{
+		return $this->belongsToMany(Receita::class, 'receitas_ingredientes', 'ingredientes_id', 'receitas_id');
+	}
 }

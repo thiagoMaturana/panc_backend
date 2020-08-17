@@ -15,6 +15,16 @@ class Receita extends Model
      */
     public $timestamps = false;
 
+
+    protected $fillable = [
+        'nome', 'tipo', 'modoPreparo', 'observacao', 'fotos'
+    ];
+
+
+    /*
+     * Relacionamentos:
+     */
+
     public function users()
     {
         return $this->belongsTo(User::class);
@@ -22,7 +32,7 @@ class Receita extends Model
 
     public function plantas()
 	{
-		return $this->belongsToMany(Receita::class, 'plantas_receitas', 'receitas_id', 'plantas_id');
+		return $this->belongsToMany(Planta::class, 'plantas_receitas', 'receitas_id', 'plantas_id');
     }
     
     public function ingredientes()

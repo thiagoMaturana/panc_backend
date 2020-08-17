@@ -15,6 +15,14 @@ class NomePopular extends Model
      */
     public $timestamps = false;
 
+    protected $fillable = [
+        'nome'
+    ];
+
+    /*
+     * Relacionamentos:
+     */
+
     public function plantas()
     {
         return $this->belongsTo(Planta::class);

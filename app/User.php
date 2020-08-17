@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'tb_usuario';
+    //protected $table = 'tb_usuario';
 
     /**
      * Indicates if the model should be timestamped.
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nome', 'email', 'senha', 'usuario_role', 'foto',
+        'nome', 'email', 'usuario_role', 'foto',
     ];
 
     /**
@@ -33,8 +33,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'senha',
     ];
+
+    /*
+     * Relacionamentos:
+     */
 
     public function receitas()
     {
