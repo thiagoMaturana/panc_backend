@@ -24,11 +24,13 @@ class CreatePlantasTable extends Migration {
 			$table->string('familia', 45);
 			$table->string('genero', 45);
 			$table->string('especie', 45);
-			$table->string('propriedades', 200);
+			$table->string('propriedadesMedicinais', 200);
+			$table->string('propriedadesCulinarias', 200);
 			$table->string('avisos', 45)->nullable();
 			$table->string('cultivo', 200)->nullable();
 			$table->string('fotos', 100);
-			$table->integer('ingredientes_id');
+			$table->integer('usuarios_id')->index('fk_plantas_usuarios1_idx');
+			$table->primary(['id','usuarios_id']);
 		});
 	}
 

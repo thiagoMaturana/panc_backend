@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Planta extends Model
 {
-    protected $table = 'tb_planta';
 
     /**
      * Indicates if the model should be timestamped.
@@ -16,7 +15,7 @@ class Planta extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nome', 'nomeCientifico', 'caracteristicas', 'tamanho', 'fruto', 'folha', 'familia', 'genero', 'especie', 'propriedades', 'avisos', 'cultivo', 'fotos'
+        'nome', 'nomeCientifico', 'caracteristicas', 'tamanho', 'fruto', 'folha', 'familia', 'genero', 'especie', 'propriedadesMedicinais', 'propriedadesCulinarias', 'avisos', 'cultivo', 'fotos'
     ];
 
     /*
@@ -31,5 +30,10 @@ class Planta extends Model
     public function receitas()
 	{
 		return $this->belongsToMany(Receita::class, 'plantas_receitas', 'plantas_id', 'receitas_id');
-	}
+    }
+    
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

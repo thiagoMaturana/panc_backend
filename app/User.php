@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    //protected $table = 'tb_usuario';
+    protected $table = 'usuarios';
 
     /**
      * Indicates if the model should be timestamped.
@@ -43,5 +43,10 @@ class User extends Authenticatable
     public function receitas()
     {
         return $this->hasMany(Receita::class, 'usuarios_id', 'id');
+    }
+
+    public function plantas()
+    {
+        return $this->hasMany(Planta::class, 'usuarios_id', 'id');
     }
 }

@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Receita extends Model
 {
-    protected $table = 'tb_receita';
-
     /**
      * Indicates if the model should be timestamped.
      *
