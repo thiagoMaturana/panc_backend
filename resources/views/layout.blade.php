@@ -60,8 +60,8 @@
                         </a>
                         <div class="collapse" id="collapseReceitas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('tables.receitas') }} ">Listar</a>
-                                <a class="nav-link" href="#">Cadastrar</a>
+                                <a class="nav-link" href=" {{ route('receita.listAll') }} ">Listar</a>
+                                <a class="nav-link" href=" {{ route('receita.create') }} ">Cadastrar</a>
                             </nav>
                         </div>
 

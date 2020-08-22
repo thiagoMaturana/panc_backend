@@ -8,7 +8,7 @@
             Lista de Usuários
         </div>
         <div class="card-body">
-            <table class="table table-hover">
+            <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th scope="col">id</th>

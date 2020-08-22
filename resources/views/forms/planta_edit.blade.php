@@ -73,7 +73,7 @@
             <input type="text" class="form-control" placeholder="Url da foto" name="fotos" value="{{ $planta->fotos }}">
         </div>
 
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="submit" class="btn btn-primary">Editar</button>
     </form>
 </div>
 @endsection

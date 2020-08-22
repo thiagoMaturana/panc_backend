@@ -12,24 +12,35 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
+                        @foreach($receitas as $receita)
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>
-                            <th>Nome Científico</th>
-                            <th>Office</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Tipo</th>
+                            <th>Usuário id</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Rhona Davidson</td>
-                            <td>Integration Specialist</td>
-                            <td>Tokyo</td>
-                            <td>55</td>
-                            <td>2010/10/14</td>
-                            <td>$327,900</td>
+                            <td> {{$receita->id}} </td>
+                            <td> {{$receita->nome}} </td>
+                            <td> {{$receita->tipo}} </td>
+                            <td> {{$receita->usuarios_id}} </td>
+                            <td class="text-center">
+                                <a type="submit" class="btn btn-outline-success" href="">Visualizar</a>
+
+                                <a type="submit" class="btn btn-outline-primary" href="{{ route('receita.editForm', ['receita' => $receita->id]) }}">Editar</a>
+
+                                <form class="py-1" action="{{ route('receita.destroy', ['receita' => $receita->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="receita" value="{{ $receita->id }}">
+                                    <input type="submit" class="btn btn-outline-danger" value="Remover">
+                                </form>
+                            </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

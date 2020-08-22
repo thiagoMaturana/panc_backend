@@ -29,6 +29,17 @@ Route::put('/planta/edit/{planta}', 'PlantaController@edit')->name('planta.edit'
 
 Route::delete('/planta/destroy/{planta}', 'PlantaController@destroy')->name('planta.destroy');
 
+// RECEITAS
+Route::get('/receitas', 'ReceitaController@listAllReceitas')->name('receita.listAll');
+Route::get('/receita/add', 'ReceitaController@create')->name('receita.create');
+Route::get('/receita/editar/{receita}', 'ReceitaController@editForm')->name('receita.editForm');
+
+Route::post('/receita/store', 'ReceitaController@store')->name('receita.store');
+
+Route::put('/receita/edit/{receita}', 'ReceitaController@edit')->name('receita.edit');
+
+Route::delete('/receita/destroy/{receita}', 'ReceitaController@destroy')->name('receita.destroy');
+
 
 // USUÁRIOS
 Route::get('/users', 'UserController@listAllUsers')->name('user.listAll');
