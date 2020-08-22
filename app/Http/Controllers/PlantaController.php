@@ -7,25 +7,76 @@ use Illuminate\Http\Request;
 
 class PlantaController extends Controller
 {
-    // public function teste(){
-    //     $planta = new Planta();
-    //     $planta->nome = 'aa';
-    //     $planta->nomeCientifico = 'aa';
-    //     $planta->caracteristicas = 'aa';
-    //     $planta->tamanho = 'aa';
-    //     $planta->fruto = 'aa';
-    //     $planta->folha = 'aa';
-    //     $planta->familia = 'aa';
-    //     $planta->genero = 'aa';
-    //     $planta->especie = 'aa';
-    //     $planta->propriedadesMedicinais = 'aa';
-    //     $planta->propriedadesCulinarias = 'aa';
-    //     $planta->avisos = 'aa';
-    //     $planta->cultivo = 'aa';
-    //     $planta->fotos = 'aa';
+    public function listAllPlantas()
+    {
+        $plantas = Planta::all();
 
-    //     $planta->save();
+        return view('tables.plantas', [
+            'plantas' => $plantas
+        ]);
+    }
 
-    //     return view('welcome');
-    // }
+    public function create()
+    {
+        return view('forms.planta_add');
+    }
+
+    public function store(Request $request)
+    {
+        $planta = new Planta();
+        $planta->nome = $request->nome;
+        $planta->nomeCientifico = $request->nomeCientifico;
+        $planta->caracteristicas = $request->caracteristicas;
+        $planta->tamanho = $request->tamanho;
+        $planta->fruto = $request->fruto;
+        $planta->folha = $request->folha;
+        $planta->familia = $request->familia;
+        $planta->genero = $request->genero;
+        $planta->especie = $request->especie;
+        $planta->propriedadesMedicinais = $request->propriedadesMedicinais;
+        $planta->propriedadesCulinarias = $request->propriedadesCulinarias;
+        $planta->avisos = $request->avisos;
+        $planta->cultivo = $request->cultivo;
+        $planta->fotos = $request->fotos;
+
+        $planta->usuarios_id = 1;
+
+        $planta->save();
+
+        return redirect()->route('planta.listAll');
+    }
+
+    public function editForm(Planta $planta)
+    {
+        return view('forms.planta_edit', [
+            'planta' => $planta
+        ]);
+    }
+
+    public function edit(Planta $planta, Request $request){
+        $planta->nome = $request->nome;
+        $planta->nomeCientifico = $request->nomeCientifico;
+        $planta->caracteristicas = $request->caracteristicas;
+        $planta->tamanho = $request->tamanho;
+        $planta->fruto = $request->fruto;
+        $planta->folha = $request->folha;
+        $planta->familia = $request->familia;
+        $planta->genero = $request->genero;
+        $planta->especie = $request->especie;
+        $planta->propriedadesMedicinais = $request->propriedadesMedicinais;
+        $planta->propriedadesCulinarias = $request->propriedadesCulinarias;
+        $planta->avisos = $request->avisos;
+        $planta->cultivo = $request->cultivo;
+        $planta->fotos = $request->fotos;
+
+        $planta->save();
+
+        return redirect()->route('planta.listAll');
+    }
+
+    public function destroy(Planta $planta){
+        $planta->delete();
+
+        return redirect()->route('planta.listAll');
+    }
 }

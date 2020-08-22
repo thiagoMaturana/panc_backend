@@ -17,9 +17,9 @@ class CreateReceitasTable extends Migration {
 			$table->integer('id', true);
 			$table->string('nome', 100);
 			$table->string('tipo', 45);
-			$table->string('modoPreparo', 300);
-			$table->string('observacao', 300)->nullable();
-			$table->string('fotos', 100);
+			$table->string('modoPreparo', 1000);
+			$table->string('observacao', 800)->nullable();
+			$table->string('fotos', 300);
 			$table->integer('usuarios_id')->index('fk_receitas_usuarios1_idx');
 			$table->primary(['id','usuarios_id']);
 		});

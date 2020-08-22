@@ -16,7 +16,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar bg-dark">
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-        <a class="navbar-brand" href="{{ route('tables.plantas') }}">PANC APP</a>
+        <a class="navbar-brand" href="{{ route('planta.listAll') }}">PANC APP</a>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         </form>
@@ -47,8 +47,8 @@
                         </a>
                         <div class="collapse" id="collapsePlantas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('tables.plantas') }} ">Listar</a>
-                                <a class="nav-link" href="#">Cadastrar</a>
+                                <a class="nav-link" href=" {{ route('planta.listAll') }} ">Listar</a>
+                                <a class="nav-link" href="{{ route('planta.create') }} ">Cadastrar</a>
                             </nav>
                         </div>
 

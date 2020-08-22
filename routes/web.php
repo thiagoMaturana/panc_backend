@@ -14,20 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('tables.plantas');
-})->name('tables.plantas');
-
 Route::get('/receitas', function () {
     return view('tables.receitas');
 })->name('tables.receitas');
 
+// PLANTAS
+Route::get('/', 'PlantaController@listAllPlantas')->name('planta.listAll');
+Route::get('/planta/add', 'PlantaController@create')->name('planta.create');
+Route::get('/planta/editar/{planta}', 'PlantaController@editForm')->name('planta.editForm');
+
+Route::post('/planta/store', 'PlantaController@store')->name('planta.store');
+
+Route::put('/planta/edit/{planta}', 'PlantaController@edit')->name('planta.edit');
+
+Route::delete('/planta/destroy/{planta}', 'PlantaController@destroy')->name('planta.destroy');
+
+
+// USUÁRIOS
 Route::get('/users', 'UserController@listAllUsers')->name('user.listAll');
-Route::get('/users/add', 'UserController@create')->name('user.create');
-Route::get('/users/editar/{user}', 'UserController@editForm')->name('user.editForm');
+Route::get('/user/add', 'UserController@create')->name('user.create');
+Route::get('/user/editar/{user}', 'UserController@editForm')->name('user.editForm');
 
 Route::post('/user/store', 'UserController@store')->name('user.store');
 
-Route::put('/users/edit/{user}', 'UserController@edit')->name('user.edit');
+Route::put('/user/edit/{user}', 'UserController@edit')->name('user.edit');
 
-Route::delete('/users/destroy/{user}', 'UserController@destroy')->name('user.destroy');
+Route::delete('/user/destroy/{user}', 'UserController@destroy')->name('user.destroy');
