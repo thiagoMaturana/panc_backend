@@ -14,7 +14,7 @@ class AddForeignKeysToReceitasTable extends Migration {
 	{
 		Schema::table('receitas', function(Blueprint $table)
 		{
-			$table->foreign('usuarios_id', 'fk_receitas_usuarios1')->references('id')->on('usuarios')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('usuarios_id', 'fk_receitas_usuarios1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 

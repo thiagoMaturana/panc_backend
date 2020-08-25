@@ -14,7 +14,7 @@ class AddForeignKeysToPlantasTable extends Migration {
 	{
 		Schema::table('plantas', function(Blueprint $table)
 		{
-			$table->foreign('usuarios_id', 'fk_plantas_usuarios1')->references('id')->on('usuarios')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('usuarios_id', 'fk_plantas_usuarios1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 

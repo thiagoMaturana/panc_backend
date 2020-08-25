@@ -14,7 +14,7 @@ class AddForeignKeysToNomesPopularesTable extends Migration {
 	{
 		Schema::table('nomes_populares', function(Blueprint $table)
 		{
-			$table->foreign('plantas_id', 'fk__plantas1')->references('id')->on('plantas')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('plantas_id', 'fk_nomes_populares_plantas1')->references('id')->on('plantas')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -28,7 +28,7 @@ class AddForeignKeysToNomesPopularesTable extends Migration {
 	{
 		Schema::table('nomes_populares', function(Blueprint $table)
 		{
-			$table->dropForeign('fk__plantas1');
+			$table->dropForeign('fk_nomes_populares_plantas1');
 		});
 	}
 
