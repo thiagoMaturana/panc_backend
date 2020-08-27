@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateNomesPopularesTable extends Migration {
 
@@ -14,9 +15,11 @@ class CreateNomesPopularesTable extends Migration {
 	{
 		Schema::create('nomes_populares', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->id();
+			$table->foreignId('plantas_id');
 			$table->string('nome', 45);
-			$table->integer('plantas_id')->index('fk_nomes_populares_plantas1_idx');
+
+			$table->foreign('plantas_id')->references('id')->on('plantas')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

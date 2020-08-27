@@ -28,9 +28,11 @@
                             <td> {{$receita->tipo}} </td>
                             <td> {{$receita->usuarios_id}} </td>
                             <td class="text-center">
-                                <a type="submit" class="btn btn-outline-success" href="">Visualizar</a>
-
-                                <a type="submit" class="btn btn-outline-primary" href="{{ route('receita.editForm', ['receita' => $receita->id]) }}">Editar</a>
+                            <form>
+                                <input type="submit" class="btn btn-outline-success" href="" value="Visualizar"></input>
+    
+                                <input type="submit" class="btn btn-outline-primary" href="{{ route('receita.editForm', ['receita' => $receita->id]) }}" value="Editar"></input>
+                            </form>
 
                                 <form class="py-1" action="{{ route('receita.destroy', ['receita' => $receita->id]) }}" method="POST">
                                     @csrf

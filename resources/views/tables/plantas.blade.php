@@ -30,9 +30,11 @@
 
 
                             <td class="text-center">
-                                <a type="submit" class="btn btn-outline-success" href="">Visualizar</a>
+                                <form>
+                                    <input type="submit" class="btn btn-outline-success" href="" value="Visualizar"></input>
 
-                                <a type="submit" class="btn btn-outline-primary" href="{{ route('planta.editForm', ['planta' => $planta->id]) }}">Editar</a>
+                                    <input type="submit" class="btn btn-outline-primary" href="{{ route('planta.editForm', ['planta' => $planta->id]) }}" value="Editar"></input>
+                                </form>
 
                                 <form class="py-1" action="{{ route('planta.destroy', ['planta' => $planta->id]) }}" method="POST">
                                     @csrf

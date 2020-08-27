@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateReceitasIngredientesTable extends Migration {
 
@@ -14,9 +15,11 @@ class CreateReceitasIngredientesTable extends Migration {
 	{
 		Schema::create('receitas_ingredientes', function(Blueprint $table)
 		{
-			$table->integer('receitas_id')->index('fk_receitas_has_ingredientes_receitas2_idx');
-			$table->integer('ingredientes_id')->index('fk_receitas_has_ingredientes_ingredientes2_idx');
-			$table->primary(['receitas_id','ingredientes_id']);
+			$table->foreignId('receitas_id');
+			$table->foreignId('ingredientes_id');
+
+			$table->foreign('receitas_id')->references('id')->on('receitas')->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('ingredientes_id')->references('id')->on('ingredientes')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

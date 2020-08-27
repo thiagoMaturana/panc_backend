@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Expr\FuncCall;
 
 class UserController extends Controller
 {
@@ -23,10 +22,10 @@ class UserController extends Controller
 
     public function store(Request $request){
         $user = new User();
-        $user->nome = $request->nome;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->usuario_role = $request->usuario_role;
-        $user->senha = Hash::make($request->senha);
+        $user->password = Hash::make($request->password);
 
         $user->save();
 
@@ -40,9 +39,9 @@ class UserController extends Controller
     }
 
     public function edit(User $user, Request $request){
-        $user->nome = $request->nome;
+        $user->name = $request->name;
         $user->email = $request->email;
-        $user->senha = Hash::make($request->senha);
+        $user->password = Hash::make($request->password);
         $user->usuario_role = $request->usuario_role;
 
         $user->save();

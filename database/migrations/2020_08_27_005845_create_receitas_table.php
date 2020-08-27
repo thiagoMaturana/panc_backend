@@ -1,7 +1,10 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
 
 class CreateReceitasTable extends Migration {
 
@@ -14,14 +17,15 @@ class CreateReceitasTable extends Migration {
 	{
 		Schema::create('receitas', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->string('nome', 100);
-			$table->string('tipo', 45);
-			$table->string('modoPreparo', 1000);
-			$table->string('observacao', 800)->nullable();
-			$table->string('fotos', 300);
-			$table->integer('usuarios_id')->index('fk_receitas_usuarios1_idx');
-			$table->primary(['id','usuarios_id']);
+			$table->id();
+			$table->foreignId('usuarios_id');
+			$table->string('nome');
+			$table->string('tipo');
+			$table->string('modoPreparo');
+			$table->string('observacao')->nullable();
+			$table->string('fotos');
+
+			$table->foreign('usuarios_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

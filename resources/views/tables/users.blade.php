@@ -32,10 +32,11 @@
                         </td>
                         <td> ************** </td>
                         <td  class="text-center">
-                            
-                            <a type="submit" class="btn btn-outline-success" href="">Visualizar</a>
-
-                            <a type="submit" class="btn btn-outline-primary" href="{{ route('user.editForm', ['user' => $user->id]) }}">Editar</a>
+                            <form>
+                                <input type="submit" class="btn btn-outline-success" href="" value="Visualizar"></input>
+    
+                                <input type="submit" class="btn btn-outline-primary" href="{{ route('user.editForm', ['user' => $user->id]) }}" value="Editar"></input>
+                            </form>
 
                             <form class="py-1" action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
                                 @csrf

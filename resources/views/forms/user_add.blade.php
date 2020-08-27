@@ -6,7 +6,7 @@
         @csrf
         <div class="form-group">
             <label class="small mb-1">Nome</label>
-            <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+            <input type="text" class="form-control" name="name" autofocus placeholder="Nome" required>
         </div>
         <div class="form-group">
             <label class="small mb-1">Email</label>
@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label class="small mb-1">Senha</label>
-            <input type="password" class="form-control" name="senha" placeholder="Senha" required>
+            <input type="password" class="form-control" name="password" placeholder="Senha" required>
         </div>
         <label>Papel</label>
         <div class="form-group">

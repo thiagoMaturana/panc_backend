@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
 
 class CreateIngredientesTable extends Migration {
 
@@ -14,7 +16,7 @@ class CreateIngredientesTable extends Migration {
 	{
 		Schema::create('ingredientes', function(Blueprint $table)
 		{
-			$table->integer('id')->primary();
+			$table->id();
 			$table->string('nome', 45);
 		});
 	}
