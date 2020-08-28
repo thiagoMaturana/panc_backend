@@ -10,7 +10,10 @@
     <link href="/sass/app.scss" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>s
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -22,10 +25,10 @@
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     @guest
-                        <a class="dropdown-item" href="{{ route('login') }}">Login</a>
-                        @if (Route::has('register'))
-                            <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                        @endif
+                    <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                    @if (Route::has('register'))
+                    <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                    @endif
 
                     @else
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); 

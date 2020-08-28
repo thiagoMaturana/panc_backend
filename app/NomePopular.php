@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class NomePopular extends Model
 {
+
+    protected $table = 'nomes_populares';
     /**
      * Indicates if the model should be timestamped.
      *

@@ -15,6 +15,24 @@
                 <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico">
             </div>
         </div>
+        
+        <label>Nomes populares</label>
+        <table>
+            <div id="dynamicTable">
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[0]">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
+                    </div>
+                </div>
+            </div>
+        </table>
+        <div class="form-group">
+            <button type="button" class="btn btn-outline-success add" id="add">Adicionar nome popular</button>
+        </div>
+
         <!-- Caracteristicas -->
         <div class="form-group">
             <label>Tamanho</label>
@@ -75,4 +93,24 @@
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
+
+<script type="text/javascript">
+    var i = 0;
+
+    $("#add").click(function() {
+
+        ++i;
+
+        console.log('' + i + '');
+
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+
+    });
+
+    $(document).on('click', '.remove-tr', function() {
+
+        $(this).parents('div.form-row').remove();
+
+    });
+</script>
 @endsection

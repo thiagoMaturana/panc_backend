@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\NomePopular;
 use App\Planta;
 use Illuminate\Http\Request;
 
@@ -43,17 +44,29 @@ class PlantaController extends Controller
 
         $planta->save();
 
+        foreach ($request->nomesPopulares as $key => $nomePopularRequest) {
+            $nomePopular = new NomePopular();
+            $nomePopular->nome = $nomePopularRequest;
+            $nomePopular->plantas_id = $planta->id;
+
+            $nomePopular->save();
+        }
+
         return redirect()->route('planta.listAll');
     }
 
     public function editForm(Planta $planta)
     {
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+
         return view('forms.planta_edit', [
-            'planta' => $planta
+            'planta' => $planta,
+            'nomesPopulares' => $nomesPopulares
         ]);
     }
 
-    public function edit(Planta $planta, Request $request){
+    public function edit(Planta $planta, Request $request)
+    {
         $planta->nome = $request->nome;
         $planta->nomeCientifico = $request->nomeCientifico;
         $planta->caracteristicas = $request->caracteristicas;
@@ -71,10 +84,20 @@ class PlantaController extends Controller
 
         $planta->save();
 
+        NomePopular::where('plantas_id', $planta->id)->delete();
+        
+        foreach ($request->nomesPopulares as $nomePopularRequest) {
+            $nomePopular = new NomePopular();
+            $nomePopular->nome = $nomePopularRequest;
+            $nomePopular->plantas_id = $planta->id;
+            $nomePopular->save();
+        }
+
         return redirect()->route('planta.listAll');
     }
 
-    public function destroy(Planta $planta){
+    public function destroy(Planta $planta)
+    {
         $planta->delete();
 
         return redirect()->route('planta.listAll');

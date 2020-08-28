@@ -30,10 +30,8 @@
 
 
                             <td class="text-center">
-                                <form>
-                                    <input type="submit" class="btn btn-outline-success" href="" value="Visualizar"></input>
-
-                                    <input type="submit" class="btn btn-outline-primary" href="{{ route('planta.editForm', ['planta' => $planta->id]) }}" value="Editar"></input>
+                                <form class="py-1" action="{{ route('planta.editForm', ['planta' => $planta->id]) }}" method="GET">
+                                    <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
 
                                 <form class="py-1" action="{{ route('planta.destroy', ['planta' => $planta->id]) }}" method="POST">

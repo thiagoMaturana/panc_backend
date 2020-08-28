@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/receitas', function () {
-    return view('tables.receitas');
-})->name('tables.receitas');
-
 // PLANTAS
 Route::get('/', 'PlantaController@listAllPlantas')->name('planta.listAll');
 Route::get('/planta/add', 'PlantaController@create')->name('planta.create');
@@ -54,9 +50,3 @@ Route::put('/user/edit/{user}', 'UserController@edit')->name('user.edit');
 Route::delete('/user/destroy/{user}', 'UserController@destroy')->name('user.destroy');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/login1', function () {
-    return view('login1');
-}); 
