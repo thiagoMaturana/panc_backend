@@ -16,7 +16,7 @@
             </div>
         </div>
         
-        <label>Nomes populares</label>
+        <label class="small mb-1 ">Nomes populares</label>
         <table>
             <div id="dynamicTable">
                 <div class="form-row">

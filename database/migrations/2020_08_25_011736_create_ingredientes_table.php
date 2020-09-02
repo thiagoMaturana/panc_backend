@@ -18,6 +18,7 @@ class CreateIngredientesTable extends Migration {
 		{
 			$table->id();
 			$table->string('nome', 45);
+			$table->string('quantidade', 80);
 		});
 	}
 

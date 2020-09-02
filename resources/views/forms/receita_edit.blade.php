@@ -12,7 +12,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label class="small mb-1 ">Tipo</label>
-                <select name="tipo" class="form-control">
+                <select name="tipo" class="form-control">a
                     @if($receita->tipo == 'Doces e Bolos')
                     <option name="tipo" value="Doces e Bolos" selected> Doces e Bolos </option>
                     @else
@@ -48,7 +48,7 @@
                     @else
                     <option name="tipo" value="Massas"> Massas </option>
                     @endif
-                    
+
                     @if($receita->tipo == 'Bebidas')
                     <option name="tipo" value="Bebidas" selected> Bebidas </option>
                     @else
@@ -58,6 +58,30 @@
                 </select>
             </div>
         </div>
+
+        <label class="small mb-1">Ingredientes</label>
+        <table>
+            <div id="dynamicTable">
+                @foreach($ingredientes as $ingrediente)
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="form-control" placeholder="Quantidade" name="quantidade[ {{ $loop->index }} ]" value="{{ $ingrediente->quantidade }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[ {{ $loop->index }} ]" value="{{ $ingrediente->nome }}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </table>
+        
+        <div class="form-group">
+            <button type="button" class="btn btn-outline-success add" id="add">Adicionar ingrediente</button>
+        </div>
+
         <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
             <textarea class="form-control" name="modoPreparo" placeholder="Modo de preparo" required rows="3">{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
@@ -73,4 +97,22 @@
         <button type="submit" class="btn btn-primary">Editar</button>
     </form>
 </div>
+
+<script type="text/javascript">
+    var i = 0;
+
+    $("#add").click(function() {
+
+        ++i;
+
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidade[' + i + ']"></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+
+    });
+
+    $(document).on('click', '.remove-tr', function() {
+
+        $(this).parents('div.form-row').remove();
+
+    });
+</script>
 @endsection

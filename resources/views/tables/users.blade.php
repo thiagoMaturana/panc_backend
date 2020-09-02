@@ -31,20 +31,18 @@
                             @if($user->usuario_role == '3') Administrador @endif
                         </td>
                         <td> ************** </td>
-                        <td  class="text-center">
-                            <form>
-                                <input type="submit" class="btn btn-outline-success" href="" value="Visualizar"></input>
-    
-                                <input type="submit" class="btn btn-outline-primary" href="{{ route('user.editForm', ['user' => $user->id]) }}" value="Editar"></input>
-                            </form>
+                        <td class="text-center">
+                                <form class="py-1" action="{{ route('user.editForm', ['user' => $user->id]) }}" method="GET">
+                                    <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
+                                </form>
 
-                            <form class="py-1" action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <input type="hidden" name="user" value="{{ $user->id }}">
-                                <input type="submit" class="btn btn-outline-danger" value="Remover">
-                            </form>
-                        </td>
+                                <form class="py-1" action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="user" value="">
+                                    <input type="submit" class="btn btn-outline-danger" value="Remover">
+                                </form>
+                            </td>
                     </tr>
                     @endforeach
                 </tbody>

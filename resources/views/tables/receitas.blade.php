@@ -12,7 +12,6 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        @foreach($receitas as $receita)
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>
@@ -22,22 +21,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($receitas as $receita)
                         <tr>
                             <td> {{$receita->id}} </td>
                             <td> {{$receita->nome}} </td>
                             <td> {{$receita->tipo}} </td>
                             <td> {{$receita->usuarios_id}} </td>
                             <td class="text-center">
-                            <form>
-                                <input type="submit" class="btn btn-outline-success" href="" value="Visualizar"></input>
-    
-                                <input type="submit" class="btn btn-outline-primary" href="{{ route('receita.editForm', ['receita' => $receita->id]) }}" value="Editar"></input>
-                            </form>
+                                <form class="py-1" action="{{ route('receita.editForm', ['receita' => $receita->id]) }}" method="GET">
+                                    <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
+                                </form>
 
                                 <form class="py-1" action="{{ route('receita.destroy', ['receita' => $receita->id]) }}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <input type="hidden" name="receita" value="{{ $receita->id }}">
+                                    <input type="hidden" name="user" value="">
                                     <input type="submit" class="btn btn-outline-danger" value="Remover">
                                 </form>
                             </td>

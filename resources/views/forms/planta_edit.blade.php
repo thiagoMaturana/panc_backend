@@ -13,17 +13,17 @@
             </div>
             <div class="form-group col-md-6">
                 <label>Nome Científico</label>
-                <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico"  value="{{ $planta->nomeCientifico }}">
+                <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico" value="{{ $planta->nomeCientifico }}">
             </div>
         </div>
-        
+
         <label>Nomes populares</label>
         <table>
             <div id="dynamicTable">
-        @foreach($nomesPopulares as $nomePopular)
+                @foreach($nomesPopulares as $nomePopular)
                 <div class="form-row">
                     <div class="form-group col-md-10">
-                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[0]" value="{{ $nomePopular->nome }}">
+                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}">
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -35,11 +35,11 @@
 
         <div class="form-group">
             <button type="button" class="btn btn-outline-success add" id="add">Adicionar nome popular</button>
-        </div>  
+        </div>
         <!-- Caracteristicas -->
         <div class="form-group">
             <label>Tamanho</label>
-            <input type="text" class="form-control" placeholder="Tamanho" name="tamanho"  value="{{ $planta->tamanho }}">
+            <input type="text" class="form-control" placeholder="Tamanho" name="tamanho" value="{{ $planta->tamanho }}">
         </div>
         <div class="form-group">
             <label>Fruto</label>
@@ -57,15 +57,15 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Familia</label>
-                <input type="text" class="form-control" placeholder="Familia da planta" name="familia"  value="{{ $planta->familia }}">
+                <input type="text" class="form-control" placeholder="Familia da planta" name="familia" value="{{ $planta->familia }}">
             </div>
             <div class="form-group col-md-4">
                 <label>Genero</label>
-                <input type="text" class="form-control" placeholder="Genero da planta" name="genero"  value="{{ $planta->genero }}">
+                <input type="text" class="form-control" placeholder="Genero da planta" name="genero" value="{{ $planta->genero }}">
             </div>
             <div class="form-group col-md-4">
                 <label>Especie</label>
-                <input type="text" class="form-control" placeholder="Especie da planta" name="especie"  value="{{ $planta->especie }}">
+                <input type="text" class="form-control" placeholder="Especie da planta" name="especie" value="{{ $planta->especie }}">
             </div>
         </div>
         <!-- Propriedades -->
@@ -98,21 +98,13 @@
 </div>
 <script type="text/javascript">
     var i = 0;
-
     $("#add").click(function() {
-
-            ++i;
-
-            console.log(''+i+'');
-
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares['+i+']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
-
+        ++i;
+        console.log('' + i + '');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
     });
-
     $(document).on('click', '.remove-tr', function() {
-
         $(this).parents('div.form-row').remove();
-
     });
 </script>
 @endsection

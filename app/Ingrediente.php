@@ -14,7 +14,7 @@ class Ingrediente extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nome'
+        'nome', 'quantidade'
     ];
 
 
