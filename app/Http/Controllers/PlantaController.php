@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PlantaRequest;
 use App\NomePopular;
 use App\Planta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlantaController extends Controller
 {
@@ -22,7 +24,7 @@ class PlantaController extends Controller
         return view('forms.planta_add');
     }
 
-    public function store(Request $request)
+    public function store(PlantaRequest $request)
     {
         $planta = new Planta();
         $planta->nome = $request->nome;
@@ -65,7 +67,7 @@ class PlantaController extends Controller
         ]);
     }
 
-    public function edit(Planta $planta, Request $request)
+    public function edit(Planta $planta, PlantaRequest $request)
     {
         $planta->nome = $request->nome;
         $planta->nomeCientifico = $request->nomeCientifico;
@@ -85,7 +87,7 @@ class PlantaController extends Controller
         $planta->save();
 
         NomePopular::where('plantas_id', $planta->id)->delete();
-        
+
         foreach ($request->nomesPopulares as $nomePopularRequest) {
             $nomePopular = new NomePopular();
             $nomePopular->nome = $nomePopularRequest;
@@ -98,8 +100,12 @@ class PlantaController extends Controller
 
     public function destroy(Planta $planta)
     {
-        $planta->delete();
+        if (Auth::check() === true) {
+            $planta->delete();
 
-        return redirect()->route('planta.listAll');
+            return redirect()->route('planta.listAll');
+        }
+
+        return redirect()->route('auth.login');
     }
 }

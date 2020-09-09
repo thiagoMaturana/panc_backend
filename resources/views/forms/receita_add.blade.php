@@ -4,14 +4,23 @@
 <div class="container p-5">
     <form action="{{ route('receita.store') }}" method="POST">
         @csrf
+
+        @if(isset($errors) && count($errors)>0)
+        <div class="text-center alert-danger">
+            @foreach($errors->all() as $erro)
+            {{ $erro }} <br>
+            @endforeach
+        </div>
+        @endif
+
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label class="small mb-1 ">Nome</label>
                 <input type="text" class="form-control" name="nome" placeholder="Nome" required>
             </div>
             <div class="form-group col-md-4">
-            <label class="small mb-1 ">Tipo</label>
-                <select name="tipo" class="form-control">
+                <label class="small mb-1 ">Tipo</label>
+                <select name="tipo" class="form-control" required>
                     <option name="tipo" value="Doces e Bolos"> Doces e Bolos </option>
                     <option name="tipo" value="Carnes"> Carnes </option>
                     <option name="tipo" value="Frutos do Mar"> Frutos do Mar </option>
@@ -28,10 +37,10 @@
             <div id="dynamicTable">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control" placeholder="Quantidade" name="quantidade[0]">
+                        <input type="text" class="form-control" placeholder="Quantidade" name="quantidade[0]" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[0]">
+                        <input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[0]" required>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -49,7 +58,7 @@
         </div>
         <div class="form-group">
             <label class="small mb-1">Observação</label>
-            <textarea class="form-control" name="observacao" placeholder="Observação" required rows="3"></textarea>
+            <textarea class="form-control" name="observacao" placeholder="Observação" rows="3"></textarea>
         </div>
         <div class="form-group">
             <label class="small mb-1 ">Foto</label>

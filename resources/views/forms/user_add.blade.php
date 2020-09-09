@@ -2,6 +2,15 @@
 
 @section('content')
 <div class="container p-5">
+
+    @if(isset($errors) && count($errors)>0)
+    <div class="text-center alert-danger">
+        @foreach($errors->all() as $erro)
+        {{ $erro }} <br>
+        @endforeach
+    </div>
+    @endif
+
     <form action="{{ route('user.store') }}" method="POST">
         @csrf
         <div class="form-group">

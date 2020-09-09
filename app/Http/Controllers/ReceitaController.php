@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReceitaRequest;
 use App\Ingrediente;
 use App\Receita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReceitaController extends Controller
 {
@@ -22,7 +24,7 @@ class ReceitaController extends Controller
         return view('forms.receita_add');
     }
 
-    public function store(Request $request)
+    public function store(ReceitaRequest $request)
     {
         $receita = new Receita();
         $receita->nome = $request->nome;
@@ -30,21 +32,21 @@ class ReceitaController extends Controller
         $receita->modoPreparo = $request->modoPreparo;
         $receita->observacao = $request->observacao;
         $receita->fotos = $request->fotos;
-        
+
         $receita->usuarios_id = 1;
         $receita->save();
 
         foreach ($request->ingredientes as $key => $ingredienteRequest) {
             $ingrediente = new Ingrediente();
-            
+
             $ingrediente->nome = $ingredienteRequest;
             $ingrediente->quantidade = $request->quantidade[$key];
-            
+
             $ingrediente->save();
-            
+
             $ingrediente->receitas()->attach($receita->id);
         }
-        
+
 
         return redirect()->route('receita.listAll');
     }
@@ -55,17 +57,18 @@ class ReceitaController extends Controller
 
         return view('forms.receita_edit', [
             'receita' => $receita,
-            'ingredientes' =>$ingredientes
+            'ingredientes' => $ingredientes
         ]);
     }
 
-    public function edit(Receita $receita, Request $request){
+    public function edit(Receita $receita, ReceitaRequest $request)
+    {
         $receita->nome = $request->nome;
         $receita->tipo = $request->tipo;
         $receita->modoPreparo = $request->modoPreparo;
         $receita->observacao = $request->observacao;
         $receita->fotos = $request->fotos;
-        
+
         $receita->usuarios_id = 1;
 
         $receita->save();
@@ -77,9 +80,9 @@ class ReceitaController extends Controller
             $ingrediente = new Ingrediente();
             $ingrediente->nome = $ingredienteRequest;
             $ingrediente->quantidade = $request->quantidade[$key];
-            
+
             $ingrediente->save();
-            
+
             $ingrediente->receitas()->attach($receita->id);
         }
 
@@ -87,9 +90,8 @@ class ReceitaController extends Controller
         return redirect()->route('receita.listAll');
     }
 
-    public function destroy(Receita $receita){
-        $receita->delete();
-
+    public function destroy(Receita $receita)
+    {
         return redirect()->route('receita.listAll');
     }
 }

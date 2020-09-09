@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function listAllUsers(){
+    public function listAllUsers()
+    {
         $users = User::all();
 
         return view('tables.users', [
@@ -16,11 +19,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('forms.user_add');
     }
 
-    public function store(Request $request){
+    public function store(UserRequest $request)
+    {
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -32,13 +37,15 @@ class UserController extends Controller
         return redirect()->route('user.listAll');
     }
 
-    public function editForm(User $user){
+    public function editForm(user $user)
+    {
         return view('forms.user_edit', [
             'user' => $user
         ]);
     }
 
-    public function edit(User $user, Request $request){
+    public function edit(User $user, UserRequest $request)
+    {
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
@@ -49,10 +56,10 @@ class UserController extends Controller
         return redirect()->route('user.listAll');
     }
 
-    public function destroy(User $user){
+    public function destroy(User $user)
+    {
         $user->delete();
 
         return redirect()->route('user.listAll');
     }
 }
-

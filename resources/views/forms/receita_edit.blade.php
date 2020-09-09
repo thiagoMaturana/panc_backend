@@ -5,6 +5,15 @@
     <form action="{{ route('receita.edit', ['receita' => $receita->id]) }}" method="POST">
         @csrf
         @method('PUT')
+
+        @if(isset($errors) && count($errors)>0)
+        <div class="text-center alert-danger">
+            @foreach($errors->all() as $erro)
+            {{ $erro }} <br>
+            @endforeach
+        </div>
+        @endif
+
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label class="small mb-1 ">Nome</label>
@@ -12,7 +21,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label class="small mb-1 ">Tipo</label>
-                <select name="tipo" class="form-control">a
+                <select name="tipo" class="form-control" required>
                     @if($receita->tipo == 'Doces e Bolos')
                     <option name="tipo" value="Doces e Bolos" selected> Doces e Bolos </option>
                     @else
@@ -65,10 +74,10 @@
                 @foreach($ingredientes as $ingrediente)
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control" placeholder="Quantidade" name="quantidade[ {{ $loop->index }} ]" value="{{ $ingrediente->quantidade }}">
+                        <input type="text" class="form-control" placeholder="Quantidade" name="quantidade[ {{ $loop->index }} ]" value="{{ $ingrediente->quantidade }}" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[ {{ $loop->index }} ]" value="{{ $ingrediente->nome }}">
+                        <input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[ {{ $loop->index }} ]" value="{{ $ingrediente->nome }}" required>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -77,7 +86,7 @@
                 @endforeach
             </div>
         </table>
-        
+
         <div class="form-group">
             <button type="button" class="btn btn-outline-success add" id="add">Adicionar ingrediente</button>
         </div>
@@ -88,7 +97,7 @@
         </div>
         <div class="form-group">
             <label class="small mb-1">Observação</label>
-            <textarea class="form-control" name="observacao" placeholder="Observação" required rows="3">{{ old('observacao', $receita->observacao) }}</textarea>
+            <textarea class="form-control" name="observacao" placeholder="Observação" rows="3">{{ old('observacao', $receita->observacao) }}</textarea>
         </div>
         <div class="form-group">
             <label class="small mb-1 ">Foto</label>
@@ -105,7 +114,7 @@
 
         ++i;
 
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidade[' + i + ']"></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidade[' + i + ']" required></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[' + i + ']" required></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
     });
 

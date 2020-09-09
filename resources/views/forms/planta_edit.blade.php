@@ -5,15 +5,24 @@
     <form action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="POST">
         @csrf
         @method('PUT')
+
+        @if(isset($errors) && count($errors)>0)
+        <div class="text-center alert-danger">
+            @foreach($errors->all() as $erro)
+            {{ $erro }} <br>
+            @endforeach
+        </div>
+        @endif
+
         <!-- Nomes -->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Nome</label>
-                <input type="text" class="form-control" placeholder="Nome" name="nome" value="{{ $planta->nome }}">
+                <input type="text" class="form-control" placeholder="Nome" name="nome" value="{{ $planta->nome }}" required>
             </div>
             <div class="form-group col-md-6">
                 <label>Nome Científico</label>
-                <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico" value="{{ $planta->nomeCientifico }}">
+                <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico" value="{{ $planta->nomeCientifico }}" required>
             </div>
         </div>
 
@@ -23,7 +32,7 @@
                 @foreach($nomesPopulares as $nomePopular)
                 <div class="form-row">
                     <div class="form-group col-md-10">
-                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}">
+                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}" required>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -39,7 +48,7 @@
         <!-- Caracteristicas -->
         <div class="form-group">
             <label>Tamanho</label>
-            <input type="text" class="form-control" placeholder="Tamanho" name="tamanho" value="{{ $planta->tamanho }}">
+            <input type="text" class="form-control" placeholder="Tamanho" name="tamanho" value="{{ $planta->tamanho }}" required>
         </div>
         <div class="form-group">
             <label>Fruto</label>
@@ -47,7 +56,7 @@
         </div>
         <div class="form-group">
             <label>Folha</label>
-            <textarea class="form-control" placeholder="Descreva a Folha da planta" rows="3" name="folha">{{ old('folha', $planta->folha) }}</textarea>
+            <textarea class="form-control" placeholder="Descreva a Folha da planta" rows="3" name="folha" required>{{ old('folha', $planta->folha) }}</textarea>
         </div>
         <div class="form-group">
             <label>Caracteristícas</label>
@@ -57,11 +66,11 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Familia</label>
-                <input type="text" class="form-control" placeholder="Familia da planta" name="familia" value="{{ $planta->familia }}">
+                <input type="text" class="form-control" placeholder="Familia da planta" name="familia" value="{{ $planta->familia }}" required>
             </div>
             <div class="form-group col-md-4">
                 <label>Genero</label>
-                <input type="text" class="form-control" placeholder="Genero da planta" name="genero" value="{{ $planta->genero }}">
+                <input type="text" class="form-control" placeholder="Genero da planta" name="genero" value="{{ $planta->genero }}" required>
             </div>
             <div class="form-group col-md-4">
                 <label>Especie</label>
@@ -71,11 +80,11 @@
         <!-- Propriedades -->
         <div class="form-group">
             <label>Propriedades Medicinais</label>
-            <textarea class="form-control" placeholder="Descreva as propriedades medicinais da planta" rows="3" name="propriedadesMedicinais">{{ old('propriedadesMedicinais', $planta->propriedadesMedicinais) }}</textarea>
+            <textarea class="form-control" placeholder="Descreva as propriedades medicinais da planta" rows="3" name="propriedadesMedicinais" required>{{ old('propriedadesMedicinais', $planta->propriedadesMedicinais) }}</textarea>
         </div>
         <div class="form-group">
             <label>Propriedades Gastronômicas</label>
-            <textarea class="form-control" placeholder="Descreva as propriedades gastronômicas da planta" rows="3" name="propriedadesCulinarias">{{ old('propriedadesCulinarias', $planta->propriedadesCulinarias) }}</textarea>
+            <textarea class="form-control" placeholder="Descreva as propriedades gastronômicas da planta" rows="3" name="propriedadesCulinarias" required>{{ old('propriedadesCulinarias', $planta->propriedadesCulinarias) }}</textarea>
         </div>
         <!-- Cultivo -->
         <div class="form-group">
@@ -90,7 +99,7 @@
         <!-- Foto -->
         <div class="form-group">
             <label>Foto</label>
-            <input type="text" class="form-control" placeholder="Url da foto" name="fotos" value="{{ $planta->fotos }}">
+            <input type="text" class="form-control" placeholder="Url da foto" name="fotos" value="{{ $planta->fotos }}" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Editar</button>
@@ -101,7 +110,7 @@
     $("#add").click(function() {
         ++i;
         console.log('' + i + '');
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[' + i + ']" required></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
     });
     $(document).on('click', '.remove-tr', function() {
         $(this).parents('div.form-row').remove();
