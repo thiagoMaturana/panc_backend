@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'usuario_role', 'foto'
+        'name', 'email', 'password', 'role', 'foto'
     ];
 
     /**
@@ -38,4 +38,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdministrador(){
+        if ($this->role == 3){
+            return true;
+        }
+        return false;
+    
+    }
+    public function isComite(){
+        if ($this->role == 2){
+            return true;
+        }
+        return false;
+    }
 }

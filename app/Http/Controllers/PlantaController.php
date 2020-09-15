@@ -21,91 +21,114 @@ class PlantaController extends Controller
 
     public function create()
     {
-        return view('forms.planta_add');
-    }
+        $user = Auth::user();
 
-    public function store(PlantaRequest $request)
-    {
-        $planta = new Planta();
-        $planta->nome = $request->nome;
-        $planta->nomeCientifico = $request->nomeCientifico;
-        $planta->caracteristicas = $request->caracteristicas;
-        $planta->tamanho = $request->tamanho;
-        $planta->fruto = $request->fruto;
-        $planta->folha = $request->folha;
-        $planta->familia = $request->familia;
-        $planta->genero = $request->genero;
-        $planta->especie = $request->especie;
-        $planta->propriedadesMedicinais = $request->propriedadesMedicinais;
-        $planta->propriedadesCulinarias = $request->propriedadesCulinarias;
-        $planta->avisos = $request->avisos;
-        $planta->cultivo = $request->cultivo;
-        $planta->fotos = $request->fotos;
-
-        $planta->usuarios_id = 1;
-
-        $planta->save();
-
-        foreach ($request->nomesPopulares as $key => $nomePopularRequest) {
-            $nomePopular = new NomePopular();
-            $nomePopular->nome = $nomePopularRequest;
-            $nomePopular->plantas_id = $planta->id;
-
-            $nomePopular->save();
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            return view('forms.planta_add');
         }
 
-        return redirect()->route('planta.listAll');
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
+    }
+
+    public function store(PlantaRequest  $request)
+    {
+        $user = Auth::user();
+
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            $planta = new Planta();
+            $planta->nome = $request->nome;
+            $planta->nomeCientifico = $request->nomeCientifico;
+            $planta->caracteristicas = $request->caracteristicas;
+            $planta->tamanho = $request->tamanho;
+            $planta->fruto = $request->fruto;
+            $planta->folha = $request->folha;
+            $planta->familia = $request->familia;
+            $planta->genero = $request->genero;
+            $planta->especie = $request->especie;
+            $planta->propriedadesMedicinais = $request->propriedadesMedicinais;
+            $planta->propriedadesCulinarias = $request->propriedadesCulinarias;
+            $planta->avisos = $request->avisos;
+            $planta->cultivo = $request->cultivo;
+            $planta->fotos = $request->fotos;
+
+            $planta->usuarios_id = 1;
+
+            $planta->save();
+
+            foreach ($request->nomesPopulares as $key => $nomePopularRequest) {
+                $nomePopular = new NomePopular();
+                $nomePopular->nome = $nomePopularRequest;
+                $nomePopular->plantas_id = $planta->id;
+
+                $nomePopular->save();
+            }
+
+            return redirect()->route('planta.listAll');
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Você precisa ser do comite ou um administrador para cadastrar plantas']);
     }
 
     public function editForm(Planta $planta)
     {
-        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
 
-        return view('forms.planta_edit', [
-            'planta' => $planta,
-            'nomesPopulares' => $nomesPopulares
-        ]);
+        $user = Auth::user();
+
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+
+            return view('forms.planta_edit', [
+                'planta' => $planta,
+                'nomesPopulares' => $nomesPopulares
+            ]);
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para editar plantas']);
     }
 
     public function edit(Planta $planta, PlantaRequest $request)
     {
-        $planta->nome = $request->nome;
-        $planta->nomeCientifico = $request->nomeCientifico;
-        $planta->caracteristicas = $request->caracteristicas;
-        $planta->tamanho = $request->tamanho;
-        $planta->fruto = $request->fruto;
-        $planta->folha = $request->folha;
-        $planta->familia = $request->familia;
-        $planta->genero = $request->genero;
-        $planta->especie = $request->especie;
-        $planta->propriedadesMedicinais = $request->propriedadesMedicinais;
-        $planta->propriedadesCulinarias = $request->propriedadesCulinarias;
-        $planta->avisos = $request->avisos;
-        $planta->cultivo = $request->cultivo;
-        $planta->fotos = $request->fotos;
+        $user = Auth::user();
 
-        $planta->save();
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            $planta->nome = $request->nome;
+            $planta->nomeCientifico = $request->nomeCientifico;
+            $planta->caracteristicas = $request->caracteristicas;
+            $planta->tamanho = $request->tamanho;
+            $planta->fruto = $request->fruto;
+            $planta->folha = $request->folha;
+            $planta->familia = $request->familia;
+            $planta->genero = $request->genero;
+            $planta->especie = $request->especie;
+            $planta->propriedadesMedicinais = $request->propriedadesMedicinais;
+            $planta->propriedadesCulinarias = $request->propriedadesCulinarias;
+            $planta->avisos = $request->avisos;
+            $planta->cultivo = $request->cultivo;
+            $planta->fotos = $request->fotos;
 
-        NomePopular::where('plantas_id', $planta->id)->delete();
+            $planta->save();
 
-        foreach ($request->nomesPopulares as $nomePopularRequest) {
-            $nomePopular = new NomePopular();
-            $nomePopular->nome = $nomePopularRequest;
-            $nomePopular->plantas_id = $planta->id;
-            $nomePopular->save();
+            NomePopular::where('plantas_id', $planta->id)->delete();
+
+            foreach ($request->nomesPopulares as $nomePopularRequest) {
+                $nomePopular = new NomePopular();
+                $nomePopular->nome = $nomePopularRequest;
+                $nomePopular->plantas_id = $planta->id;
+                $nomePopular->save();
+            }
+
+            return redirect()->route('planta.listAll');
         }
-
-        return redirect()->route('planta.listAll');
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
     }
 
     public function destroy(Planta $planta)
     {
-        if (Auth::check() === true) {
+        $user = Auth::user();
+
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
             $planta->delete();
 
             return redirect()->route('planta.listAll');
         }
-
-        return redirect()->route('auth.login');
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para deletar plantas']);
     }
 }

@@ -33,7 +33,7 @@
 
                     @else
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); 
-                                                        document.getElementById('logout-form').submit();">
+                        document.getElementById('logout-form').submit();">
                         {{ _('Logout') }}
                     </a>
 
@@ -60,7 +60,9 @@
                         <div class="collapse" id="collapsePlantas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href=" {{ route('planta.listAll') }} ">Listar</a>
+                                @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
                                 <a class="nav-link" href="{{ route('planta.create') }} ">Cadastrar</a>
+                                @endif
                             </nav>
                         </div>
 
@@ -73,10 +75,13 @@
                         <div class="collapse" id="collapseReceitas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href=" {{ route('receita.listAll') }} ">Listar</a>
+                                @if(Auth::user() && (Auth::check()))
                                 <a class="nav-link" href=" {{ route('receita.create') }} ">Cadastrar</a>
+                                @endif
                             </nav>
                         </div>
 
+                        @if(Auth::user() && Auth::user()->isAdministrador())
                         <div class="sb-sidenav-menu-heading">Usuários</div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -89,6 +94,7 @@
                                 <a class="nav-link" href=" {{ route('user.create') }} ">Cadastrar</a>
                             </nav>
                         </div>
+                        @endif
                     </div>
                 </div>
             </nav>
@@ -102,7 +108,7 @@
     <script src="assets/jquery/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>  
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="assets/datatables-demo.js"></script>
 </body>

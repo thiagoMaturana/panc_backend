@@ -26,9 +26,9 @@
                         <td> {{$user->nome}} </td>
                         <td> {{$user->email}} </td>
                         <td>
-                            @if($user->usuario_role == '1') Autenticado @endif
-                            @if($user->usuario_role == '2') Comitê @endif
-                            @if($user->usuario_role == '3') Administrador @endif
+                            @if($user->role == '1') Autenticado @endif
+                            @if($user->role == '2') Comitê @endif
+                            @if($user->role == '3') Administrador @endif
                         </td>
                         <td> ************** </td>
                         <td class="text-center">

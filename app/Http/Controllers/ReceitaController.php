@@ -26,72 +26,94 @@ class ReceitaController extends Controller
 
     public function store(ReceitaRequest $request)
     {
-        $receita = new Receita();
-        $receita->nome = $request->nome;
-        $receita->tipo = $request->tipo;
-        $receita->modoPreparo = $request->modoPreparo;
-        $receita->observacao = $request->observacao;
-        $receita->fotos = $request->fotos;
+        $user = Auth::user();
 
-        $receita->usuarios_id = 1;
-        $receita->save();
+        if ($user && Auth::check()) {
 
-        foreach ($request->ingredientes as $key => $ingredienteRequest) {
-            $ingrediente = new Ingrediente();
+            $receita = new Receita();
+            $receita->nome = $request->nome;
+            $receita->tipo = $request->tipo;
+            $receita->modoPreparo = $request->modoPreparo;
+            $receita->observacao = $request->observacao;
+            $receita->fotos = $request->fotos;
 
-            $ingrediente->nome = $ingredienteRequest;
-            $ingrediente->quantidade = $request->quantidade[$key];
+            $receita->usuarios_id = 1;
+            $receita->save();
 
-            $ingrediente->save();
+            foreach ($request->ingredientes as $key => $ingredienteRequest) {
+                $ingrediente = new Ingrediente();
 
-            $ingrediente->receitas()->attach($receita->id);
+                $ingrediente->nome = $ingredienteRequest;
+                $ingrediente->quantidade = $request->quantidade[$key];
+
+                $ingrediente->save();
+
+                $ingrediente->receitas()->attach($receita->id);
+            }
+
+
+            return redirect()->route('receita.listAll');
         }
 
-
-        return redirect()->route('receita.listAll');
+        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para cadastrar receitas']);
     }
 
     public function editForm(Receita $receita)
     {
-        $ingredientes = $receita->ingredientes;
+        $user = Auth::user();
 
-        return view('forms.receita_edit', [
-            'receita' => $receita,
-            'ingredientes' => $ingredientes
-        ]);
+        if ($user && Auth::check()) {
+            $ingredientes = $receita->ingredientes;
+
+            return view('forms.receita_edit', [
+                'receita' => $receita,
+                'ingredientes' => $ingredientes
+            ]);
+        }
+        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
     }
 
     public function edit(Receita $receita, ReceitaRequest $request)
     {
-        $receita->nome = $request->nome;
-        $receita->tipo = $request->tipo;
-        $receita->modoPreparo = $request->modoPreparo;
-        $receita->observacao = $request->observacao;
-        $receita->fotos = $request->fotos;
+        $user = Auth::user();
 
-        $receita->usuarios_id = 1;
+        if ($user && Auth::check()) {
+            $receita->nome = $request->nome;
+            $receita->tipo = $request->tipo;
+            $receita->modoPreparo = $request->modoPreparo;
+            $receita->observacao = $request->observacao;
+            $receita->fotos = $request->fotos;
 
-        $receita->save();
+            $receita->usuarios_id = 1;
+
+            $receita->save();
 
 
-        $receita->ingredientes()->delete();
+            $receita->ingredientes()->delete();
 
-        foreach ($request->ingredientes as $key => $ingredienteRequest) {
-            $ingrediente = new Ingrediente();
-            $ingrediente->nome = $ingredienteRequest;
-            $ingrediente->quantidade = $request->quantidade[$key];
+            foreach ($request->ingredientes as $key => $ingredienteRequest) {
+                $ingrediente = new Ingrediente();
+                $ingrediente->nome = $ingredienteRequest;
+                $ingrediente->quantidade = $request->quantidade[$key];
 
-            $ingrediente->save();
+                $ingrediente->save();
 
-            $ingrediente->receitas()->attach($receita->id);
+                $ingrediente->receitas()->attach($receita->id);
+            }
+            return redirect()->route('receita.listAll');
         }
-
-
-        return redirect()->route('receita.listAll');
+        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
     }
 
     public function destroy(Receita $receita)
     {
-        return redirect()->route('receita.listAll');
+        $user = Auth::user();
+
+        if ($user && Auth::check()) {
+            $receita->delete();
+            return redirect()->route('receita.listAll');
+        }
+
+        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para deletar receitas']);
     }
 }

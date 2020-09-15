@@ -27,28 +27,28 @@
             <input type="password" class="form-control" name="password" placeholder="Senha">
         </div>
         <label>Papel</label>
-        <div class="form-group" value="{{ $user->usuario_role }}">
+        <div class="form-group" value="{{ $user->role }}">
             <div class="form-check form-check-inline">
-                @if($user->usuario_role === 1)
-                <input class="form-check-input" type="radio" name="usuario_role" value="1" checked required>
+                @if($user->role === 1)
+                <input class="form-check-input" type="radio" name="role" value="1" checked required>
                 @else
-                <input class="form-check-input" type="radio" name="usuario_role" value="1">
+                <input class="form-check-input" type="radio" name="role" value="1">
                 @endif
                 <label class="form-check-label">Autenticado</label>
             </div>
             <div class="form-check form-check-inline">
-                @if($user->usuario_role === 2)
-                <input class="form-check-input" type="radio" name="usuario_role" value="2" checked>
+                @if($user->role === 2)
+                <input class="form-check-input" type="radio" name="role" value="2" checked>
                 @else
-                <input class="form-check-input" type="radio" name="usuario_role" value="2">
+                <input class="form-check-input" type="radio" name="role" value="2">
                 @endif
                 <label class="form-check-label">Comitê</label>
             </div>
             <div class="form-check form-check-inline">
-                @if($user->usuario_role === 3)
-                <input class="form-check-input" type="radio" name="usuario_role" value="3" checked>
+                @if($user->role === 3)
+                <input class="form-check-input" type="radio" name="role" value="3" checked>
                 @else
-                <input class="form-check-input" type="radio" name="usuario_role" value="3">
+                <input class="form-check-input" type="radio" name="role" value="3">
                 @endif
                 <label class="form-check-label">Administrador</label>
             </div>

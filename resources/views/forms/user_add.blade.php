@@ -28,15 +28,13 @@
         <label>Papel</label>
         <div class="form-group">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="usuario_role" value="1" required>
+                <input class="form-check-input" type="radio" name="role" value="1" required>
                 <label class="form-check-label">Autenticado</label>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="usuario_role" value="2">
+            <div class="form-check form-check-inline"> <input class="form-check-input" type="radio" name="role" value="2">
                 <label class="form-check-label">Comitê</label>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="usuario_role" value="3">
+            <div class="form-check form-check-inline"> <input class="form-check-input" type="radio" name="role" value="3">
                 <label class="form-check-label">Administrador</label>
             </div>
         </div>

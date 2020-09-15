@@ -3,6 +3,13 @@
 @section('content')
 <div class="container-fluid">
     <h1 class="mt-4">RECEITAS</h1>
+
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <p>{{ $errors }}</p>
+    </div>
+    @endif
+
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table mr-1"></i>

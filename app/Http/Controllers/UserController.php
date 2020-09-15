@@ -12,54 +12,84 @@ class UserController extends Controller
 {
     public function listAllUsers()
     {
-        $users = User::all();
+        $userAuth = Auth::user();
 
-        return view('tables.users', [
-            'users' => $users
-        ]);
+        if ($userAuth && $userAuth->isAdminstrador()) {
+            $users = User::all();
+
+            return view('tables.users', [
+                'users' => $users
+            ]);
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
     }
 
     public function create()
     {
-        return view('forms.user_add');
+        $userAuth = Auth::user();
+
+        if ($userAuth && $userAuth->isAdminstrador()) {
+            return view('forms.user_add');
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
     }
 
     public function store(UserRequest $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->usuario_role = $request->usuario_role;
-        $user->password = Hash::make($request->password);
+        $userAuth = Auth::user();
 
-        $user->save();
+        if ($userAuth && $userAuth->isAdministrador()) {
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->password = Hash::make($request->password);
 
-        return redirect()->route('user.listAll');
+            $user->save();
+
+            return redirect()->route('user.listAll');
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para cadastrar usuario']);
     }
 
     public function editForm(user $user)
     {
-        return view('forms.user_edit', [
-            'user' => $user
-        ]);
+        $userAuth = Auth::user();
+
+        if ($userAuth && $userAuth->isAdministrador()) {
+            return view('forms.user_edit', [
+                'user' => $user
+            ]);
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para editar usuarios']);
     }
 
     public function edit(User $user, UserRequest $request)
     {
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->usuario_role = $request->usuario_role;
+        $userAuth = Auth::user();
 
-        $user->save();
+        if ($userAuth && $userAuth->isAdministrador()) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->role = $request->role;
 
-        return redirect()->route('user.listAll');
+            $user->save();
+
+            return redirect()->route('user.listAll');
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para editar usuarios']);
     }
 
     public function destroy(User $user)
     {
-        $user->delete();
+        $userAuth = Auth::user();
 
-        return redirect()->route('user.listAll');
+        if ($userAuth && $userAuth->isAdministrador()) {
+            $user->delete();
+
+            return redirect()->route('user.listAll');
+        }
+        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para deletar usuarios']);
     }
 }
