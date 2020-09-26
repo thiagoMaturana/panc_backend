@@ -14,7 +14,7 @@ class PlantaController extends Controller
     {
         $plantas = Planta::all();
 
-        return view('tables.plantas', [
+        return view('admin.tables.plantas', [
             'plantas' => $plantas
         ]);
     }
@@ -24,7 +24,7 @@ class PlantaController extends Controller
         $user = Auth::user();
 
         if ($user && ($user->isAdministrador() || $user->isComite())) {
-            return view('forms.planta_add');
+            return view('admin.forms.planta_add');
         }
 
         return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
@@ -76,7 +76,7 @@ class PlantaController extends Controller
         if ($user && ($user->isAdministrador() || $user->isComite())) {
             $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
 
-            return view('forms.planta_edit', [
+            return view('admin.forms.planta_edit', [
                 'planta' => $planta,
                 'nomesPopulares' => $nomesPopulares
             ]);

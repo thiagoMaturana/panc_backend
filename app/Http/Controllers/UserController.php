@@ -14,10 +14,10 @@ class UserController extends Controller
     {
         $userAuth = Auth::user();
 
-        if ($userAuth && $userAuth->isAdminstrador()) {
+        if ($userAuth && $userAuth->isAdministrador()) {
             $users = User::all();
 
-            return view('tables.users', [
+            return view('admin.tables.users', [
                 'users' => $users
             ]);
         }
@@ -28,8 +28,8 @@ class UserController extends Controller
     {
         $userAuth = Auth::user();
 
-        if ($userAuth && $userAuth->isAdminstrador()) {
-            return view('forms.user_add');
+        if ($userAuth && $userAuth->isAdministrador()) {
+            return view('admin.forms.user_add');
         }
         return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
     }
@@ -57,7 +57,7 @@ class UserController extends Controller
         $userAuth = Auth::user();
 
         if ($userAuth && $userAuth->isAdministrador()) {
-            return view('forms.user_edit', [
+            return view('admin.forms.user_edit', [
                 'user' => $user
             ]);
         }

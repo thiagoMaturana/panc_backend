@@ -14,14 +14,14 @@ class ReceitaController extends Controller
     {
         $receitas = Receita::all();
 
-        return view('tables.receitas', [
+        return view('admin.tables.receitas', [
             'receitas' => $receitas
         ]);
     }
 
     public function create()
     {
-        return view('forms.receita_add');
+        return view('admin.forms.receita_add');
     }
 
     public function store(ReceitaRequest $request)
@@ -65,7 +65,7 @@ class ReceitaController extends Controller
         if ($user && Auth::check()) {
             $ingredientes = $receita->ingredientes;
 
-            return view('forms.receita_edit', [
+            return view('admin.forms.receita_edit', [
                 'receita' => $receita,
                 'ingredientes' => $ingredientes
             ]);
