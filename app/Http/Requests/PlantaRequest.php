@@ -26,7 +26,6 @@ class PlantaRequest extends FormRequest
         return [
             'nome' => 'required|max:45',
             'nomeCientifico' => 'required|max:50',
-            'caracteristicas' => 'max:45',
             'tamanho' => 'required',
             'folha' => 'required',
             'familia' => 'required|max:45',
@@ -34,7 +33,7 @@ class PlantaRequest extends FormRequest
             'especie' => 'required|max:45',
             'propriedadesMedicinais' => 'required',
             'propriedadesCulinarias' => 'required',
-            'fotos' => 'required|max:200',
+            'fotos' => 'required|max:500',
         ];
     }
 }

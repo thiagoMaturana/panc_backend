@@ -41,5 +41,7 @@ Route::group([
     Route::delete('/user/destroy/{user}', 'UserController@destroy')->name('user.destroy');
 });
 
+Route::get('/plantas', 'PublicController@listAllPlantas')->name('publico.listAllPlantas');
+Route::get('/receitas', 'PublicController@listAllReceitas')->name('publico.listAllReceitas');
 
 Auth::routes();
