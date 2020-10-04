@@ -41,7 +41,7 @@ Route::group([
     Route::delete('/user/destroy/{user}', 'UserController@destroy')->name('user.destroy');
 });
 
-Route::get('/plantas', 'PublicController@listAllPlantas')->name('publico.planta.listAll');
+Route::get('/', 'PublicController@listAllPlantas')->name('publico.planta.listAll');
 Route::get('/plantas/add', 'PublicController@addForm')->name('publico.planta.addForm');
 Route::get('/plantas/editar/{planta}', 'PublicController@editForm')->name('publico.planta.editForm');
 Route::post('/plantas/store', 'PublicController@store')->name('publico.planta.store');

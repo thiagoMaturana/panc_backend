@@ -92,5 +92,5 @@ class PublicController extends Controller
     public function destroyReceita(Receita $receita){
         app(ReceitaController::class)->destroy($receita);
         return redirect()->route('publico.receita.listAll');
-    } redirect()->route('publico.planta.listAll');
+    }
 }

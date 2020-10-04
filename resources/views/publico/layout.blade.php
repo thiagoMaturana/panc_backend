@@ -55,10 +55,21 @@
           <li><a href="{{ route('publico.receita.listAll') }}"><i class="bx bx-dish"></i> <span>Receitas</span></a></li>
           <li><a href="{{ route('publico.planta.addForm') }}"><i class="bx bx-add-to-queue"> </i> <span>Cadastrar planta</span></a></li>
           <li><a href="{{ route('publico.receita.addForm') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
-          <li><a href="{{ route('logout') }}"><i class="bx bx-logout"></i>Logout</a></li>
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-          </form>
+          <li>
+            @guest
+            <a href="{{ route('login') }}"><i class='bx bx-log-in'></i>Login</a>
+
+            @else
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); 
+                        document.getElementById('logout-form').submit();"><i class='bx bx-log-out'></i>
+              {{ _('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+            @endguest
+          </li>
 
         </ul>
       </nav><!-- .nav-menu -->
