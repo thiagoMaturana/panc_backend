@@ -41,7 +41,20 @@ Route::group([
     Route::delete('/user/destroy/{user}', 'UserController@destroy')->name('user.destroy');
 });
 
-Route::get('/plantas', 'PublicController@listAllPlantas')->name('publico.listAllPlantas');
-Route::get('/receitas', 'PublicController@listAllReceitas')->name('publico.listAllReceitas');
+Route::get('/plantas', 'PublicController@listAllPlantas')->name('publico.planta.listAll');
+Route::get('/plantas/add', 'PublicController@addForm')->name('publico.planta.addForm');
+Route::get('/plantas/editar/{planta}', 'PublicController@editForm')->name('publico.planta.editForm');
+Route::post('/plantas/store', 'PublicController@store')->name('publico.planta.store');
+Route::put('/plantas/edit/{planta}', 'PublicController@edit')->name('publico.planta.edit');
+Route::delete('/plantas/destroy/{planta}', 'PublicController@destroy')->name('publico.planta.destroy');
+
+
+Route::get('/receitas', 'PublicController@listAllReceitas')->name('publico.receita.listAll');
+Route::get('/receitas/add', 'PublicController@addFormReceita')->name('publico.receita.addForm');
+Route::get('/receitas/editar/{receita}', 'PublicController@editFormReceita')->name('publico.receita.editForm');
+Route::post('/receitas/store', 'PublicController@storeReceita')->name('publico.receita.store');
+Route::put('/receitas/edit/{receita}', 'PublicController@editReceita')->name('publico.receita.edit');
+Route::delete('/receitas/destroy/{receita}', 'PublicController@destroyReceita')->name('publico.receita.destroy');
 
 Auth::routes();
+Route::get('/logout', 'UserController@logout')->name('user.logout');

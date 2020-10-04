@@ -16,6 +16,15 @@
             <div class="card-body">
               <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
               <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
+              <form class="py-1 text-center" action="{{ route('publico.receita.editForm', ['receita' => $receita->id]) }}" method="GET">
+                <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
+              </form>
+              <form class="py-1 text-center" action="{{ route('publico.receita.destroy', ['receita' => $receita->id]) }}" method="POST">
+                @csrf
+                @method('delete')
+                <input type="hidden" name="user" value="">
+                <input type="submit" class="btn btn-outline-danger" value="Remover">
+              </form>
             </div>
           </div>
         </div>

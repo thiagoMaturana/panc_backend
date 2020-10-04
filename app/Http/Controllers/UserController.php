@@ -92,4 +92,10 @@ class UserController extends Controller
         }
         return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para deletar usuarios']);
     }
+
+    public function logout(){
+        Auth::logout();
+
+        return redirect()->route('planta.listAll');
+    }
 }

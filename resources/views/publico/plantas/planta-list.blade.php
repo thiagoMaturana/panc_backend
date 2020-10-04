@@ -19,6 +19,15 @@
               <p class="card-title text-center" style="color:gray">
                 <i>{{ $planta->nomeCientifico }}</i> </p>
               <p class="card-text text-justify">{{ $planta->caracteristicas }}</p>
+              <form class="py-1 text-center" action="{{ route('publico.planta.editForm', ['planta' => $planta->id]) }}" method="GET">
+                <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
+              </form>
+              <form class="py-1 text-center" action="{{ route('publico.planta.destroy', ['planta' => $planta->id]) }}" method="POST">
+                @csrf
+                @method('delete')
+                <input type="hidden" name="user" value="">
+                <input type="submit" class="btn btn-outline-danger" value="Remover">
+              </form>
             </div>
           </div>
         </div>

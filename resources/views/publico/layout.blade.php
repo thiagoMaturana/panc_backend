@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>iPortfolio Bootstrap Template - Index</title>
+  <title>PANC APP</title>
 
   <!-- Favicons -->
   <link href="{{ asset('publico/img/favicon.png') }}" rel="icon">
@@ -24,6 +24,8 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('publico/css/style.css') }}" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 
   <!-- =======================================================
   * Template Name: iPortfolio - v1.4.0
@@ -49,11 +51,14 @@
 
       <nav class="nav-menu">
         <ul>
-          <li><a href="{{ route('publico.listAllPlantas') }}"><i class="bx bx-donate-blood"></i> <span>Plantas</span></a></li>
-          <li><a href="{{ route('publico.listAllReceitas') }}"><i class="bx bx-dish"></i> <span>Receitas</span></a></li>
-          <li><a href="#"><i class="bx bx-add-to-queue"> </i> <span>Cadastrar planta</span></a></li>
-          <li><a href="#"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
-          <li><a href="#"><i class="bx bx-log-out"></i>Logout</a></li>
+          <li><a href="{{ route('publico.planta.listAll') }}"><i class="bx bx-donate-blood"></i> <span>Plantas</span></a></li>
+          <li><a href="{{ route('publico.receita.listAll') }}"><i class="bx bx-dish"></i> <span>Receitas</span></a></li>
+          <li><a href="{{ route('publico.planta.addForm') }}"><i class="bx bx-add-to-queue"> </i> <span>Cadastrar planta</span></a></li>
+          <li><a href="{{ route('publico.receita.addForm') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
+          <li><a href="{{ route('logout') }}"><i class="bx bx-logout"></i>Logout</a></li>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
 
         </ul>
       </nav><!-- .nav-menu -->
