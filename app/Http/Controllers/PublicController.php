@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PlantaRequest;
 use App\Http\Requests\ReceitaRequest;
+use App\Ingrediente;
 use App\NomePopular;
 use App\Planta;
 use App\Receita;
@@ -92,5 +93,21 @@ class PublicController extends Controller
     public function destroyReceita(Receita $receita){
         app(ReceitaController::class)->destroy($receita);
         return redirect()->route('publico.receita.listAll');
+    }
+
+    public function detail(Planta $planta){
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+        return view('publico.plantas.planta-detail', [
+            'planta' => $planta,
+            'nomesPopulares' => $nomesPopulares
+        ]);
+    }
+
+    public function detailReceita(Receita $receita){
+        $ingredientes = $receita->ingredientes;
+        return view('publico.receitas.receita-detail', [
+            'receita' => $receita,
+            'ingredientes' => $ingredientes
+        ]);
     }
 }

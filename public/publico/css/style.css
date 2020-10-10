@@ -1091,3 +1091,11 @@ section {
     padding-right: 20px 15px;
   }
 }
+
+a{
+  color: black;
+}
+
+a:hover{
+  color: #18d26e;
+}

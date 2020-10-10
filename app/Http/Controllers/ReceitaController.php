@@ -12,16 +12,24 @@ class ReceitaController extends Controller
 {
     public function listAllReceitas()
     {
+        $user = Auth::user();
         $receitas = Receita::all();
 
-        return view('admin.tables.receitas', [
-            'receitas' => $receitas
-        ]);
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            return view('admin.tables.receitas', [
+                'receitas' => $receitas
+            ]);
+        }
+        return redirect()->route('publico.receita.listAll');
     }
 
     public function create()
     {
-        return view('admin.forms.receita_add');
+        $user = Auth::user();
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            return view('admin.forms.receita_add');
+        }
+        return redirect()->route('publico.receita.listAll');
     }
 
     public function store(ReceitaRequest $request)

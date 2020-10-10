@@ -12,11 +12,16 @@ class PlantaController extends Controller
 {
     public function listAllPlantas()
     {
+        $user = Auth::user();
         $plantas = Planta::all();
 
-        return view('admin.tables.plantas', [
-            'plantas' => $plantas
-        ]);
+        if ($user && ($user->isAdministrador() || $user->isComite())) {
+            return view('admin.tables.plantas', [
+                'plantas' => $plantas
+            ]);
+        }
+        return redirect()->route('publico.planta.listAll');
+
     }
 
     public function create()
