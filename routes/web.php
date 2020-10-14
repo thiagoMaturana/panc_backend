@@ -58,4 +58,6 @@ Route::post('/receitas/store', 'PublicController@storeReceita')->name('publico.r
 Route::put('/receitas/edit/{receita}', 'PublicController@editReceita')->name('publico.receita.edit');
 Route::delete('/receitas/destroy/{receita}', 'PublicController@destroyReceita')->name('publico.receita.destroy');
 
+Route::post('/receitas/fetch', 'ReceitaController@fetchPlanta')->name('receita.fetchPlanta');
+
 Auth::routes();

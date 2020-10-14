@@ -7,6 +7,7 @@ use App\NomePopular;
 use App\Planta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PlantaController extends Controller
 {
@@ -21,7 +22,6 @@ class PlantaController extends Controller
             ]);
         }
         return redirect()->route('publico.planta.listAll');
-
     }
 
     public function create()

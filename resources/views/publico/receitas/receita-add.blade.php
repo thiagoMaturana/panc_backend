@@ -64,6 +64,14 @@
             <label class="small mb-1 ">Foto</label>
             <input type="text" class="form-control" name="fotos" placeholder="Foto" required>
         </div>
+
+        <div class="form-group">
+            <input type="text" name="nomePlanta" id="nomePlanta" class="form-control input-lg" placeholder="Entre com o nome da Planta" />
+            <div id="plantaList">
+            </div>
+        </div>
+        {{ csrf_field() }}
+
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
@@ -86,6 +94,34 @@
         $(this).parents('div.form-row').remove();
 
     });
+
+    $(document).ready(function() {
+
+$('#nomePlanta').keyup(function() {
+    var query = $(this).val();
+    if (query != '') {
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url: "{{ route('receita.fetchPlanta') }}",
+            method: "POST",
+            data: {
+                query: query,
+                _token: _token
+            },
+            success: function(data) {
+                $('#plantaList').fadeIn();
+                $('#plantaList').html(data);
+            }
+        });
+    }
+});
+
+$(document).on('click', 'li', function() {
+    $('#nomePlanta').val($(this).text());
+    $('#plantaList').fadeOut();
+});
+
+});
 </script>
 
 @endsection

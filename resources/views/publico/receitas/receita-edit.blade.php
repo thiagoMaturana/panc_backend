@@ -103,6 +103,7 @@
             <label class="small mb-1 ">Foto</label>
             <input type="text" class="form-control" name="fotos" value="{{ $receita->fotos }}" placeholder="Foto" required>
         </div>
+
         <button type="submit" class="btn btn-primary">Editar</button>
     </form>
 </div>

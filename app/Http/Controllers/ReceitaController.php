@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ReceitaRequest;
 use App\Ingrediente;
+use App\Planta;
 use App\Receita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReceitaController extends Controller
 {
@@ -45,8 +47,13 @@ class ReceitaController extends Controller
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
 
+            
             $receita->usuarios_id = 1;
             $receita->save();
+            
+            $planta = Planta::where('nome', $request->nomePlanta)->get();
+            dd($planta);
+            $receita->plantas()->attach($planta->id);
 
             foreach ($request->ingredientes as $key => $ingredienteRequest) {
                 $ingrediente = new Ingrediente();
@@ -123,5 +130,25 @@ class ReceitaController extends Controller
         }
 
         return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para deletar receitas']);
+    }
+
+    function fetchPlanta(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      $data = DB::table('plantas')
+        ->where('nome', 'LIKE', "%{$query}%")
+        ->get();
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+       $output .= '
+       <li><a href="#">'.$row->nome.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 }
