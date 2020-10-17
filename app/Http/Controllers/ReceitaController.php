@@ -47,13 +47,12 @@ class ReceitaController extends Controller
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
 
+            $planta = Planta::where('nome', $request->nomePlanta)->first();
             
-            $receita->usuarios_id = 1;
+            $receita->usuarios_id = Auth::user()->id;
             $receita->save();
             
-            $planta = Planta::where('nome', $request->nomePlanta)->get();
-            dd($planta);
-            $receita->plantas()->attach($planta->id);
+            $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
 
             foreach ($request->ingredientes as $key => $ingredienteRequest) {
                 $ingrediente = new Ingrediente();
@@ -99,9 +98,14 @@ class ReceitaController extends Controller
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
 
-            $receita->usuarios_id = 1;
+            $receita->usuarios_id = Auth::user()->id;
 
             $receita->save();
+
+            $planta = Planta::where('nome', $request->nomePlanta)->first();
+            
+            $receita->plantas()->detach();
+            $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
 
 
             $receita->ingredientes()->delete();
@@ -134,21 +138,9 @@ class ReceitaController extends Controller
 
     function fetchPlanta(Request $request)
     {
-     if($request->get('query'))
-     {
-      $query = $request->get('query');
-      $data = DB::table('plantas')
-        ->where('nome', 'LIKE', "%{$query}%")
-        ->get();
-      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $row)
-      {
-       $output .= '
-       <li><a href="#">'.$row->nome.'</a></li>
-       ';
-      }
-      $output .= '</ul>';
-      echo $output;
-     }
+        $nome = $request->get('query');
+        $planta = Planta::where('nome', 'LIKE', "%{$nome}%")
+            ->get();
+        return $planta;
     }
 }

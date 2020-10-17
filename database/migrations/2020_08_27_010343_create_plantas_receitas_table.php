@@ -17,7 +17,7 @@ class CreatePlantasReceitasTable extends Migration {
 		{
 			$table->foreignId('receitas_id');
 			$table->foreignId('plantas_id');
-			$table->string('quantidade', 100);
+			$table->string('quantidade');
 
 			$table->foreign('receitas_id')->references('id')->on('receitas')->onUpdate('cascade')->onDelete('cascade');
 			$table->foreign('plantas_id')->references('id')->on('plantas')->onUpdate('cascade')->onDelete('cascade');

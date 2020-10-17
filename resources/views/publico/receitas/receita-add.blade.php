@@ -48,9 +48,34 @@
                 </div>
             </div>
         </table>
+
         <div class="form-group">
             <button type="button" class="btn btn-outline-success add" id="add">Adicionar ingrediente</button>
         </div>
+
+        <label class="small mb-1">Plantas</label>
+        <table>
+            <div id="tablePlantas">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" />
+                        <div id="plantaList">
+                        </div>
+                        {{ csrf_field() }}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                    </div>
+                </div>
+        </table>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-outline-success addPlanta" id="addPlanta">Adicionar planta</button>
+        </div>
+
 
         <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
@@ -65,25 +90,17 @@
             <input type="text" class="form-control" name="fotos" placeholder="Foto" required>
         </div>
 
-        <div class="form-group">
-            <input type="text" name="nomePlanta" id="nomePlanta" class="form-control input-lg" placeholder="Entre com o nome da Planta" />
-            <div id="plantaList">
-            </div>
-        </div>
-        {{ csrf_field() }}
-
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
 
 <script type="text/javascript">
     var i = 0;
+    var a = 0;
 
     $("#add").click(function() {
 
         ++i;
-
-        console.log('' + i + '');
 
         $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidade[' + i + ']"></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
@@ -95,33 +112,51 @@
 
     });
 
+    $("#addPlanta").click(function() {
+        ++a;
+
+        $("#tablePlantas").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidadePlanta"></div><div class="form-group col-md-6"><input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" /><div id="plantaList"></div>{{ csrf_field() }}</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button></div></div>');
+
+    });
+
+    $(document).on('click', '.remove-tr-planta', function() {
+
+        $(this).parents('div.form-row').remove();
+
+    });
+
     $(document).ready(function() {
 
-$('#nomePlanta').keyup(function() {
-    var query = $(this).val();
-    if (query != '') {
-        var _token = $('input[name="_token"]').val();
-        $.ajax({
-            url: "{{ route('receita.fetchPlanta') }}",
-            method: "POST",
-            data: {
-                query: query,
-                _token: _token
-            },
-            success: function(data) {
-                $('#plantaList').fadeIn();
-                $('#plantaList').html(data);
+        $('.nomePlanta').keyup(function() {
+            var query = $(this).val();
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ route('receita.fetchPlanta') }}",
+                    method: "POST",
+                    data: {
+                        query: query,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#plantaList').fadeIn();
+                        let output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+                        for (planta of data) {
+                            output += '<li> <a href = "#">' + planta['nome'] + '</a></li>';
+                        }
+                        output += '</ul>';
+                        $('#plantaList').html(output);
+                    }
+                });
             }
         });
-    }
-});
 
-$(document).on('click', 'li', function() {
-    $('#nomePlanta').val($(this).text());
-    $('#plantaList').fadeOut();
-});
+        $(document).on('click', 'li', function() {
+            $('#nomePlanta').val($(this).text());
+            $('#plantaList').fadeOut();
+        });
 
-});
+    });
 </script>
 
 @endsection

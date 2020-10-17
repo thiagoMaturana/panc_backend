@@ -30,7 +30,8 @@ class Receita extends Model
 
     public function plantas()
 	{
-		return $this->belongsToMany(Planta::class, 'plantas_receitas', 'receitas_id', 'plantas_id');
+        return $this->belongsToMany(Planta::class, 'plantas_receitas', 'receitas_id', 'plantas_id')
+            ->withPivot(['quantidade']);
     }
     
     public function ingredientes()
@@ -38,4 +39,7 @@ class Receita extends Model
 		return $this->belongsToMany(Ingrediente::class, 'receitas_ingredientes', 'receitas_id', 'ingredientes_id');
 	}
     
+    /*public function quantidade(){
+        return $this->belongsToMany(Planta::class)->withPivot('quantidade');;
+    }*/
 }

@@ -91,6 +91,31 @@
             <button type="button" class="btn btn-outline-success add" id="add">Adicionar ingrediente</button>
         </div>
 
+        <label class="small mb-1">Plantas</label>
+        <table>
+            <div id="tablePlantas">
+                @foreach($receita->plantas as $planta)
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" value="{{ $planta->pivot->quantidade }}" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" value="{{ $planta->nome }}"/>
+                        <div id="plantaList">
+                        </div>
+                        {{ csrf_field() }}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                    </div>
+                </div>
+                @endforeach
+        </table>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-outline-success addPlanta" id="addPlanta">Adicionar planta</button>
+        </div>
+
         <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
             <textarea class="form-control" name="modoPreparo" placeholder="Modo de preparo" required rows="3">{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
@@ -122,6 +147,52 @@
     $(document).on('click', '.remove-tr', function() {
 
         $(this).parents('div.form-row').remove();
+
+    });
+
+    $("#addPlanta").click(function() {
+        ++a;
+
+        $("#tablePlantas").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidadePlanta"></div><div class="form-group col-md-6"><input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" /><div id="plantaList"></div>{{ csrf_field() }}</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button></div></div>');
+
+    });
+
+    $(document).on('click', '.remove-tr-planta', function() {
+
+        $(this).parents('div.form-row').remove();
+
+    });
+
+    $(document).ready(function() {
+
+        $('.nomePlanta').keyup(function() {
+            var query = $(this).val();
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ route('receita.fetchPlanta') }}",
+                    method: "POST",
+                    data: {
+                        query: query,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#plantaList').fadeIn();
+                        let output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+                        for (planta of data) {
+                            output += '<li> <a href = "#">' + planta['nome'] + '</a></li>';
+                        }
+                        output += '</ul>';
+                        $('#plantaList').html(output);
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', 'li', function() {
+            $('#nomePlanta').val($(this).text());
+            $('#plantaList').fadeOut();
+        });
 
     });
 </script>
