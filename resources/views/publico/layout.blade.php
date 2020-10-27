@@ -45,16 +45,24 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="{{ asset('publico/img/profile-img.jpg') }}" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="index.html">Thiago Maturana</a></h1>
+        <img src="{{ asset('publico/img/logo.png') }}" alt="" class="img-fluid rounded-circle">
+        @guest
+        <h1 class="text-light"><a href="index.html"> Panc App </a></h1>
+        @else
+        <h1 class="text-light"><a href="index.html"> {{ Auth::user()->name }} </a></h1>
+        @endguest
+
+
       </div>
 
       <nav class="nav-menu">
         <ul>
           <li><a href="{{ route('publico.planta.listAll') }}"><i class="bx bx-donate-blood"></i> <span>Plantas</span></a></li>
           <li><a href="{{ route('publico.receita.listAll') }}"><i class="bx bx-dish"></i> <span>Receitas</span></a></li>
-          <li><a href="{{ route('publico.planta.addForm') }}"><i class="bx bx-add-to-queue"> </i> <span>Cadastrar planta</span></a></li>
+          @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
+          <li><a href="{{ route('publico.planta.addForm') }}"><i class="bx bx-add-to-queue"> </i> <span>Submeter planta</span></a></li>
           <li><a href="{{ route('publico.receita.addForm') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
+          @endif
           <li>
             @guest
             <a href="{{ route('login') }}"><i class='bx bx-log-in'></i>Login</a>

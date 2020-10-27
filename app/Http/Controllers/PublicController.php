@@ -9,6 +9,7 @@ use App\NomePopular;
 use App\Planta;
 use App\Receita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
@@ -108,6 +109,26 @@ class PublicController extends Controller
         return view('publico.receitas.receita-detail', [
             'receita' => $receita,
             'ingredientes' => $ingredientes
+        ]);
+    }
+
+    public function search(Request $request){
+        $nome = $request->search;
+
+        $plantas = DB::table('plantas')->where('nome', 'LIKE', '%'. $nome. '%')->get();
+
+        return view('publico.plantas.planta-list', [
+            'plantas' => $plantas
+        ]);
+    }
+
+    public function searchReceita(Request $request){
+        $nome = $request->search;
+
+        $receitas = DB::table('receitas')->where('nome', 'LIKE', '%'. $nome. '%')->get();
+
+        return view('publico.receitas.receita-list', [
+            'receitas' => $receitas
         ]);
     }
 }

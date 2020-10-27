@@ -61,7 +61,7 @@
                         <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" />
+                        <input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" />
                         <div id="plantaList">
                         </div>
                         {{ csrf_field() }}
@@ -115,14 +115,12 @@
     $("#addPlanta").click(function() {
         ++a;
 
-        $("#tablePlantas").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidadePlanta"></div><div class="form-group col-md-6"><input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" /><div id="plantaList"></div>{{ csrf_field() }}</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button></div></div>');
+        $("#tablePlantas").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidadePlanta"></div><div class="form-group col-md-6"><input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" /><div id="plantaList"></div>{{ csrf_field() }}</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button></div></div>');
 
     });
 
     $(document).on('click', '.remove-tr-planta', function() {
-
         $(this).parents('div.form-row').remove();
-
     });
 
     $(document).ready(function() {
@@ -152,7 +150,7 @@
         });
 
         $(document).on('click', 'li', function() {
-            $('#nomePlanta').val($(this).text());
+            $('.nomePlanta').val($(this).text());
             $('#plantaList').fadeOut();
         });
 

@@ -46,13 +46,16 @@ class ReceitaController extends Controller
             $receita->modoPreparo = $request->modoPreparo;
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
-
-            $planta = Planta::where('nome', $request->nomePlanta)->first();
-            
             $receita->usuarios_id = Auth::user()->id;
             $receita->save();
             
-            $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
+            $nomesPlantas = $request->nomePlanta;
+            $plantas = [];
+
+            foreach ($nomesPlantas as $nomePlanta){
+                $planta = Planta::where('nome', $nomePlanta)->first();
+                $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
+            }
 
             foreach ($request->ingredientes as $key => $ingredienteRequest) {
                 $ingrediente = new Ingrediente();

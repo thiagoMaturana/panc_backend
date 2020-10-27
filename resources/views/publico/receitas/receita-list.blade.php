@@ -6,6 +6,17 @@
 <section id="portfolio" class="portfolio section-bg">
   <div class="container">
 
+    <form class="text-center" action="{{ route('receita.search') }}" method="GET">
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <input type="search" class="form-control" name="search" placeholder="Procure por nome">
+        </div>
+        <div class="form-group col-md-2">
+          <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>
+        </div>
+      </div>
+    </form>
+
     <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
 
       @foreach ($receitas as $receita)

@@ -60,4 +60,7 @@ Route::delete('/receitas/destroy/{receita}', 'PublicController@destroyReceita')-
 
 Route::post('/receitas/fetch', 'ReceitaController@fetchPlanta')->name('receita.fetchPlanta');
 
+Route::get('/search', 'PublicController@search')->name('planta.search');
+Route::get('/search', 'PublicController@searchReceita')->name('receita.search');
+
 Auth::routes();
