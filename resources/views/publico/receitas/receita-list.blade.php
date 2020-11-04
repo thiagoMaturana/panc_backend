@@ -20,7 +20,7 @@
     <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
 
       @foreach ($receitas as $receita)
-      <a href="{{ route('publico.receita.detail', ['receita' => $receita->id]) }}">
+      <a href="{{ route('publico.receita.show', ['receita' => $receita->id]) }}">
         <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
           <div class="portfolio-wrap">
             <div class="card" style="max-width: 50vw">
@@ -28,7 +28,9 @@
               <div class="card-body">
                 <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
                 <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
-                <form class="py-1 text-center" action="{{ route('publico.receita.editForm', ['receita' => $receita->id]) }}" method="GET">
+
+                @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
+                <form class="py-1 text-center" action="{{ route('publico.receita.edit', ['receita' => $receita->id]) }}" method="GET">
                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                 </form>
                 <form class="py-1 text-center" action="{{ route('publico.receita.destroy', ['receita' => $receita->id]) }}" method="POST">
@@ -37,6 +39,7 @@
                   <input type="hidden" name="user" value="">
                   <input type="submit" class="btn btn-outline-danger" value="Remover">
                 </form>
+                @endif
               </div>
             </div>
           </div>

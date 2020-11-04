@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function listAllUsers()
+    public function index()
     {
         $userAuth = Auth::user();
 
@@ -21,7 +21,7 @@ class UserController extends Controller
                 'users' => $users
             ]);
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
     }
 
     public function create()
@@ -31,7 +31,7 @@ class UserController extends Controller
         if ($userAuth && $userAuth->isAdministrador()) {
             return view('admin.forms.user_add');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser administrador para ver os usuarios']);
     }
 
     public function store(UserRequest $request)
@@ -47,12 +47,12 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect()->route('user.listAll');
+            return redirect()->route('user.index');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para cadastrar usuario']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser administrador para cadastrar usuario']);
     }
 
-    public function editForm(user $user)
+    public function edit(user $user)
     {
         $userAuth = Auth::user();
 
@@ -61,10 +61,10 @@ class UserController extends Controller
                 'user' => $user
             ]);
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para editar usuarios']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser administrador para editar usuarios']);
     }
 
-    public function edit(User $user, UserRequest $request)
+    public function update(User $user, UserRequest $request)
     {
         $userAuth = Auth::user();
 
@@ -76,9 +76,9 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect()->route('user.listAll');
+            return redirect()->route('user.index');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para editar usuarios']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser administrador para editar usuarios']);
     }
 
     public function destroy(User $user)
@@ -88,8 +88,8 @@ class UserController extends Controller
         if ($userAuth && $userAuth->isAdministrador()) {
             $user->delete();
 
-            return redirect()->route('user.listAll');
+            return redirect()->route('user.index');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser administrador para deletar usuarios']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser administrador para deletar usuarios']);
     }
 }

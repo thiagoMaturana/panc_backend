@@ -23,7 +23,7 @@
                     @foreach($users as $user)
                     <tr>
                         <th scope="row"> {{$user->id}} </th>
-                        <td> {{$user->nome}} </td>
+                        <td> {{$user->name}} </td>
                         <td> {{$user->email}} </td>
                         <td>
                             @if($user->role == '1') Autenticado @endif
@@ -32,7 +32,7 @@
                         </td>
                         <td> ************** </td>
                         <td class="text-center">
-                                <form class="py-1" action="{{ route('user.editForm', ['user' => $user->id]) }}" method="GET">
+                                <form class="py-1" action="{{ route('user.edit', ['user' => $user->id]) }}" method="GET">
                                     <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
 

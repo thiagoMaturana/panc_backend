@@ -39,7 +39,7 @@
 
 
                             <td class="text-center">
-                                <form class="py-1" action="{{ route('planta.editForm', ['planta' => $planta->id]) }}" method="GET">
+                                <form class="py-1" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                                     <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
 

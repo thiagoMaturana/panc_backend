@@ -47,9 +47,9 @@
       <div class="profile">
         <img src="{{ asset('publico/img/logo.png') }}" alt="" class="img-fluid rounded-circle">
         @guest
-        <h1 class="text-light"><a href="index.html"> Panc App </a></h1>
+        <h1 class="text-light">Panc App </h1>
         @else
-        <h1 class="text-light"><a href="index.html"> {{ Auth::user()->name }} </a></h1>
+        <h1 class="text-light text-center">{{ Auth::user()->name }} </h1>
         @endguest
 
 
@@ -57,11 +57,14 @@
 
       <nav class="nav-menu">
         <ul>
-          <li><a href="{{ route('publico.planta.listAll') }}"><i class="bx bx-donate-blood"></i> <span>Plantas</span></a></li>
-          <li><a href="{{ route('publico.receita.listAll') }}"><i class="bx bx-dish"></i> <span>Receitas</span></a></li>
+          <li><a href="{{ route('publico.planta.index') }}"><i class="bx bx-donate-blood"></i> <span>Plantas</span></a></li>
+          <li><a href="{{ route('publico.receita.index') }}"><i class="bx bx-dish"></i> <span>Receitas</span></a></li>
           @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
-          <li><a href="{{ route('publico.planta.addForm') }}"><i class="bx bx-add-to-queue"> </i> <span>Submeter planta</span></a></li>
-          <li><a href="{{ route('publico.receita.addForm') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
+          <li><a href="{{ route('publico.planta.create') }}"><i class="bx bx-add-to-queue"> </i> <span>Submeter planta</span></a></li>
+          <li><a href="{{ route('publico.receita.create') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
+          @endif
+          @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
+          <li><a href="{{ route('planta.index') }}"><i class="bx bx-lock"> </i> Painel Administrativo</a></li>
           @endif
           <li>
             @guest

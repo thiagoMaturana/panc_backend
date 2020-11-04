@@ -11,17 +11,17 @@ use Illuminate\Support\Facades\DB;
 
 class PlantaController extends Controller
 {
-    public function listAllPlantas()
+    public function index()//index
     {
         $user = Auth::user();
-        $plantas = Planta::all();
+        $plantas = Planta::all();   
 
         if ($user && ($user->isAdministrador() || $user->isComite())) {
             return view('admin.tables.plantas', [
                 'plantas' => $plantas
             ]);
         }
-        return redirect()->route('publico.planta.listAll');
+        return redirect()->route('publico.planta.index');
     }
 
     public function create()
@@ -32,7 +32,7 @@ class PlantaController extends Controller
             return view('admin.forms.planta_add');
         }
 
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
     }
 
     public function store(PlantaRequest  $request)
@@ -56,7 +56,7 @@ class PlantaController extends Controller
             $planta->cultivo = $request->cultivo;
             $planta->fotos = $request->fotos;
 
-            $planta->usuarios_id = 1;
+            $planta->usuarios_id = Auth::user()->id;
 
             $planta->save();
 
@@ -68,14 +68,13 @@ class PlantaController extends Controller
                 $nomePopular->save();
             }
 
-            return redirect()->route('planta.listAll');
+            return redirect()->route('planta.index');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Você precisa ser do comite ou um administrador para cadastrar plantas']);
+        return redirect()->route('planta.index')->withErrors(['Você precisa ser do comite ou um administrador para cadastrar plantas']);
     }
 
-    public function editForm(Planta $planta)
+    public function edit(Planta $planta)
     {
-
         $user = Auth::user();
 
         if ($user && ($user->isAdministrador() || $user->isComite())) {
@@ -86,10 +85,10 @@ class PlantaController extends Controller
                 'nomesPopulares' => $nomesPopulares
             ]);
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para editar plantas']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para editar plantas']);
     }
 
-    public function edit(Planta $planta, PlantaRequest $request)
+    public function update(Planta $planta, PlantaRequest $request)
     {
         $user = Auth::user();
 
@@ -120,9 +119,9 @@ class PlantaController extends Controller
                 $nomePopular->save();
             }
 
-            return redirect()->route('planta.listAll');
+            return redirect()->route('planta.index');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
     }
 
     public function destroy(Planta $planta)
@@ -132,8 +131,8 @@ class PlantaController extends Controller
         if ($user && ($user->isAdministrador() || $user->isComite())) {
             $planta->delete();
 
-            return redirect()->route('planta.listAll');
+            return redirect()->route('planta.index');
         }
-        return redirect()->route('planta.listAll')->withErrors(['Voce precisa ser do comite ou um administrador para deletar plantas']);
+        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para deletar plantas']);
     }
 }

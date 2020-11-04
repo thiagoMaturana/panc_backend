@@ -59,7 +59,7 @@
                         </a>
                         <div class="collapse" id="collapsePlantas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('planta.listAll') }} ">Listar</a>
+                                <a class="nav-link" href=" {{ route('planta.index') }} ">Listar</a>
                                 @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
                                 <a class="nav-link" href="{{ route('planta.create') }} ">Cadastrar</a>
                                 @endif
@@ -74,7 +74,7 @@
                         </a>
                         <div class="collapse" id="collapseReceitas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('receita.listAll') }} ">Listar</a>
+                                <a class="nav-link" href=" {{ route('receita.index') }} ">Listar</a>
                                 @if(Auth::user() && (Auth::check()))
                                 <a class="nav-link" href=" {{ route('receita.create') }} ">Cadastrar</a>
                                 @endif
@@ -90,7 +90,7 @@
                         </a>
                         <div class="collapse" id="collapseUsuarios" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('user.listAll') }} ">Listar</a>
+                                <a class="nav-link" href=" {{ route('user.index') }} ">Listar</a>
                                 <a class="nav-link" href=" {{ route('user.create') }} ">Cadastrar</a>
                             </nav>
                         </div>

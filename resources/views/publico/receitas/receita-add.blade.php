@@ -61,15 +61,14 @@
                         <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" />
-                        <div id="plantaList">
-                        </div>
-                        {{ csrf_field() }}
+                        <input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" list="plantaList" />
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
                     </div>
                 </div>
+                <datalist id="plantaList"></datalist>
+            </div>
         </table>
 
         <div class="form-group">
@@ -114,8 +113,20 @@
 
     $("#addPlanta").click(function() {
         ++a;
-
-        $("#tablePlantas").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidadePlanta"></div><div class="form-group col-md-6"><input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" /><div id="plantaList"></div>{{ csrf_field() }}</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button></div></div>');
+        let divInputPlanta =
+            `<div class="form-row">
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" list="plantaList" />
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                </div>
+            </div>
+            <datalist id="plantaList"></datalist>`;
+        $("#tablePlantas").append(divInputPlanta);
 
     });
 
@@ -126,32 +137,40 @@
     $(document).ready(function() {
 
         $('.nomePlanta').keyup(function() {
+            var minlength = 3;
+
             var query = $(this).val();
-            if (query != '') {
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url: "{{ route('receita.fetchPlanta') }}",
-                    method: "POST",
-                    data: {
-                        query: query,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        $('#plantaList').fadeIn();
-                        let output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-                        for (planta of data) {
-                            output += '<li> <a href = "#">' + planta['nome'] + '</a></li>';
+            if (query.length >= minlength) {
+                if (query != '') {
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{ route('receita.fetchPlanta') }}",
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: _token
+                        },
+                        success: function(data) {
+
+                            for (planta of data) {
+                                //cria option para o datalist
+                                let option = document.createElement("OPTION");
+                                option.value = planta['nome'];
+                                //cria seletor para verificar se aquela opção já existe
+                                let seletorOption = `#plantaList option[value='${planta['nome']}']`;
+                                //se não existe aquela opção adiciona
+                                if ($(seletorOption).length == 0) {
+                                    $('#plantaList').append(option);
+                                }
+                            }
                         }
-                        output += '</ul>';
-                        $('#plantaList').html(output);
-                    }
-                });
+                    });
+                }
             }
         });
 
         $(document).on('click', 'li', function() {
             $('.nomePlanta').val($(this).text());
-            $('#plantaList').fadeOut();
         });
 
     });

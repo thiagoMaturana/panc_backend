@@ -21,7 +21,7 @@
 
       @foreach ($plantas as $planta)
 
-      <a href="{{ route('publico.planta.detail', ['planta' => $planta->id]) }}">
+      <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
         <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
           <div class="portfolio-wrap">
             <div class="card" style="max-width: 80vw">
@@ -31,7 +31,9 @@
                 <p class="card-title text-center" style="color:gray">
                   <i>{{ $planta->nomeCientifico }}</i> </p>
                 <p style="color:black" class="card-text text-justify">{{ $planta->caracteristicas }}</p>
-                <form class="py-1 text-center" action="{{ route('publico.planta.editForm', ['planta' => $planta->id]) }}" method="GET">
+
+                @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
+                <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                 </form>
                 <form class="py-1 text-center" action="{{ route('publico.planta.destroy', ['planta' => $planta->id]) }}" method="POST">
@@ -40,6 +42,7 @@
                   <input type="hidden" name="user" value="">
                   <input type="submit" class="btn btn-outline-danger" value="Remover">
                 </form>
+                @endif
               </div>
             </div>
           </div>

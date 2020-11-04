@@ -19,48 +19,48 @@ Route::group([
     'middleware' => ['auth'],
     'prefix' => 'admin',
 ], function(){
-    Route::get('/plantas', 'PlantaController@listAllPlantas')->name('planta.listAll');
-    Route::get('/planta/add', 'PlantaController@create')->name('planta.create');
-    Route::get('/planta/editar/{planta}', 'PlantaController@editForm')->name('planta.editForm');
-    Route::post('/planta/store', 'PlantaController@store')->name('planta.store');
-    Route::put('/planta/edit/{planta}', 'PlantaController@edit')->name('planta.edit');
-    Route::delete('/planta/destroy/{planta}', 'PlantaController@destroy')->name('planta.destroy');
+    Route::get('/plantas', 'PlantaController@index')->name('planta.index');
+    Route::get('/planta/create', 'PlantaController@create')->name('planta.create');
+    Route::post('/planta', 'PlantaController@store')->name('planta.store');
+    Route::get('/planta/{planta}/edit', 'PlantaController@edit')->name('planta.edit');
+    Route::put('/planta/{planta}', 'PlantaController@update')->name('planta.update');
+    Route::delete('/planta/{planta}', 'PlantaController@destroy')->name('planta.destroy');
     
-    Route::get('/receitas', 'ReceitaController@listAllReceitas')->name('receita.listAll');
-    Route::get('/receita/add', 'ReceitaController@create')->name('receita.create');
-    Route::get('/users', 'UserController@listAllUsers')->name('user.listAll');
-    Route::get('/receita/editar/{receita}', 'ReceitaController@editForm')->name('receita.editForm');
-    Route::post('/receita/store', 'ReceitaController@store')->name('receita.store');
-    Route::put('/receita/edit/{receita}', 'ReceitaController@edit')->name('receita.edit');
-    Route::delete('/receita/destroy/{receita}', 'ReceitaController@destroy')->name('receita.destroy');
+    Route::get('/receitas', 'ReceitaController@index')->name('receita.index');
+    Route::get('/receita/create', 'ReceitaController@create')->name('receita.create');
+    Route::post('/receita', 'ReceitaController@store')->name('receita.store');
+    Route::get('/receita/{receita}/edit', 'ReceitaController@edit')->name('receita.edit');
+    Route::put('/receita/{receita}', 'ReceitaController@update')->name('receita.update');
+    Route::delete('/receita/{receita}', 'ReceitaController@destroy')->name('receita.destroy');
     
-    Route::get('/user/add', 'UserController@create')->name('user.create');
-    Route::get('/user/editar/{user}', 'UserController@editForm')->name('user.editForm');
+    Route::get('/users', 'UserController@index')->name('user.index');
+    Route::get('/user/create', 'UserController@create')->name('user.create');
     Route::post('/user/store', 'UserController@store')->name('user.store');    
-    Route::put('/user/edit/{user}', 'UserController@edit')->name('user.edit');    
-    Route::delete('/user/destroy/{user}', 'UserController@destroy')->name('user.destroy');
+    Route::get('/user/{user}/edit', 'UserController@edit')->name('user.edit');
+    Route::put('/user/{user}', 'UserController@update')->name('user.update');    
+    Route::delete('/user/{user}', 'UserController@destroy')->name('user.destroy');
 });
 
-Route::get('/', 'PublicController@listAllPlantas')->name('publico.planta.listAll');
-Route::get('/plantas/add', 'PublicController@addForm')->name('publico.planta.addForm');
-Route::get('/plantas/{planta}}', 'PublicController@detail')->name('publico.planta.detail');
-Route::get('/plantas/editar/{planta}', 'PublicController@editForm')->name('publico.planta.editForm');
-Route::post('/plantas/store', 'PublicController@store')->name('publico.planta.store');
-Route::put('/plantas/edit/{planta}', 'PublicController@edit')->name('publico.planta.edit');
-Route::delete('/plantas/destroy/{planta}', 'PublicController@destroy')->name('publico.planta.destroy');
+Route::get('/', 'PublicController@indexPlanta')->name('publico.planta.index');
+Route::get('/plantas/create', 'PublicController@createPlanta')->name('publico.planta.create');
+Route::post('/plantas', 'PublicController@storePlanta')->name('publico.planta.store');
+Route::get('/plantas/{planta}', 'PublicController@showPlanta')->name('publico.planta.show');//show
+Route::get('/plantas/{planta}/edit', 'PublicController@editPlanta')->name('publico.planta.edit');
+Route::put('/plantas/{planta}', 'PublicController@updatePlanta')->name('publico.planta.update');
+Route::delete('/plantas/{planta}', 'PublicController@destroyPlanta')->name('publico.planta.destroy');
 
 
-Route::get('/receitas', 'PublicController@listAllReceitas')->name('publico.receita.listAll');
-Route::get('/receitas/add', 'PublicController@addFormReceita')->name('publico.receita.addForm');
-Route::get('/receitas/{receita}', 'PublicController@detailReceita')->name('publico.receita.detail');
-Route::get('/receitas/editar/{receita}', 'PublicController@editFormReceita')->name('publico.receita.editForm');
-Route::post('/receitas/store', 'PublicController@storeReceita')->name('publico.receita.store');
-Route::put('/receitas/edit/{receita}', 'PublicController@editReceita')->name('publico.receita.edit');
-Route::delete('/receitas/destroy/{receita}', 'PublicController@destroyReceita')->name('publico.receita.destroy');
+Route::get('/receitas', 'PublicController@indexReceita')->name('publico.receita.index');
+Route::get('/receitas/create', 'PublicController@createReceita')->name('publico.receita.create');
+Route::post('/receitas', 'PublicController@storeReceita')->name('publico.receita.store');
+Route::get('/receitas/{receita}', 'PublicController@showReceita')->name('publico.receita.show');
+Route::get('/receitas/{receita}/edit', 'PublicController@editReceita')->name('publico.receita.edit');
+Route::put('/receitas/{receita}', 'PublicController@updateReceita')->name('publico.receita.update');
+Route::delete('/receitas/{receita}', 'PublicController@destroyReceita')->name('publico.receita.destroy');
 
 Route::post('/receitas/fetch', 'ReceitaController@fetchPlanta')->name('receita.fetchPlanta');
 
-Route::get('/search', 'PublicController@search')->name('planta.search');
-Route::get('/search', 'PublicController@searchReceita')->name('receita.search');
+Route::get('/searchPlanta', 'PublicController@searchPlanta')->name('planta.search');
+Route::get('/searchReceita', 'PublicController@searchReceita')->name('receita.search');
 
 Auth::routes();

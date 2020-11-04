@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container p-5">
-    <form action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="POST">
+    <form action="{{ route('planta.update', ['planta' => $planta->id]) }}" method="POST">
         @csrf
         @method('PUT')
 

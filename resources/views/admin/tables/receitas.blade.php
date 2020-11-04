@@ -35,7 +35,7 @@
                             <td> {{$receita->tipo}} </td>
                             <td> {{$receita->usuarios_id}} </td>
                             <td class="text-center">
-                                <form class="py-1" action="{{ route('receita.editForm', ['receita' => $receita->id]) }}" method="GET">
+                                <form class="py-1" action="{{ route('receita.edit', ['receita' => $receita->id]) }}" method="GET">
                                     <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
 

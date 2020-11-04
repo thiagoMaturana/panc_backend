@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container p-5">
-    <form action="{{ route('publico.receita.edit', ['receita' => $receita->id]) }}" method="POST">
+    <form action="{{ route('publico.receita.update', ['receita' => $receita->id]) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -93,23 +93,22 @@
 
         <label class="small mb-1">Plantas</label>
         <table>
+            @foreach($receita->plantas as $planta)
             <div id="tablePlantas">
-                @foreach($receita->plantas as $planta)
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" value="{{ $planta->pivot->quantidade }}" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" value="{{ $planta->nome }}"/>
-                        <div id="plantaList">
-                        </div>
-                        {{ csrf_field() }}
+                        <input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" list="plantaList" value="{{ $planta->nome }}"/>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
                     </div>
+                    <datalist id="plantaList"></datalist>
                 </div>
-                @endforeach
+            </div>
+            @endforeach
         </table>
 
         <div class="form-group">
@@ -135,12 +134,13 @@
 
 <script type="text/javascript">
     var i = 0;
+    var a = 0;
 
     $("#add").click(function() {
 
         ++i;
 
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidade[' + i + ']" required></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[' + i + ']" required></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidade[' + i + ']"></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" name="ingredientes[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
     });
 
@@ -152,46 +152,64 @@
 
     $("#addPlanta").click(function() {
         ++a;
-
-        $("#tablePlantas").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" placeholder="Quantidade" name="quantidadePlanta"></div><div class="form-group col-md-6"><input type="text" name="nomePlanta" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" /><div id="plantaList"></div>{{ csrf_field() }}</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button></div></div>');
+        let divInputPlanta =
+            `<div class="form-row">
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" name="quantidadePlanta" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" list="plantaList" />
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                </div>
+            </div>
+            <datalist id="plantaList"></datalist>`;
+        $("#tablePlantas").append(divInputPlanta);
 
     });
 
     $(document).on('click', '.remove-tr-planta', function() {
-
         $(this).parents('div.form-row').remove();
-
     });
 
     $(document).ready(function() {
 
         $('.nomePlanta').keyup(function() {
+            var minlength = 3;
+
             var query = $(this).val();
-            if (query != '') {
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url: "{{ route('receita.fetchPlanta') }}",
-                    method: "POST",
-                    data: {
-                        query: query,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        $('#plantaList').fadeIn();
-                        let output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-                        for (planta of data) {
-                            output += '<li> <a href = "#">' + planta['nome'] + '</a></li>';
+            if (query.length >= minlength) {
+                if (query != '') {
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{ route('receita.fetchPlanta') }}",
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: _token
+                        },
+                        success: function(data) {
+
+                            for (planta of data) {
+                                //cria option para o datalist
+                                let option = document.createElement("OPTION");
+                                option.value = planta['nome'];
+                                //cria seletor para verificar se aquela opção já existe
+                                let seletorOption = `#plantaList option[value='${planta['nome']}']`;
+                                //se não existe aquela opção adiciona
+                                if ($(seletorOption).length == 0) {
+                                    $('#plantaList').append(option);
+                                }
+                            }
                         }
-                        output += '</ul>';
-                        $('#plantaList').html(output);
-                    }
-                });
+                    });
+                }
             }
         });
 
         $(document).on('click', 'li', function() {
-            $('#nomePlanta').val($(this).text());
-            $('#plantaList').fadeOut();
+            $('.nomePlanta').val($(this).text());
         });
 
     });

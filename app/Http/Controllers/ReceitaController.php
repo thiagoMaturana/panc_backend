@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReceitaController extends Controller
 {
-    public function listAllReceitas()
+    public function index()
     {
         $user = Auth::user();
         $receitas = Receita::all();
@@ -22,7 +22,7 @@ class ReceitaController extends Controller
                 'receitas' => $receitas
             ]);
         }
-        return redirect()->route('publico.receita.listAll');
+        return redirect()->route('publico.receita.index');
     }
 
     public function create()
@@ -31,7 +31,7 @@ class ReceitaController extends Controller
         if ($user && ($user->isAdministrador() || $user->isComite())) {
             return view('admin.forms.receita_add');
         }
-        return redirect()->route('publico.receita.listAll');
+        return redirect()->route('publico.receita.index');
     }
 
     public function store(ReceitaRequest $request)
@@ -50,7 +50,6 @@ class ReceitaController extends Controller
             $receita->save();
             
             $nomesPlantas = $request->nomePlanta;
-            $plantas = [];
 
             foreach ($nomesPlantas as $nomePlanta){
                 $planta = Planta::where('nome', $nomePlanta)->first();
@@ -69,13 +68,13 @@ class ReceitaController extends Controller
             }
 
 
-            return redirect()->route('receita.listAll');
+            return redirect()->route('receita.index');
         }
 
-        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para cadastrar receitas']);
+        return redirect()->route('receita.index')->withErrors(['Voce precisa ser usuario autenticado para cadastrar receitas']);
     }
 
-    public function editForm(Receita $receita)
+    public function edit(Receita $receita)
     {
         $user = Auth::user();
 
@@ -87,10 +86,10 @@ class ReceitaController extends Controller
                 'ingredientes' => $ingredientes
             ]);
         }
-        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
+        return redirect()->route('receita.index')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
     }
 
-    public function edit(Receita $receita, ReceitaRequest $request)
+    public function update(Receita $receita, ReceitaRequest $request)
     {
         $user = Auth::user();
 
@@ -104,12 +103,15 @@ class ReceitaController extends Controller
             $receita->usuarios_id = Auth::user()->id;
 
             $receita->save();
-
-            $planta = Planta::where('nome', $request->nomePlanta)->first();
             
             $receita->plantas()->detach();
-            $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
 
+            $nomesPlantas = $request->nomePlanta;
+
+            foreach ($nomesPlantas as $nomePlanta){
+                $planta = Planta::where('nome', $nomePlanta)->first();
+                $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
+            }
 
             $receita->ingredientes()->delete();
 
@@ -122,9 +124,9 @@ class ReceitaController extends Controller
 
                 $ingrediente->receitas()->attach($receita->id);
             }
-            return redirect()->route('receita.listAll');
+            return redirect()->route('receita.index');
         }
-        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
+        return redirect()->route('receita.index')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
     }
 
     public function destroy(Receita $receita)
@@ -133,10 +135,10 @@ class ReceitaController extends Controller
 
         if ($user && Auth::check()) {
             $receita->delete();
-            return redirect()->route('receita.listAll');
+            return redirect()->route('receita.index');
         }
 
-        return redirect()->route('receita.listAll')->withErrors(['Voce precisa ser usuario autenticado para deletar receitas']);
+        return redirect()->route('receita.index')->withErrors(['Voce precisa ser usuario autenticado para deletar receitas']);
     }
 
     function fetchPlanta(Request $request)

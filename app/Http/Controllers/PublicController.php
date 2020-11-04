@@ -9,11 +9,12 @@ use App\NomePopular;
 use App\Planta;
 use App\Receita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
 {
-    public function listAllPlantas()
+    public function indexPlanta()
     {
         $plantas = Planta::all();
 
@@ -22,41 +23,66 @@ class PublicController extends Controller
         ]);
     }
 
-    public function addForm()
+    public function createPlanta()
     {
         return view('publico.plantas.planta-add');
     }
 
-    public function store(PlantaRequest $request)
+    public function storePlanta(PlantaRequest $request)
     {
         app(PlantaController::class)->store($request);
-        return redirect()->route('publico.planta.listAll');
+        return redirect()->route('publico.planta.index');
     }
 
-    public function editForm(Planta $planta)
+    public function editPlanta(Planta $planta)
     {
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
 
-        return view('publico.plantas.planta-edit', [
+        if (Auth::user()) {
+            return view('publico.plantas.planta-edit', [
+                'planta' => $planta,
+                'nomesPopulares' => $nomesPopulares
+            ]);
+        }
+        return redirect()->route('publico.planta.index');
+    }
+
+    public function updatePlanta(Planta $planta, PlantaRequest $request)
+    {
+        app(PlantaController::class)->update($planta, $request);
+        return redirect()->route('publico.planta.index');
+    }
+
+    public function destroyPlanta(Planta $planta)
+    {
+        app(PlantaController::class)->destroy($planta);
+        return redirect()->route('publico.planta.index');
+    }
+
+    public function showPlanta(Planta $planta)
+    {
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+        return view('publico.plantas.planta-detail', [
             'planta' => $planta,
             'nomesPopulares' => $nomesPopulares
         ]);
     }
 
-    public function edit(Planta $planta, PlantaRequest $request){
-        app(PlantaController::class)->edit($planta, $request);
-        return redirect()->route('publico.planta.listAll');
-    }
+    public function searchPlanta(Request $request)
+    {
+        $nome = $request->search;
 
-    public function destroy(Planta $planta){
-        app(PlantaController::class)->destroy($planta);
-        return redirect()->route('publico.planta.listAll');
+        $plantas = DB::table('plantas')->where('nome', 'LIKE', '%' . $nome . '%')->get();
+
+        return view('publico.plantas.planta-list', [
+            'plantas' => $plantas
+        ]);
     }
 
     /*+++++++++++++++++++++++++++++++++++RECEITAS METÓDOS++++++++++++++++++++++++++++++++++++++++*/
 
 
-    public function listAllReceitas()
+    public function indexReceita()
     {
         $receitas = Receita::all();
 
@@ -65,7 +91,7 @@ class PublicController extends Controller
         ]);
     }
 
-    public function addFormReceita()
+    public function createReceita()
     {
         return view('publico.receitas.receita-add');
     }
@@ -73,38 +99,38 @@ class PublicController extends Controller
     public function storeReceita(ReceitaRequest $request)
     {
         app(ReceitaController::class)->store($request);
-        return redirect()->route('publico.receita.listAll');
+        return redirect()->route('publico.receita.index');
     }
 
-    public function editFormReceita(Receita $receita)
+    public function editReceita(Receita $receita)
     {
         $ingredientes = $receita->ingredientes;
 
-        return view('publico.receitas.receita-edit', [
-            'receita' => $receita,
-            'ingredientes' => $ingredientes
-        ]);
+        if (Auth::user()) {
+            return view('publico.receitas.receita-edit', [
+                'receita' => $receita,
+                'ingredientes' => $ingredientes
+            ]);
+        }
+
+        return redirect()->route('publico.receita.index');
     }
 
-    public function editReceita(Receita $receita, ReceitaRequest $request){
-        app(ReceitaController::class)->edit($receita, $request);
-        return redirect()->route('publico.receita.listAll');
+    public function updateReceita(Receita $receita, ReceitaRequest $request)
+    {
+        app(ReceitaController::class)->update($receita, $request);
+        return redirect()->route('publico.receita.index');
     }
 
-    public function destroyReceita(Receita $receita){
+    public function destroyReceita(Receita $receita)
+    {
         app(ReceitaController::class)->destroy($receita);
-        return redirect()->route('publico.receita.listAll');
+        return redirect()->route('publico.receita.index');
     }
 
-    public function detail(Planta $planta){
-        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
-        return view('publico.plantas.planta-detail', [
-            'planta' => $planta,
-            'nomesPopulares' => $nomesPopulares
-        ]);
-    }
 
-    public function detailReceita(Receita $receita){
+    public function showReceita(Receita $receita)
+    {
         $ingredientes = $receita->ingredientes;
         return view('publico.receitas.receita-detail', [
             'receita' => $receita,
@@ -112,20 +138,12 @@ class PublicController extends Controller
         ]);
     }
 
-    public function search(Request $request){
+
+    public function searchReceita(Request $request)
+    {
         $nome = $request->search;
 
-        $plantas = DB::table('plantas')->where('nome', 'LIKE', '%'. $nome. '%')->get();
-
-        return view('publico.plantas.planta-list', [
-            'plantas' => $plantas
-        ]);
-    }
-
-    public function searchReceita(Request $request){
-        $nome = $request->search;
-
-        $receitas = DB::table('receitas')->where('nome', 'LIKE', '%'. $nome. '%')->get();
+        $receitas = DB::table('receitas')->where('nome', 'LIKE', '%' . $nome . '%')->get();
 
         return view('publico.receitas.receita-list', [
             'receitas' => $receitas
