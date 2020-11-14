@@ -17,7 +17,7 @@ class CreateNomesPopularesTable extends Migration {
 		{
 			$table->id();
 			$table->foreignId('plantas_id');
-			$table->string('nome', 45);
+			$table->string('nome', 60);
 
 			$table->foreign('plantas_id')->references('id')->on('plantas')->onUpdate('cascade')->onDelete('cascade');
 		});

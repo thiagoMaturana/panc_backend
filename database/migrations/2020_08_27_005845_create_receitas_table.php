@@ -21,9 +21,9 @@ class CreateReceitasTable extends Migration {
 			$table->foreignId('usuarios_id');
 			$table->string('nome');
 			$table->string('tipo');
-			$table->string('modoPreparo');
-			$table->string('observacao')->nullable();
-			$table->string('fotos');
+			$table->text('modoPreparo');
+			$table->text('observacao')->nullable();
+			$table->text('fotos');
 
 			$table->foreign('usuarios_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 		});

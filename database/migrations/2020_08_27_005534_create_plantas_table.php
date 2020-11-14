@@ -17,8 +17,8 @@ class CreatePlantasTable extends Migration {
 		{
 			$table->id();
 			$table->foreignId('usuarios_id');
-			$table->string('nome', 45)->comment('Nome da planta');
-			$table->string('nomeCientifico', 50)->comment('Nome científico da planta');
+			$table->string('nome', 60)->comment('Nome da planta');
+			$table->string('nomeCientifico', 100)->comment('Nome científico da planta');
 			$table->text('caracteristicas')->nullable()->comment('Caracteristicas da planta');
 			$table->text('tamanho')->comment('Tamanho da planta');
 			$table->text('fruto')->nullable()->comment('Fruto da planta');
@@ -30,7 +30,7 @@ class CreatePlantasTable extends Migration {
 			$table->text('propriedadesCulinarias')->comment('Propriedades culinarias da planta');
 			$table->text('avisos')->nullable()->comment('Avisos sobre a planta');
 			$table->text('cultivo')->nullable()->comment('Cultivo da planta');
-			$table->string('fotos', 200);
+			$table->text('fotos');
 
 			$table->foreign('usuarios_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 		});

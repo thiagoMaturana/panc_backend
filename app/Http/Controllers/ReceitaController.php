@@ -107,10 +107,11 @@ class ReceitaController extends Controller
             $receita->plantas()->detach();
 
             $nomesPlantas = $request->nomePlanta;
+            $quantidadesPlantas = $request->quantidadePlanta;
 
-            foreach ($nomesPlantas as $nomePlanta){
-                $planta = Planta::where('nome', $nomePlanta)->first();
-                $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
+            for ($indice = 0; $indice < count($nomesPlantas); $indice++){
+                $planta = Planta::where('nome', $nomesPlantas[$indice])->first();
+                $receita->plantas()->attach($planta, ['quantidade' => $quantidadesPlantas[$indice]]);
             }
 
             $receita->ingredientes()->delete();

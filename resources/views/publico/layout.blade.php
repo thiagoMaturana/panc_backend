@@ -50,6 +50,12 @@
         <h1 class="text-light">Panc App </h1>
         @else
         <h1 class="text-light text-center">{{ Auth::user()->name }} </h1>
+        @if(Auth::user() && Auth::user()->isAdministrador())
+        <p class="text-light text-center">Administrador</p>
+        @endif
+        @if(Auth::user() && Auth::user()->isComite())
+        <p class="text-light text-center">Comitê de admissão</p>
+        @endif
         @endguest
 
 

@@ -5,23 +5,15 @@
     <form action="{{ route('planta.store') }}" method="POST">
         @csrf
 
-        @if(isset($errors) && count($errors)>0)
-        <div class="text-center alert-danger">
-            @foreach($errors->all() as $erro)
-            {{ $erro }} <br>
-            @endforeach
-        </div>
-        @endif
-
         <!-- Nomes -->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Nome</label>
-                <input type="text" class="form-control" placeholder="Nome" name="nome" required>
+                <input type="text" minlength="3" maxlength="60" class="form-control" placeholder="Nome" name="nome" required>
             </div>
             <div class="form-group col-md-6">
                 <label>Nome Científico</label>
-                <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico" required>
+                <input type="text" minlength="3" maxlength="100" class="form-control" placeholder="Nome Científico" name="nomeCientifico" required>
             </div>
         </div>
         
@@ -30,7 +22,7 @@
             <div id="dynamicTable">
                 <div class="form-row">
                     <div class="form-group col-md-10">
-                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[0]" required>
+                        <input type="text" minlength="3" maxlength="60" class="form-control" placeholder="Nome popular" name="nomesPopulares[0]" required>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -63,15 +55,15 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Familia</label>
-                <input type="text" class="form-control" placeholder="Familia da planta" name="familia" required>
+                <input type="text" minlength="3" maxlength="45" class="form-control" placeholder="Familia da planta" name="familia" required>
             </div>
             <div class="form-group col-md-4">
                 <label>Genero</label>
-                <input type="text" class="form-control" placeholder="Genero da planta" name="genero" required>
+                <input type="text" minlength="3" maxlength="45" class="form-control" placeholder="Genero da planta" name="genero" required>
             </div>
             <div class="form-group col-md-4">
                 <label>Especie</label>
-                <input type="text" class="form-control" placeholder="Especie da planta" name="especie" required>
+                <input type="text" minlength="3" maxlength="45" class="form-control" placeholder="Especie da planta" name="especie" required>
             </div>
         </div>
         <!-- Propriedades -->
@@ -112,7 +104,7 @@
 
         console.log('' + i + '');
 
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[' + i + ']" required></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" minlength="3" maxlength="60" class="form-control" placeholder="Nome popular" name="nomesPopulares[' + i + ']" required></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
     });
 

@@ -3,27 +3,34 @@
 @section('content')
 <div class="container p-5">
 
-    @if(isset($errors) && count($errors)>0)
-    <div class="text-center alert-danger">
-        @foreach($errors->all() as $erro)
-        {{ $erro }} <br>
-        @endforeach
-    </div>
-    @endif
-
     <form action="{{ route('user.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label class="small mb-1">Nome</label>
-            <input type="text" class="form-control" name="name" autofocus placeholder="Nome" required>
+            <input type="text" minlength="3" maxlength="100" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" name="name" autofocus placeholder="Nome" required>
+            @error('name')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="Email" required>
+            <input type="email" maxlength="255" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{old('email')}}" required>
+            @error('email')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Senha</label>
-            <input type="password" class="form-control" name="password" placeholder="Senha" required>
+            <input type="password" minlength="3" maxlength="50" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Senha" required>
+            @error('password')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <label>Papel</label>
         <div class="form-group">

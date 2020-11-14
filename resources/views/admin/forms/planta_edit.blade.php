@@ -6,23 +6,15 @@
         @csrf
         @method('PUT')
 
-        @if(isset($errors) && count($errors)>0)
-        <div class="text-center alert-danger">
-            @foreach($errors->all() as $erro)
-            {{ $erro }} <br>
-            @endforeach
-        </div>
-        @endif
-
         <!-- Nomes -->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Nome</label>
-                <input type="text" class="form-control" placeholder="Nome" name="nome" value="{{ $planta->nome }}" required>
+                <input type="text" minlength="3" maxlength="60" class="form-control" placeholder="Nome" name="nome" value="{{ $planta->nome }}" required>
             </div>
             <div class="form-group col-md-6">
                 <label>Nome Científico</label>
-                <input type="text" class="form-control" placeholder="Nome Científico" name="nomeCientifico" value="{{ $planta->nomeCientifico }}" required>
+                <input type="text" minlength="3" maxlength="100" class="form-control" placeholder="Nome Científico" name="nomeCientifico" value="{{ $planta->nomeCientifico }}" required>
             </div>
         </div>
 
@@ -32,7 +24,7 @@
                 @foreach($nomesPopulares as $nomePopular)
                 <div class="form-row">
                     <div class="form-group col-md-10">
-                        <input type="text" class="form-control" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}" required>
+                        <input type="text" minlength="3" maxlength="60" class="form-control" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}" required>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -66,15 +58,15 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Familia</label>
-                <input type="text" class="form-control" placeholder="Familia da planta" name="familia" value="{{ $planta->familia }}" required>
+                <input type="text" minlength="3" maxlength="45" class="form-control" placeholder="Familia da planta" name="familia" value="{{ $planta->familia }}" required>
             </div>
             <div class="form-group col-md-4">
                 <label>Genero</label>
-                <input type="text" class="form-control" placeholder="Genero da planta" name="genero" value="{{ $planta->genero }}" required>
+                <input type="text" minlength="3" maxlength="45" class="form-control" placeholder="Genero da planta" name="genero" value="{{ $planta->genero }}" required>
             </div>
             <div class="form-group col-md-4">
                 <label>Especie</label>
-                <input type="text" class="form-control" placeholder="Especie da planta" name="especie" value="{{ $planta->especie }}">
+                <input type="text" minlength="3" maxlength="45" class="form-control" placeholder="Especie da planta" name="especie" value="{{ $planta->especie }}">
             </div>
         </div>
         <!-- Propriedades -->

@@ -17,8 +17,8 @@ class CreateIngredientesTable extends Migration {
 		Schema::create('ingredientes', function(Blueprint $table)
 		{
 			$table->id();
-			$table->string('nome', 45);
-			$table->string('quantidade', 80);
+			$table->string('nome', 60);
+			$table->string('quantidade');
 		});
 	}
 

@@ -23,12 +23,44 @@ class ReceitaRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'nome' => 'required|min:3',
+            'tipo' => 'required',
+            'modoPreparo' => 'required',
+            'fotos' => 'required',
+            'quantidadePlanta.*' => 'required',
+            'quantidade.*' => 'required',
+            'ingredientes.*' => 'required|min:3|max:60',
+            'nomePlanta.*' => 'required|min:3|max:60'
+        ];
+
+        return $rules;
+    }
+
+    public function messages()
+    {
         return [
-            'nome' => 'required|max:255',
-            'tipo' => 'required|max:255',
-            'modoPreparo' => 'required|max:255',
-            'observacao' => 'max:255',
-            'fotos' => 'required|max:255'
+            'nome.required' => 'Nome é obrigatório',
+            'nome.min' => 'Nome precisa de ter no minímo 3 caracteres',
+
+            'tipo.required' => 'Tipo é obrigatório',
+
+            'modoPreparo.required' => 'Modo de Preparo é obrigatório',
+
+            'fotos.required' => 'Foto é obrigatória',
+
+            'quantidadePlanta.*.required' => 'Quantidade é obrigatória',
+
+            'quantidade.*.required' => 'Quantidade é obrigatória',
+
+            'ingredientes.*.required' => 'Ingrediente é obrigatório',
+            'ingredientes.*.min' => 'Ingrediente precisa de ter no minímo 3 caracteres',
+            'ingredientes.*.max' => 'Ingrediente precisa de ter no máximo 60 caracteres',
+
+            'nomePlanta.*.required' => 'Nome é obrigatório',
+            'nomePlanta.*.min' => 'Nome precisa de ter no minímo 3 caracteres',
+            'nomePlanta.*.max' => 'Nome precisa de ter no máximo 60 caracteres',
+
         ];
     }
 }

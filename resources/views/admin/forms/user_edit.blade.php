@@ -6,25 +6,35 @@
         @csrf
         @method('PUT')
 
-        @if(isset($errors) && count($errors)>0)
-        <div class="text-center alert-danger">
-            @foreach($errors->all() as $erro)
-            {{ $erro }} <br>
-            @endforeach
-        </div>
-        @endif
-
         <div class="form-group">
             <label class="small mb-1">Nome</label>
-            <input type="text" class="form-control" name="name" placeholder="Nome" value="{{ $user->name }}" required>
+            <input type="text" minlength="3" maxlength="100" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Nome" value="{{ $user->name }}" required>
+
+            @error('name')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="Email" value="{{ $user->email }}" required>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ $user->email }}" required>
+
+            @error('email')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Senha</label>
-            <input type="password" class="form-control" name="password" placeholder="Senha">
+            <input type="password" maxlength="50" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Senha">
+
+            @error('email')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <label>Papel</label>
         <div class="form-group" value="{{ $user->role }}">
