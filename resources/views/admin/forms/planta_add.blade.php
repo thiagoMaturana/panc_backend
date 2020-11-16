@@ -5,6 +5,7 @@
     <form action="{{ route('planta.store') }}" method="POST">
         @csrf
 
+
         <!-- Nomes -->
         <div class="form-row">
             <div class="form-group col-md-6">

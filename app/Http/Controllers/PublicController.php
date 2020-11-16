@@ -8,6 +8,7 @@ use App\Ingrediente;
 use App\NomePopular;
 use App\Planta;
 use App\Receita;
+use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,12 +26,16 @@ class PublicController extends Controller
 
     public function createPlanta()
     {
-        return view('publico.plantas.planta-add');
+        return view('publico.plantas.planta-add', ['erroEx' => '']);
     }
 
     public function storePlanta(PlantaRequest $request)
     {
-        app(PlantaController::class)->store($request);
+        try{
+            app(PlantaController::class)->store($request);
+        }catch (ErrorException $exception) {
+            return view('publico.plantas.planta-add', ['erroEx' => 'Campo nomes populares é obrigatório']);
+        }
         return redirect()->route('publico.planta.index');
     }
 
@@ -41,7 +46,8 @@ class PublicController extends Controller
         if (Auth::user()) {
             return view('publico.plantas.planta-edit', [
                 'planta' => $planta,
-                'nomesPopulares' => $nomesPopulares
+                'nomesPopulares' => $nomesPopulares,
+                'erroEx' => ''
             ]);
         }
         return redirect()->route('publico.planta.index');
@@ -49,7 +55,16 @@ class PublicController extends Controller
 
     public function updatePlanta(Planta $planta, PlantaRequest $request)
     {
-        app(PlantaController::class)->update($planta, $request);
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+        try{
+            app(PlantaController::class)->update($planta, $request);
+        } catch (ErrorException $exception){
+            return view('publico.plantas.planta-edit', [
+                'planta' => $planta,
+                'nomesPopulares' => $nomesPopulares,
+                'erroEx' => 'Campo nomes populares é obrigatório'
+            ]);
+        }
         return redirect()->route('publico.planta.index');
     }
 
@@ -93,12 +108,16 @@ class PublicController extends Controller
 
     public function createReceita()
     {
-        return view('publico.receitas.receita-add');
+        return view('publico.receitas.receita-add', ['erroEx' => '']);
     }
 
     public function storeReceita(ReceitaRequest $request)
     {
-        app(ReceitaController::class)->store($request);
+        try {
+            app(ReceitaController::class)->store($request);
+        } catch (ErrorException $exception) {
+            return view('publico.receitas.receita-add', ['erroEx' => 'Campos ingredientes e planta são obrigatórios']);
+        }
         return redirect()->route('publico.receita.index');
     }
 
@@ -109,7 +128,8 @@ class PublicController extends Controller
         if (Auth::user()) {
             return view('publico.receitas.receita-edit', [
                 'receita' => $receita,
-                'ingredientes' => $ingredientes
+                'ingredientes' => $ingredientes,
+                'erroEx' => ''
             ]);
         }
 
@@ -118,7 +138,15 @@ class PublicController extends Controller
 
     public function updateReceita(Receita $receita, ReceitaRequest $request)
     {
-        app(ReceitaController::class)->update($receita, $request);
+        $ingredientes = $receita->ingredientes;
+        try {
+            app(ReceitaController::class)->update($receita, $request);
+        } catch (ErrorException $exception) {
+            return view('publico.receitas.receita-edit', [
+                'receita' => $receita,
+                'ingredientes' => $ingredientes,
+                'erroEx' => 'Campos ingredientes e planta são obrigatórios']);
+        }
         return redirect()->route('publico.receita.index');
     }
 

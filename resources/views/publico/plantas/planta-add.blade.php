@@ -31,6 +31,12 @@
                 </div>
             </div>
 
+            @if ($erroEx)
+            <div class="alert alert-danger" role="alert">
+                {{ $erroEx }}
+            </div>
+            @endif
+
             <label>Nomes populares</label>
             <table>
                 <div id="dynamicTable">
@@ -164,7 +170,7 @@
 
         ++i;
 
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control @error("nomesPopulares.*") is-invalid @enderror" minlength="3" maxlength="60" placeholder="Nome popular" name="nomesPopulares['+ i +']" required></div>@error("nomesPopulares.*")<div class="invalid-feedback">{{ $message }}</div>@enderror<div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control @error("nomesPopulares.*") is-invalid @enderror" minlength="3" maxlength="60" placeholder="Nome popular" name="nomesPopulares[' + i + ']" required></div>@error("nomesPopulares.*")<div class="invalid-feedback">{{ $message }}</div>@enderror<div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
     });
 
