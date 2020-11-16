@@ -65,6 +65,12 @@
             </div>
         </div>
 
+        @if ($erroEx)
+        <div class="alert alert-danger" role="alert">
+            {{ $erroEx }}
+        </div>
+        @endif
+
         <label class="small mb-1">Ingredientes</label>
         <table>
             <div id="dynamicTable">
@@ -97,7 +103,7 @@
                         <input type="text" class="form-control @error('quantidadePlanta.*') is-invalid @enderror" id="quantidadePlanta" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidadePlanta[{{$loop->index}}]" value="{{ $planta->pivot->quantidade }}" required>
                         @error('quantidadePlanta.*')
                         <div class="invalid-feedback">
-                            {{ $message }} 
+                            {{ $message }}
                         </div>
                         @enderror
                     </div>
@@ -108,7 +114,7 @@
                             {{ $message }}
                         </div>
                         @enderror
-                        
+
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
@@ -240,7 +246,7 @@
         $(document).on('click', 'li', function() {
             $('.nomePlanta').val($(this).text());
         });
-x
+        x
     });
 </script>
 @endsection

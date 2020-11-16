@@ -28,13 +28,19 @@
             </div>
         </div>
 
+        @if ($erroEx)
+        <div class="alert alert-danger" role="alert">
+            {{ $erroEx }}
+        </div>
+        @endif
+
         <label>Nomes populares</label>
         <table>
             <div id="dynamicTable">
                 @foreach($nomesPopulares as $nomePopular)
                 <div class="form-row">
                     <div class="form-group col-md-10">
-                        <input type="text" minlength="3" maxlength="60" class="form-control @error.*('nomesPopulares.*') is-invalid @enderror" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}" required>
+                        <input type="text" minlength="3" maxlength="60" class="form-control @error('nomesPopulares.*') is-invalid @enderror" placeholder="Nome popular" name="nomesPopulares[{{ $loop->index }}]" value="{{ $nomePopular->nome }}" required>
                         @error('nomesPopulares.*')
                         <div class="invalid-feedback">
                             {{ $message }}

@@ -47,11 +47,14 @@ class ReceitaController extends Controller
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
             $receita->usuarios_id = Auth::user()->id;
-            $receita->save();
-            
+
+            if($request->nomePlanta && $request->ingredientes && $request->quantidade && $request->quantidadePlanta){
+                $receita->save();
+            }
+
             $nomesPlantas = $request->nomePlanta;
 
-            foreach ($nomesPlantas as $nomePlanta){
+            foreach ($nomesPlantas as $nomePlanta) {
                 $planta = Planta::where('nome', $nomePlanta)->first();
                 $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
             }
@@ -66,8 +69,6 @@ class ReceitaController extends Controller
 
                 $ingrediente->receitas()->attach($receita->id);
             }
-
-
             return redirect()->route('receita.index');
         }
 
@@ -102,19 +103,19 @@ class ReceitaController extends Controller
 
             $receita->usuarios_id = Auth::user()->id;
 
-            $receita->save();
-            
-            $receita->plantas()->detach();
+            if($request->nomePlanta && $request->ingredientes && $request->quantidade && $request->quantidadePlanta){
+                $receita->save();
+                $receita->plantas()->detach();
+                $receita->ingredientes()->delete();
+            }
 
             $nomesPlantas = $request->nomePlanta;
             $quantidadesPlantas = $request->quantidadePlanta;
 
-            for ($indice = 0; $indice < count($nomesPlantas); $indice++){
+            for ($indice = 0; $indice < count($nomesPlantas); $indice++) {
                 $planta = Planta::where('nome', $nomesPlantas[$indice])->first();
                 $receita->plantas()->attach($planta, ['quantidade' => $quantidadesPlantas[$indice]]);
             }
-
-            $receita->ingredientes()->delete();
 
             foreach ($request->ingredientes as $key => $ingredienteRequest) {
                 $ingrediente = new Ingrediente();

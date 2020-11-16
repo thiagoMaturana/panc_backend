@@ -5,6 +5,16 @@
     <form action="{{ route('publico.receita.store') }}" method="POST">
         @csrf
 
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label class="small mb-1 ">Nome</label>
@@ -28,6 +38,12 @@
                 </select>
             </div>
         </div>
+
+        @if ($erroEx)
+        <div class="alert alert-danger" role="alert">
+            {{ $erroEx }}
+        </div>
+        @endif
 
         <label class="small mb-1">Ingredientes</label>
         <table>
@@ -128,7 +144,7 @@
 
         ++i;
 
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control @error("quantidade.*") is-invalid @enderror" minlength="3" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidade[' + i + ']">@error("quantidade.*")<div class="invalid-feedback">{{ $message }}</div>@enderror</div><div class="form-group col-md-6"><input type="text" minlength="3" maxlength="60" class="form-control  @error("ingredientes.*") is-invalid @enderror" placeholder="Ingrediente" name="ingredientes[' + i + ']">@error("ingredientes.*")<div class="invalid-feedback">{{ $message }}</div>@enderror</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control @error("quantidade.*") is-invalid @enderror" minlength="3" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidade[' + i + ']">@error("quantidade.*")<div class="invalid-feedback">{{ $message }}</div>@enderror</div><div class="form-group col-md-6"><input type="text" minlength="3" maxlength="60" class="form-control @error("ingredientes.*") is-invalid @enderror" placeholder="Ingrediente" name="ingredientes[' + i + ']">@error("ingredientes.*")<div class="invalid-feedback">{{ $message }}</div>@enderror</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
     });
 
@@ -151,7 +167,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <input type="text" minlength="3" maxlength="60" name="nomePlanta[]" class="form-control nomePlanta @error('nomePlanta.*') is-invalid @enderror" onkeyup="fetchPlanta(this) placeholder="Entre com o nome da Planta" list="plantaList" required>
+                    <input type="text" minlength="3" maxlength="60" name="nomePlanta[]" class="form-control nomePlanta @error('nomePlanta.*') is-invalid @enderror" onkeyup="fetchPlanta(this)" placeholder="Entre com o nome da Planta" list="plantaList" required>
                     @error('nomePlanta.*')
                         <div class="invalid-feedback">
                             {{ $message }}

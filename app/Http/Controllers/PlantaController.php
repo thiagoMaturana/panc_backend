@@ -58,7 +58,9 @@ class PlantaController extends Controller
 
             $planta->usuarios_id = Auth::user()->id;
 
-            $planta->save();
+            if($request->nomesPopulares){
+                $planta->save();
+            }
 
             foreach ($request->nomesPopulares as $key => $nomePopularRequest) {
                 $nomePopular = new NomePopular();
@@ -108,9 +110,10 @@ class PlantaController extends Controller
             $planta->cultivo = $request->cultivo;
             $planta->fotos = $request->fotos;
 
-            $planta->save();
-
-            NomePopular::where('plantas_id', $planta->id)->delete();
+            if ($request->nomesPopulares){
+                $planta->save();
+                NomePopular::where('plantas_id', $planta->id)->delete();
+            }
 
             foreach ($request->nomesPopulares as $nomePopularRequest) {
                 $nomePopular = new NomePopular();
