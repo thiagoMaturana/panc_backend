@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        //ADMINISTRADOR
         DB::table('users')->insert([
             'name' => 'thiago',
             'email' => 'thiago@gmail.com',
@@ -21,6 +22,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
 
+        //COMITÊ
         DB::table('users')->insert([
             'name' => 'harry',
             'email' => 'harry@gmail.com',
@@ -28,6 +30,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
 
+        //USUÁRIO COMUM
         DB::table('users')->insert([
             'name' => 'niall',
             'email' => 'niall@gmail.com',

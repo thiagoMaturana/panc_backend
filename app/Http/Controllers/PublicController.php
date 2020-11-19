@@ -86,7 +86,7 @@ class PublicController extends Controller
     public function searchPlanta(Request $request)
     {
         $nome = $request->search;
-
+        $plantas = DB::table('plantas')->where('nomeCientifico', 'LIKE', '%' . $nome . '%')->get();
         $plantas = DB::table('plantas')->where('nome', 'LIKE', '%' . $nome . '%')->get();
 
         return view('publico.plantas.planta-list', [
@@ -170,11 +170,20 @@ class PublicController extends Controller
     public function searchReceita(Request $request)
     {
         $nome = $request->search;
+        $tipos = $request->tipo;
 
         $receitas = DB::table('receitas')->where('nome', 'LIKE', '%' . $nome . '%')->get();
 
+        if ($tipos){
+            foreach($tipos as $tipo){
+                $receitas = DB::table('receitas')->where('tipo', 'LIKE', '%'. $tipo . '%')->get();
+            }
+        }
+
         return view('publico.receitas.receita-list', [
-            'receitas' => $receitas
+            'receitas' => $receitas,
+            'nome' => $nome,
+            'tipo' => $tipos
         ]);
     }
 }
