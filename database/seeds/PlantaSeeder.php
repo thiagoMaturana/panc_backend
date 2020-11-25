@@ -33,5 +33,32 @@ class PlantaSeeder extends Seeder
             'plantas_id' => $id,
             'nome' => 'taráxaco'
         ]);
+
+
+        $id = DB::table('plantas')->insert([
+            'usuarios_id' => '1',
+            'nome' => 'Ora-pro-nóbis',
+            'nomeCientifico' => 'Pereskia aculeata.',
+            'tamanho' => 'Chega até 1 metro de altura',
+            'folha' => 'Folhas lanceoladas, suculentas, medindo de 3 a 10 cm de comprimento por 1,5 a 5 cm de largura, pecíolo curto, nervura central proeminente, de cor verde e providas de espinhos nas axilas.',
+            'caracteristicas' => 'É uma herbácea de hábito trepador e escandente, caules compridos revestidos de agressivos espinhos, podendo alcançar até 10 m de comprimento. As flores são pequenas, 2,5 a 5 cm de diâmetro, coloração branca ou amarela clara ou creme, podendo ter outras variantes. Exalam um perfume forte característico e as anteras e grãos polínicos são dourados.',
+            'fruto' => 'Os frutos são redondos, ovais ou piriformes, de coloração amarelada ou avermelhada, medindo de 1-2 cm de diâmetro. Produzem sementes marrons ou pretas com 4 mm de diâmetro aproximadamente.',
+            'familia' => 'Cactaceae',
+            'genero' => 'Pereskia',
+            'especie' => 'P. aculeata',
+            'propriedadesMedicinais' => 'Antioxidante, anti-inflamatório, nutracêutico, cicatrizante. A alta quantidade de fibras insolúveis pode auxiliar na prevenção de diversas doenças como: câncer de cólon, hemorroidas, varizes, tumores intestinais e diabetes.',
+            'propriedadesCulinarias' => 'Na culinária as folhas podem ser consumidas cruas ou refogadas, adicionadas a farinha para serem feitas massa para pães, tortas, suflês, omeletes, misturadas ao feijão. As flores são utilizadas em preparações de saladas.',
+            'cultivo' => 'Sua rusticidade permite que seja cultivada em diversos tipos de solo, inclusive não exige que eles sejam férteis. A ora-pro-nóbis também se desenvolve em ambientes com incidência de sol ou meia--sombra. Inicie o plantio no começo do período das chuvas. A hortaliça é resistente à seca, mas o acesso à água nessa fase do cultivo estimula o crescimento dos ramos.',
+            'fotos' => 'https://hortodidatico.ufsc.br/files/2020/02/ORA-PRO-NOBIS5.jpg'
+        ]);
+
+        DB::table('nomes_populares')->insert([
+            'plantas_id' => $id,
+            'nome' => 'trepadeira-limão'
+        ]);
+        DB::table('nomes_populares')->insert([
+            'plantas_id' => $id,
+            'nome' => 'groselha-de-Barbados'
+        ]);
     }
 }

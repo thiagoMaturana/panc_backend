@@ -8,7 +8,7 @@
   <title>PANC APP</title>
 
   <!-- Favicons -->
-  <link href="{{ asset('publico/img/favicon.png') }}" rel="icon">
+  <link href="{{ asset('favicon.ico') }}" rel="icon">
   <link href="{{ asset('publico/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->

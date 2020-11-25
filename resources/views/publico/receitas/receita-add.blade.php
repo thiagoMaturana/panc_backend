@@ -5,16 +5,6 @@
     <form action="{{ route('publico.receita.store') }}" method="POST">
         @csrf
 
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label class="small mb-1 ">Nome</label>
@@ -50,7 +40,7 @@
             <div id="dynamicTable">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control @error('quantidade.*') is-invalid @enderror" placeholder="Quantidade. Ex.: 1 xícara, ou 350ml" name="quantidade[0]" required>
+                        <input type="text" class="form-control @error('quantidade.*') is-invalid @enderror" placeholder="Quantidade. Ex.: 1 xícara, ou 350ml" name="quantidade[]" required>
                         @error('quantidade.*')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -58,7 +48,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" minlength="3" maxlength="60" class="form-control @error('ingredientes.*') is-invalid @enderror" placeholder="Ingrediente" name="ingredientes[0]" required>
+                        <input type="text" minlength="3" maxlength="60" class="form-control @error('ingredientes.*') is-invalid @enderror" placeholder="Ingrediente" name="ingredientes[]" required>
                         @error('ingredientes.*')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -111,16 +101,16 @@
 
         <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
-            <textarea class="form-control @error('modoPreparo') is-invalid @enderror" name="modoPreparo" placeholder="Modo de preparo" rows="3" required>{{ old('modoPreparo') }}</textarea>
+            <textarea class="form-control ckeditor" name="modoPreparo" placeholder="Modo de preparo" required>{{ old('modoPreparo') }}</textarea>
             @error('modoPreparo')
-            <div class="invalid-feedback">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Observação</label>
-            <textarea class="form-control @error('observacap') is-invalid @enderror" name="observacao" placeholder="Observação" rows="3">{{ old('observacao') }}</textarea>
+            <textarea class="form-control ckeditor" name="observacao" placeholder="Observação" rows="3">{{ old('observacao') }}</textarea>
         </div>
         <div class="form-group">
             <label class="small mb-1 ">Foto</label>
@@ -136,6 +126,7 @@
     </form>
 </div>
 
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     var i = 0;
     var a = 0;
@@ -220,13 +211,16 @@
         }
     }
 
-
     $(document).ready(function() {
 
         $(document).on('click', 'li', function() {
             $('.nomePlanta').val($(this).text());
         });
 
+    });
+
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
     });
 </script>
 

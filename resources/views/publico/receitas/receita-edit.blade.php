@@ -131,16 +131,16 @@
 
         <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
-            <textarea class="form-control @error('modoPreparo') is-invalid @enderror" name="modoPreparo" placeholder="Modo de preparo" required rows="3">{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
+            <textarea class="form-control ckeditor" name="modoPreparo" placeholder="Modo de preparo" required>{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
             @error('modoPreparo')
-            <div class="invalid-feedback">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Observação</label>
-            <textarea class="form-control " name="observacao" placeholder="Observação" rows="3">{{ old('observacao', $receita->observacao) }}</textarea>
+            <textarea class="form-control ckeditor" name="observacao" placeholder="Observação" >{{ old('observacao', $receita->observacao) }}</textarea>
         </div>
         <div class="form-group">
             <label class="small mb-1 ">Foto</label>
@@ -156,6 +156,7 @@
     </form>
 </div>
 
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     var i = 0;
     var a = 0;
@@ -247,6 +248,10 @@
             $('.nomePlanta').val($(this).text());
         });
         x
+    });
+
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
     });
 </script>
 @endsection

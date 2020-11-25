@@ -86,8 +86,15 @@ class PublicController extends Controller
     public function searchPlanta(Request $request)
     {
         $nome = $request->search;
+
         $plantas = DB::table('plantas')->where('nomeCientifico', 'LIKE', '%' . $nome . '%')->get();
-        $plantas = DB::table('plantas')->where('nome', 'LIKE', '%' . $nome . '%')->get();
+
+        $plantas = DB::table('plantas')
+            ->leftJoin('nomes_populares', 'nomes_populares.plantas_id', '=', 'plantas.id')  
+            ->select('plantas.*')  
+            ->where('plantas.nome', 'LIKE', '%' . $nome . '%')
+            ->orWhere('nomes_populares.nome', 'LIKE', '%' . $nome . '%')
+            ->get();
 
         return view('publico.plantas.planta-list', [
             'plantas' => $plantas
@@ -172,7 +179,15 @@ class PublicController extends Controller
         $nome = $request->search;
         $tipos = $request->tipo;
 
-        $receitas = DB::table('receitas')->where('nome', 'LIKE', '%' . $nome . '%')->get();
+        $receitas = DB::table('receitas')
+            ->leftJoin('plantas_receitas', 'receitas.id', '=', 'plantas_receitas.receitas_id')
+            ->leftJoin('plantas', 'plantas_receitas.plantas_id', '=', 'plantas.id')
+            ->leftJoin('nomes_populares', 'nomes_populares.plantas_id', '=', 'plantas.id')
+            ->select('receitas.*')
+            ->where('receitas.nome', 'LIKE', '%' . $nome . '%')
+            ->orWhere('plantas.nome', 'LIKE', '%' . $nome . '%')
+            ->orWhere('nomes_populares.nome', 'LIKE', '%' . $nome . '%')                
+        ->get();
 
         if ($tipos){
             foreach($tipos as $tipo){

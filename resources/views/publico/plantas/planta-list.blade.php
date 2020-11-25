@@ -9,7 +9,7 @@
       <form class="text-center" action="{{ route('planta.search') }}" method="GET">
         <div class="form-row">
           <div class="form-group col-md-10">
-            <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome cientifíco...">
+            <input type="search" class="form-control" name="search" placeholder="Procure por nome, nome cientifíco ou por nomes populares...">
           </div>
           <div class="form-group col-md-2">
             <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>

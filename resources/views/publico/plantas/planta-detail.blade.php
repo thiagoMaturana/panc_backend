@@ -35,8 +35,8 @@
 
         <div id="dynamicDiv">
             <p><b>Nomes populares:</b> @foreach($nomesPopulares as $nomePopular)<p> - {{ $nomePopular->nome }}</p>@endforeach</p>
-            <p><b>Caracteristicas: </b> {{ $planta->caracteristicas }}</p>
-            <p><b>Tamanho: </b>{{ $planta->tamanho }}</p>
+            <p><b>Caracteristicas: </b> {!!$planta->caracteristicas!!}</p>
+            <p><b>Tamanho: </b>{!!$planta->tamanho!!}</p>
             <p><b>Fruto: </b>{{ $planta->fruto }}</p>
             <p><b>Folha: </b>{{ $planta->folha }}</p>
             <p><b>Classificação: </b></p>

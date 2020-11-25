@@ -61,7 +61,7 @@
         <!-- Caracteristicas -->
         <div class="form-group">
             <label>Tamanho</label>
-            <input type="text" class="form-control @error('tamanho') is-invalid @enderror" placeholder="Tamanho" name="tamanho" value="{{ $planta->tamanho }}" required>
+            <input type="text" class="form-control" placeholder="Tamanho" name="tamanho" value="{{ $planta->tamanho }}" required>
             @error('tamanho')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -70,20 +70,20 @@
         </div>
         <div class="form-group">
             <label>Fruto</label>
-            <textarea class="form-control" placeholder="Descreva o Fruto da planta, caso haja" rows="3" name="fruto">{{ old('fruto', $planta->fruto) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Descreva o Fruto da planta, caso haja" name="fruto">{{ old('fruto', $planta->fruto) }}</textarea>
         </div>
         <div class="form-group">
             <label>Folha</label>
-            <textarea class="form-control @error('folha') is-invalid @enderror" placeholder="Descreva a Folha da planta" rows="3" name="folha" required>{{ old('folha', $planta->folha) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Descreva a Folha da planta" name="folha" required>{{ old('folha', $planta->folha) }}</textarea>
             @error('folha')
-            <div class="invalid-feedback">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror
         </div>
         <div class="form-group">
             <label>Caracteristícas</label>
-            <textarea class="form-control" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" rows="3" name="caracteristicas">{{ old('caracteristicas', $planta->caracteristicas) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" name="caracteristicas">{{ old('caracteristicas', $planta->caracteristicas) }}</textarea>
         </div>
         <!-- Classificação -->
         <div class="form-row">
@@ -118,18 +118,18 @@
         <!-- Propriedades -->
         <div class="form-group">
             <label>Propriedades Medicinais</label>
-            <textarea class="form-control @error('propriedadesMedicinais') is-invalid @enderror" placeholder="Descreva as propriedades medicinais da planta" rows="3" name="propriedadesMedicinais" required>{{ old('propriedadesMedicinais', $planta->propriedadesMedicinais) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Descreva as propriedades medicinais da planta" name="propriedadesMedicinais" required>{{ old('propriedadesMedicinais', $planta->propriedadesMedicinais) }}</textarea>
             @error('propriedadesMedicinais')
-            <div class="invalid-feedback">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror
         </div>
         <div class="form-group">
             <label>Propriedades Gastronômicas</label>
-            <textarea class="form-control @error('propriedadesCulinarias') is-invalid @enderror" placeholder="Descreva as propriedades gastronômicas da planta" rows="3" name="propriedadesCulinarias" required>{{ old('propriedadesCulinarias', $planta->propriedadesCulinarias) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Descreva as propriedades gastronômicas da planta" name="propriedadesCulinarias" required>{{ old('propriedadesCulinarias', $planta->propriedadesCulinarias) }}</textarea>
             @error('propriedadesCulinarias')
-            <div class="invalid-feedback">
+            <div class="alert alert-danger">
                 {{ $message }}
             </div>
             @enderror
@@ -137,12 +137,12 @@
         <!-- Cultivo -->
         <div class="form-group">
             <label>Cultivo</label>
-            <textarea class="form-control" placeholder="Descreva o processo de cultivo da planta" rows="3" name="cultivo">{{ old('cultivo', $planta->cultivo) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Descreva o processo de cultivo da planta" name="cultivo">{{ old('cultivo', $planta->cultivo) }}</textarea>
         </div>
         <!-- Avisos -->
         <div class="form-group">
             <label>Avisos</label>
-            <textarea class="form-control" placeholder="Escreve os avisos sobre a planta, caso haja" rows="3" name="avisos">{{ old('avisos', $planta->avisos) }}</textarea>
+            <textarea class="form-control ckeditor" placeholder="Escreve os avisos sobre a planta, caso haja" name="avisos">{{ old('avisos', $planta->avisos) }}</textarea>
         </div>
         <!-- Foto -->
         <div class="form-group">
@@ -159,16 +159,20 @@
     </form>
 </div>
 
-
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     var i = 0;
     $("#add").click(function() {
         ++i;
         console.log('' + i + '');
-        $("#dynamicTable").append('div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control @error("nomesPopulares.*") is-invalid @enderror" placeholder="Nome popular" name="nomesPopulares[' + i + ']" minlength="3" maxlength="60" required></div>@error("nomesPopulares.*")<div class="invalid-feedback">{{ $message }}</div>@enderror<div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-10"><input type="text" class="form-control @error("nomesPopulares.*") is-invalid @enderror" placeholder="Nome popular" name="nomesPopulares[' + i + ']" minlength="3" maxlength="60" required></div>@error("nomesPopulares.*")<div class="invalid-feedback">{{ $message }}</div>@enderror<div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
     });
     $(document).on('click', '.remove-tr', function() {
         $(this).parents('div.form-row').remove();
+    });
+
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
     });
 </script>
 @endsection

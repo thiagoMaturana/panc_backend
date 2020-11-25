@@ -71,20 +71,20 @@
             </div>
             <div class="form-group">
                 <label>Fruto</label>
-                <textarea class="form-control" placeholder="Descreva o Fruto da planta, caso haja" rows="3" name="fruto">{{old('fruto')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva o Fruto da planta, caso haja" name="fruto">{{old('fruto')}}</textarea>
             </div>
             <div class="form-group">
                 <label>Folha</label>
-                <textarea class="form-control @error('folha') is-invalid @enderror" placeholder="Descreva a Folha da planta" rows="3" name="folha" required>{{old('folha')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva a Folha da planta" name="folha" required>{{old('folha')}}</textarea>
                 @error('folha')
-                <div class="invalid-feedback">
+                <div class="alert alert-danger">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
             <div class="form-group">
                 <label>Caracteristícas</label>
-                <textarea class="form-control" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" rows="3" name="caracteristicas">{{old('caracteristicas')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" name="caracteristicas">{{old('caracteristicas')}}</textarea>
             </div>
             <!-- Classificação -->
             <div class="form-row">
@@ -119,18 +119,18 @@
             <!-- Propriedades -->
             <div class="form-group">
                 <label>Propriedades Medicinais</label>
-                <textarea class="form-control @error('propriedadesMedicinais') is-invalid @enderror" placeholder="Descreva as propriedades medicinais da planta" rows="3" name="propriedadesMedicinais" value="{{old('propriedadesMedicinais')}}" required></textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva as propriedades medicinais da planta" name="propriedadesMedicinais" required>{{old('propriedadesMedicinais')}}</textarea>
                 @error('propriedadesMedicinais')
-                <div class="invalid-feedback">
+                <div class="alert alert-danger">
                     {{$message }}
                 </div>
                 @enderror
             </div>
             <div class="form-group">
                 <label>Propriedades Gastronômicas</label>
-                <textarea class="form-control @error('nomeCientifico') is-invalid @enderror" placeholder="Descreva as propriedades gastronômicas da planta" rows="3" name="propriedadesCulinarias" value="{{old('propriedadesCulinarias')}}" required></textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva as propriedades gastronômicas da planta" name="propriedadesCulinarias" required>{{old('propriedadesCulinarias')}}</textarea>
                 @error('propriedadesCulinarias')
-                <div class="invalid-feedback">
+                <div class="alert alert-danger">
                     {{ $message }}
                 </div>
                 @enderror
@@ -138,12 +138,12 @@
             <!-- Cultivo -->
             <div class="form-group">
                 <label>Cultivo</label>
-                <textarea class="form-control" placeholder="Descreva o processo de cultivo da planta" rows="3" name="cultivo">{{old('cultivo')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva o processo de cultivo da planta" name="cultivo">{{old('cultivo')}}</textarea>
             </div>
             <!-- Avisos -->
             <div class="form-group">
                 <label>Avisos</label>
-                <textarea class="form-control" placeholder="Escreve os avisos sobre a planta, caso haja" rows="3" name="avisos">{{old('avisos')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Escreve os avisos sobre a planta, caso haja" name="avisos">{{old('avisos')}}</textarea>
             </div>
             <!-- Foto -->
             <div class="form-group">
@@ -163,6 +163,7 @@
 </section><!-- End Portfolio Section -->
 
 
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     var i = 0;
 
@@ -178,6 +179,10 @@
 
         $(this).parents('div.form-row').remove();
 
+    });
+
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
     });
 </script>
 @endsection

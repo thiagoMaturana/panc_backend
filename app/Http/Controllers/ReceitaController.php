@@ -54,9 +54,9 @@ class ReceitaController extends Controller
 
             $nomesPlantas = $request->nomePlanta;
 
-            foreach ($nomesPlantas as $nomePlanta) {
+            foreach ($nomesPlantas as $key => $nomePlanta){
                 $planta = Planta::where('nome', $nomePlanta)->first();
-                $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta]);
+                $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta[$key]]);
             }
 
             foreach ($request->ingredientes as $key => $ingredienteRequest) {
@@ -110,11 +110,10 @@ class ReceitaController extends Controller
             }
 
             $nomesPlantas = $request->nomePlanta;
-            $quantidadesPlantas = $request->quantidadePlanta;
 
-            for ($indice = 0; $indice < count($nomesPlantas); $indice++) {
-                $planta = Planta::where('nome', $nomesPlantas[$indice])->first();
-                $receita->plantas()->attach($planta, ['quantidade' => $quantidadesPlantas[$indice]]);
+            foreach ($nomesPlantas as $key => $nomePlanta){
+                $planta = Planta::where('nome', $nomePlanta)->first();
+                $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta[$key]]);
             }
 
             foreach ($request->ingredientes as $key => $ingredienteRequest) {

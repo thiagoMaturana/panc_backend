@@ -10,9 +10,9 @@
       <div class="form-row">
         <div class="form-group col-md-10">
           @if($nome ?? '')
-          <input type="search" class="form-control" name="search" placeholder="Procure por nome" value="{{$nome}}">
+          <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta" value="{{$nome}}">
           @else
-          <input type="search" class="form-control" name="search" placeholder="Procure por nome">
+          <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta">
           @endif
         </div>
         <div class="form-group col-md-2">
