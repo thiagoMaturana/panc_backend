@@ -82,7 +82,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label>Caracteristícas</label>
+            <label>Caracteristícas</label><small style="color:green"> (flores, raízes, sementes, origem e entre outros)</small>
             <textarea class="form-control ckeditor" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" name="caracteristicas">{{ old('caracteristicas', $planta->caracteristicas) }}</textarea>
         </div>
         <!-- Classificação -->
@@ -155,6 +155,16 @@
             @enderror
         </div>
 
+        <div class="form-group">
+            <label>Referências</label>
+            <textarea class="form-control ckeditor" placeholder="Coloque aqui as referências dos sites, artigos e qualquer material pesquisado. De preferência nas normas ABNT" name="referencia" required>{{old('referencia', $planta->referencia)}}</textarea>
+            @error('referencia')
+            <div class="alert alert-danger">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+
         <button type="submit" class="btn btn-primary">Editar</button>
     </form>
 </div>
@@ -171,7 +181,7 @@
         $(this).parents('div.form-row').remove();
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('.ckeditor').ckeditor();
     });
 </script>

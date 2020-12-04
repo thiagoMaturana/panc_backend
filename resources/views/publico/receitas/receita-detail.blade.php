@@ -32,24 +32,51 @@
 
         <div id="dynamicDiv">
             <p><b>Tipo: </b>{{ $receita->tipo }}</p>
-            <p><b>Observação: </b>{{ $receita->observacao }}</p>
+            <p><b>Tempo de preparo: </b>{{ $receita->tempoPreparo }}</p>
+            <p><b>Porções: </b>{{ $receita->porcoes }}</p>
+            @if($receita->observacao)
+            <p><b>Observação: </b>{!!$receita->observacao!!}</p>
+            @endif
         </div>
 
+        @if($tipoPg == 'minhasReceitas')
+        <div class="row float-right">
+            <form class="px-1" action="{{ route('publico.receita.edit', ['receita' => $receita->id]) }}" method="GET">
+                <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
+            </form>
+            <form class="px-1" action="{{ route('publico.receita.destroy', ['receita' => $receita->id]) }}" method="POST">
+                @csrf
+                @method('delete')
+                <input type="hidden" name="user" value="">
+                <input type="submit" class="btn btn-outline-danger" value="Remover">
+            </form>
+        </div>
+        @endif
+        <br><br>
+        <p><i>Receita criada por <b>{{$usuario->name}}</b></i></p>
     </div>
 </section><!-- End Portfolio Details Section -->
 
 <script type="text/javascript">
     $("#addDes").click(function() {
         document.getElementById("dynamicDiv").innerHTML = "";
-        $("#dynamicDiv").append('<p><b>Tipo: </b>{{ $receita->tipo }}</p><p><b>Observação: </b>{{ $receita->observacao }}</p>');
+        $("#dynamicDiv").append('<p><b>Tipo: </b>{{ $receita->tipo }}</p><p><b>Observação: </b>{!! $receita->observacao!!}</p>');
     })
     $("#addIng").click(function() {
         document.getElementById("dynamicDiv").innerHTML = "";
-        $("#dynamicDiv").append('@foreach($ingredientes as $ingrediente)<p> {{$ingrediente->quantidade}} {{ $ingrediente->nome }}</p>@endforeach');
+        $("#dynamicDiv").append(`
+        <p><b>Plantas usadas:</b></p>
+        @foreach ($nomePlantas as $nomePlanta)
+        <p>{{$loop->index+1}}. {{$nomePlanta->nome}} - {{$quantidade}} </p>
+        @endforeach 
+        <p><b>Ingredientes:</b></p>
+        @foreach($ingredientes as $ingrediente)
+        <p>{{$loop->index+1}}. {{ $ingrediente->nome }} - {{$ingrediente->quantidade}}</p>
+        @endforeach`);
     })
     $("#addPre").click(function() {
         document.getElementById("dynamicDiv").innerHTML = "";
-        $("#dynamicDiv").append('<p><b>Modo de preparo: </b>{{ $receita->modoPreparo }}</p>');
+        $("#dynamicDiv").append('<p><b>Modo de preparo: </b>{!!$receita->modoPreparo!!}</p>');
     })
 </script>
 

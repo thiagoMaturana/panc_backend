@@ -51,40 +51,16 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
 
-                        <div class="sb-sidenav-menu-heading">Plantas</div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantas" aria-expanded="false" aria-controls="collapsePlantas">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Plantas
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        <a class="nav-link" href=" {{ route('planta.index') }} ">Plantas</a>
                         </a>
-                        <div class="collapse" id="collapsePlantas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('planta.index') }} ">Listar</a>
-                                @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
-                                <a class="nav-link" href="{{ route('planta.create') }} ">Cadastrar</a>
-                                @endif
-                            </nav>
-                        </div>
 
-                        <div class="sb-sidenav-menu-heading">Receitas</div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReceitas" aria-expanded="false" aria-controls="collapseReceitas">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Receitas
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReceitas" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href=" {{ route('receita.index') }} ">Listar</a>
-                                @if(Auth::user() && (Auth::check()))
-                                <a class="nav-link" href=" {{ route('receita.create') }} ">Cadastrar</a>
-                                @endif
-                            </nav>
-                        </div>
+                            <a class="nav-link" href=" {{ route('receita.index') }} ">Receitas</a>
+                        </a><br>
 
                         @if(Auth::user() && Auth::user()->isAdministrador())
-                        <div class="sb-sidenav-menu-heading">Usuários</div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Usuários
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>

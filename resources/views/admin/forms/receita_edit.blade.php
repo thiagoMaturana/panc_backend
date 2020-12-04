@@ -2,14 +2,19 @@
 
 @section('content')
 <div class="container p-5">
-    <form action="{{ route('receita.update', ['receita' => $receita->id]) }}" method="POST">
+<form action="{{ route('receita.update', ['receita' => $receita->id]) }}" method="POST">
         @csrf
         @method('PUT')
 
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label class="small mb-1 ">Nome</label>
-                <input type="text" class="form-control @error('nome') is-invalid @enderror" minlength="3" class="form-control" name="nome" placeholder="Nome" value="{{ $receita->nome }}" required>
+                <input type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" placeholder="Nome" value="{{ $receita->nome }}" minlength="3" required>
+                @error('nome')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
             <div class="form-group col-md-4">
                 <label class="small mb-1 ">Tipo</label>
@@ -60,16 +65,22 @@
             </div>
         </div>
 
+        @if ($erroEx)
+        <div class="alert alert-danger" role="alert">
+            {{ $erroEx }}
+        </div>
+        @endif
+
         <label class="small mb-1">Ingredientes</label>
         <table>
             <div id="dynamicTable">
                 @foreach($ingredientes as $ingrediente)
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" minlength="3" class="form-control" placeholder="Quantidade. Ex.: 1 xícara,= ou 350ml" name="quantidade[ {{ $loop->index }} ]" value="{{ $ingrediente->quantidade }}" required>
+                        <input type="text" class="form-control" placeholder="Quantidade. Ex.: 1 xícara,= ou 350ml" name="quantidade[ {{ $loop->index }} ]" value="{{ $ingrediente->quantidade }}" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" minlength="3" maxlength="60" class="form-control" placeholder="Ingrediente" name="ingredientes[ {{ $loop->index }} ]" value="{{ $ingrediente->nome }}" required>
+                        <input type="text" maxlength="60" class="form-control" placeholder="Ingrediente" name="ingredientes[ {{ $loop->index }} ]" value="{{ $ingrediente->nome }}" required>
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
@@ -85,22 +96,33 @@
 
         <label class="small mb-1">Plantas</label>
         <table>
-            @foreach($receita->plantas as $planta)
             <div id="tablePlantas">
+                @foreach($receita->plantas as $planta)
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <input type="text" minlength="3" class="form-control" id="quantidadePlanta" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidadePlanta" value="{{ $planta->pivot->quantidade }}" required>
+                        <input type="text" class="form-control @error('quantidadePlanta.*') is-invalid @enderror" id="quantidadePlanta" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidadePlanta[{{$loop->index}}]" value="{{ $planta->pivot->quantidade }}" required>
+                        @error('quantidadePlanta.*')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" minlength="3" maxlength="60" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" list="plantaList" value="{{ $planta->nome }}"/>
+                        <input type="text" minlength="3" maxlength="60" name="nomePlanta[{{$loop->index}}]" class="form-control nomePlanta @error('nomePlanta.*') is-invalid @enderror" onkeyup="fetchPlanta(this)" placeholder="Entre com o nome da Planta" list="plantaList" value="{{ $planta->nome }}" required>
+                        @error('nomePlanta.*')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
                     </div>
                     <div class="form-group col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
                     </div>
-                    <datalist id="plantaList"></datalist>
                 </div>
+                @endforeach
+                <datalist id="plantaList"></datalist>
             </div>
-            @endforeach
         </table>
 
         <div class="form-group">
@@ -108,21 +130,53 @@
         </div>
 
         <div class="form-group">
+            <label class="small mb-1">Porções</label>
+            <input type="text" maxlength="100" class="form-control @error('fotos') is-invalid @enderror" name="porcoes" placeholder="Porções" value="{{ $receita->porcoes }}" required>
+            @error('porcoes')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="small mb-1">Tempo de preparo</label>
+            <input type="text" maxlength="60" class="form-control @error('fotos') is-invalid @enderror" name="tempoPreparo" placeholder="Tempo de preparo. Ex: 40m, 1h e 30m" value="{{ $receita->tempoPreparo }}" required>
+            @error('tempoPreparo')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
-            <textarea class="form-control" name="modoPreparo" placeholder="Modo de preparo" required rows="3">{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
+            <textarea class="form-control ckeditor" name="modoPreparo" placeholder="Modo de preparo" required>{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
+            @error('modoPreparo')
+            <div class="alert alert-danger">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
         <div class="form-group">
             <label class="small mb-1">Observação</label>
-            <textarea class="form-control" name="observacao" placeholder="Observação" rows="3">{{ old('observacao', $receita->observacao) }}</textarea>
+            <textarea class="form-control ckeditor" name="observacao" placeholder="Observação" >{{ old('observacao', $receita->observacao) }}</textarea>
         </div>
         <div class="form-group">
             <label class="small mb-1 ">Foto</label>
-            <input type="text" class="form-control" name="fotos" value="{{ $receita->fotos }}" placeholder="Foto" required>
+            <input type="text" class="form-control @error('fotos') is-invalid @enderror" name="fotos" value="{{ $receita->fotos }}" placeholder="Foto" required>
+            @error('fotos')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
+
         <button type="submit" class="btn btn-primary">Editar</button>
     </form>
 </div>
 
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     var i = 0;
     var a = 0;
@@ -131,7 +185,7 @@
 
         ++i;
 
-        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control" minlength="3" placeholder="Quantidade" name="quantidade[' + i + ']"></div><div class="form-group col-md-6"><input type="text" class="form-control" placeholder="Ingrediente" minlength="3" maxlength="60" name="ingredientes[' + i + ']"></div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
+        $("#dynamicTable").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" class="form-control @error("quantidade.*") is-invalid @enderror" minlength="3" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidade[' + i + ']">@error("quantidade.*")<div class="invalid-feedback">{{ $message }}</div>@enderror</div><div class="form-group col-md-6"><input type="text" minlength="3" maxlength="60" class="form-control @error("ingredientes.*") is-invalid @enderror" placeholder="Ingrediente" name="ingredientes[' + i + ']">@error("ingredientes.*")<div class="invalid-feedback">{{ $message }}</div>@enderror</div><div class="form-group col-md-2"><button type="button" class="btn btn-outline-danger remove-tr">Remover</button></div></div>');
 
     });
 
@@ -145,17 +199,27 @@
         ++a;
         let divInputPlanta =
             `<div class="form-row">
-                <div class="form-group col-md-4">
-                    <input type="text" class="form-control" id="quantidadePlanta" placeholder="Quantidade" minlength="3" name="quantidadePlanta" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <input type="text" minlength="3" maxlength="60" name="nomePlanta[]" class="form-control nomePlanta" placeholder="Entre com o nome da Planta" list="plantaList" required/>
-                </div>
-                <div class="form-group col-md-2">
-                    <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
-                </div>
-            </div>
-            <datalist id="plantaList"></datalist>`;
+                    <div class="form-group col-md-4">
+                        <input type="text" minlength="3" class="form-control @error('quantidadePlanta.*') is-invalid @enderror" id="quantidadePlanta" placeholder="Quantidade. Ex.: 1 xícara ou 350ml" name="quantidadePlanta[]">
+                        @error('quantidadePlanta.*')
+                        <div class="invalid-feedback">
+                            {{ $message }} 
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" minlength="3" maxlength="60" name="nomePlanta[]" class="form-control nomePlanta @error('nomePlanta.*') is-invalid @enderror" placeholder="Entre com o nome da Planta" onkeyup="fetchPlanta(this)" list="plantaList""/>
+                        @error('nomePlanta.*')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                    </div>
+                    <datalist id="plantaList"></datalist>
+                </div>`;
         $("#tablePlantas").append(divInputPlanta);
 
     });
@@ -164,45 +228,50 @@
         $(this).parents('div.form-row').remove();
     });
 
-    $(document).ready(function() {
+    function fetchPlanta(element) {
+        var minlength = 2;
+        var query = element.value;
+        if (query.length >= minlength) {
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ route('receita.fetchPlanta') }}",
+                    method: "POST",
+                    data: {
+                        query: query,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        console.log(data);
 
-        $('.nomePlanta').keyup(function() {
-            var minlength = 3;
-
-            var query = $(this).val();
-            if (query.length >= minlength) {
-                if (query != '') {
-                    var _token = $('input[name="_token"]').val();
-                    $.ajax({
-                        url: "{{ route('receita.fetchPlanta') }}",
-                        method: "POST",
-                        data: {
-                            query: query,
-                            _token: _token
-                        },
-                        success: function(data) {
-
-                            for (planta of data) {
-                                //cria option para o datalist
-                                let option = document.createElement("OPTION");
-                                option.value = planta['nome'];
-                                //cria seletor para verificar se aquela opção já existe
-                                let seletorOption = `#plantaList option[value='${planta['nome']}']`;
-                                //se não existe aquela opção adiciona
-                                if ($(seletorOption).length == 0) {
-                                    $('#plantaList').append(option);
-                                }
+                        for (planta of data) {
+                            //cria option para o datalist
+                            let option = document.createElement("OPTION");
+                            option.value = planta['nome'];
+                            //cria seletor para verificar se aquela opção já existe
+                            let seletorOption = `#plantaList option[value='${planta['nome']}']`;
+                            //se não existe aquela opção adiciona
+                            if ($(seletorOption).length == 0) {
+                                $('#plantaList').append(option);
                             }
                         }
-                    });
-                }
+                    }
+                });
             }
-        });
+        }
+    }
+
+
+    $(document).ready(function() {
 
         $(document).on('click', 'li', function() {
             $('.nomePlanta').val($(this).text());
         });
+        x
+    });
 
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
     });
 </script>
 @endsection

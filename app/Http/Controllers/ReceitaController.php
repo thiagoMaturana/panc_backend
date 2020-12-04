@@ -25,14 +25,7 @@ class ReceitaController extends Controller
         return redirect()->route('publico.receita.index');
     }
 
-    public function create()
-    {
-        $user = Auth::user();
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
-            return view('admin.forms.receita_add');
-        }
-        return redirect()->route('publico.receita.index');
-    }
+    public function create(){}
 
     public function store(ReceitaRequest $request)
     {
@@ -46,6 +39,9 @@ class ReceitaController extends Controller
             $receita->modoPreparo = $request->modoPreparo;
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
+            $receita->porcoes = $request->porcoes;
+            $receita->tempoPreparo = $request->tempoPreparo;
+            
             $receita->usuarios_id = Auth::user()->id;
 
             if($request->nomePlanta && $request->ingredientes && $request->quantidade && $request->quantidadePlanta){
@@ -84,7 +80,8 @@ class ReceitaController extends Controller
 
             return view('admin.forms.receita_edit', [
                 'receita' => $receita,
-                'ingredientes' => $ingredientes
+                'ingredientes' => $ingredientes,
+                'erroEx' => ''
             ]);
         }
         return redirect()->route('receita.index')->withErrors(['Voce precisa ser usuario autenticado para editar receitas']);
@@ -100,6 +97,8 @@ class ReceitaController extends Controller
             $receita->modoPreparo = $request->modoPreparo;
             $receita->observacao = $request->observacao;
             $receita->fotos = $request->fotos;
+            $receita->porcoes = $request->porcoes;
+            $receita->tempoPreparo = $request->tempoPreparo;
 
             $receita->usuarios_id = Auth::user()->id;
 
@@ -107,6 +106,12 @@ class ReceitaController extends Controller
                 $receita->save();
                 $receita->plantas()->detach();
                 $receita->ingredientes()->delete();
+            } else {
+                return view('admin.forms.receita_edit', [
+                    'receita' => $receita,
+                    'ingredientes' => $receita->ingredientes,
+                    'erroEx' => 'Campos ingredientes e planta são obrigatórios'
+                ]);
             }
 
             $nomesPlantas = $request->nomePlanta;

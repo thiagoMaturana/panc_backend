@@ -49,6 +49,12 @@ Route::get('/plantas/{planta}/edit', 'PublicController@editPlanta')->name('publi
 Route::put('/plantas/{planta}', 'PublicController@updatePlanta')->name('publico.planta.update');
 Route::delete('/plantas/{planta}', 'PublicController@destroyPlanta')->name('publico.planta.destroy');
 
+Route::get('/plantas/analise/{planta}', 'PublicController@showPlantaParaAnalise')->name('publico.planta.showParaAnalise');
+Route::get('/minhasPlantas', 'PublicController@indexMinhasPlantas')->name('publico.planta.indexMinhasPlantas');
+Route::get('/plantasParaAnalise','PublicController@indexParaAnalise')->name('publico.planta.indexParaAnalise');
+Route::get('/plantas/{planta}/aprovar', 'PublicController@aprovarPlanta')->name('publico.planta.aprovar');
+Route::get('/plantas/{planta}/rejeitar', 'PublicController@rejeitarPlanta')->name('publico.planta.rejeitar');
+Route::get('/plantas/{planta}/submeter', 'PublicController@submeterPlanta')->name('publico.planta.submeter');
 
 Route::get('/receitas', 'PublicController@indexReceita')->name('publico.receita.index');
 Route::get('/receitas/create', 'PublicController@createReceita')->name('publico.receita.create');
@@ -59,6 +65,10 @@ Route::put('/receitas/{receita}', 'PublicController@updateReceita')->name('publi
 Route::delete('/receitas/{receita}', 'PublicController@destroyReceita')->name('publico.receita.destroy');
 
 Route::post('/receitas/fetch', 'ReceitaController@fetchPlanta')->name('receita.fetchPlanta');
+Route::get('/minhasReceitas', 'PublicController@indexMinhasReceitas')->name('publico.receita.indexMinhasReceitas');
+Route::get('/receitas/porPlanta/{planta}', 'PublicController@indexReceitaPorPlanta')->name('publico.receita.indexPorPlanta');
+Route::get('/receitas/minhaPlanta/{receita}', 'PublicController@showReceitaMinhasReceita')->name('publico.receita.showReceitaMinhaReceita');
+
 
 Route::get('/searchPlanta', 'PublicController@searchPlanta')->name('planta.search');
 Route::get('/searchReceita', 'PublicController@searchReceita')->name('receita.search');

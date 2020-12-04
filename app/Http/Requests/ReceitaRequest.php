@@ -28,6 +28,9 @@ class ReceitaRequest extends FormRequest
             'tipo' => 'required',
             'modoPreparo' => 'required',
             'fotos' => 'required',
+            'tempoPreparo' => 'required|max:60',
+            'porcoes' => 'required|max:100',
+            'fotos' => 'required',
             'quantidadePlanta.*' => 'required',
             'quantidade.*' => 'required',
             'ingredientes.*' => 'required|min:3|max:60',
@@ -42,6 +45,12 @@ class ReceitaRequest extends FormRequest
         return [
             'nome.required' => 'Nome é obrigatório',
             'nome.min' => 'Nome precisa de ter no minímo 3 caracteres',
+
+            'porcoes.required' => 'Porções é obrigatória',
+            'porcoes.max' => 'Porções precisa de ter no máximo 100 caracteres',
+
+            'tempoPreparo.required' => 'Tempo de preparo é obrigatório',
+            'tempoPreparo.max' => 'Tempo de preparo precisa de ter no máximo 60 caracteres',
 
             'tipo.required' => 'Tipo é obrigatório',
 

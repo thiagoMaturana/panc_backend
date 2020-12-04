@@ -6,6 +6,7 @@
 <section id="portfolio" class="portfolio section-bg">
   <div class="container">
 
+    @if($tipoPg == 'todasReceitas')
     <form class="text-center py-3" action="{{ route('receita.search') }}" method="GET">
       <div class="form-row">
         <div class="form-group col-md-10">
@@ -77,34 +78,27 @@
         <label class="form-check-label">Bebidas</label>
       </div>
     </form>
+    @endif
 
     <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
 
       @foreach ($receitas as $receita)
-      <a href="{{ route('publico.receita.show', ['receita' => $receita->id]) }}">
-        <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
-          <div class="portfolio-wrap">
-            <div class="card" style="max-width: 50vw">
-              <img class="card-img-top" src="{{ $receita->fotos }}">
-              <div class="card-body">
-                <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
-                <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
-
-                @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
-                <form class="py-1 text-center" action="{{ route('publico.receita.edit', ['receita' => $receita->id]) }}" method="GET">
-                  <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
-                </form>
-                <form class="py-1 text-center" action="{{ route('publico.receita.destroy', ['receita' => $receita->id]) }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <input type="hidden" name="user" value="">
-                  <input type="submit" class="btn btn-outline-danger" value="Remover">
-                </form>
-                @endif
+      @if($tipoPg == 'minhasReceitas')
+      <a href="{{ route('publico.receita.showReceitaMinhaReceita', ['receita' => $receita->id]) }}">
+        @else
+        <a href="{{ route('publico.receita.show', ['receita' => $receita->id]) }}">
+          @endif
+          <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+            <div class="portfolio-wrap">
+              <div class="card" style="max-width: 50vw">
+                <img class="card-img-top img-fluid" src="{{ $receita->fotos }}">
+                <div class="card-body">
+                  <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
+                  <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
+                </div>
               </div>
             </div>
-          </div>
-      </a>
+        </a>
     </div>
     @endforeach
   </div>

@@ -1096,6 +1096,10 @@ a{
   color: black;
 }
 
+p{
+  color: black;
+}
+
 a:hover{
   color: #18d26e;
 }

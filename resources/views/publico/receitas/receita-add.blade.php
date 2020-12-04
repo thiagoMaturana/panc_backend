@@ -98,6 +98,25 @@
             <button type="button" class="btn btn-outline-success addPlanta" id="addPlanta">Adicionar planta</button>
         </div>
 
+        <div class="form-group">
+            <label class="small mb-1">Porções</label>
+            <input type="text" maxlength="100" class="form-control @error('porcoes') is-invalid @enderror" name="porcoes" placeholder="Porções" required>
+            @error('porcoes')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="small mb-1">Tempo de preparo</label>
+            <input type="text" maxlength="60" class="form-control @error('tempoPreparo') is-invalid @enderror" name="tempoPreparo" placeholder="Tempo de preparo. Ex: 40m, 1h e 30m" required>
+            @error('tempoPreparo')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
 
         <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>

@@ -31,6 +31,9 @@ class CreatePlantasTable extends Migration {
 			$table->text('avisos')->nullable()->comment('Avisos sobre a planta');
 			$table->text('cultivo')->nullable()->comment('Cultivo da planta');
 			$table->text('fotos');
+			$table->string('status', 45);
+			$table->text('referencia');
+			$table->text('parecer')->nullable();
 
 			$table->foreign('usuarios_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 		});

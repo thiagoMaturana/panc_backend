@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\DB;
 
 class PlantaController extends Controller
 {
-    public function index()//index
+    public function index() //index
     {
         $user = Auth::user();
-        $plantas = Planta::all();   
+        $plantas = Planta::getAprovadas();
 
         if ($user && ($user->isAdministrador() || $user->isComite())) {
+            $plantas = Planta::all();
             return view('admin.tables.plantas', [
                 'plantas' => $plantas
             ]);
@@ -26,20 +27,13 @@ class PlantaController extends Controller
 
     public function create()
     {
-        $user = Auth::user();
-
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
-            return view('admin.forms.planta_add');
-        }
-
-        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
     }
 
-    public function store(PlantaRequest  $request)
+    public function store(PlantaRequest $request)
     {
         $user = Auth::user();
 
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
+        if ($user) {
             $planta = new Planta();
             $planta->nome = $request->nome;
             $planta->nomeCientifico = $request->nomeCientifico;
@@ -55,10 +49,12 @@ class PlantaController extends Controller
             $planta->avisos = $request->avisos;
             $planta->cultivo = $request->cultivo;
             $planta->fotos = $request->fotos;
+            $planta->status = 'cadastrada';
+            $planta->referencia = $request->referencia;
 
             $planta->usuarios_id = Auth::user()->id;
 
-            if($request->nomesPopulares){
+            if ($request->nomesPopulares) {
                 $planta->save();
             }
 
@@ -84,7 +80,8 @@ class PlantaController extends Controller
 
             return view('admin.forms.planta_edit', [
                 'planta' => $planta,
-                'nomesPopulares' => $nomesPopulares
+                'nomesPopulares' => $nomesPopulares,
+                'erroEx' => ''
             ]);
         }
         return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para editar plantas']);
@@ -94,7 +91,7 @@ class PlantaController extends Controller
     {
         $user = Auth::user();
 
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
+        if (($user->id == $planta->usuarios_id && ($planta->status=="cadastrada" || $planta->status =='rejeitada') ) || ($user->isAdministrador() || $user->isComite())) {
             $planta->nome = $request->nome;
             $planta->nomeCientifico = $request->nomeCientifico;
             $planta->caracteristicas = $request->caracteristicas;
@@ -109,10 +106,21 @@ class PlantaController extends Controller
             $planta->avisos = $request->avisos;
             $planta->cultivo = $request->cultivo;
             $planta->fotos = $request->fotos;
+            if ($user->isComite() && $user->id != $planta->usuarios_id && $planta->status != 'submetida'){
+                $planta->status = 'aprovada';
+            }
+            $planta->referencia = $request->referencia;
 
-            if ($request->nomesPopulares){
+            if ($request->nomesPopulares) {
                 $planta->save();
                 NomePopular::where('plantas_id', $planta->id)->delete();
+            } else {
+                $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+                return view('admin.forms.planta_edit', [
+                    'planta' => $planta,
+                    'nomesPopulares' => $nomesPopulares,
+                    'erroEx' => 'Campo nomes populares é obrigatório'
+                ]);
             }
 
             foreach ($request->nomesPopulares as $nomePopularRequest) {
@@ -131,7 +139,8 @@ class PlantaController extends Controller
     {
         $user = Auth::user();
 
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
+        if (($user->id == $planta->usuarios_id && ($planta->status=="cadastrada" || $planta->status =='rejeitada') ) || ($user->isAdministrador() || $user->isComite())) {
+            
             $planta->delete();
 
             return redirect()->route('planta.index');

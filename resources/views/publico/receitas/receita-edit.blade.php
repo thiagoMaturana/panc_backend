@@ -130,6 +130,26 @@
         </div>
 
         <div class="form-group">
+            <label class="small mb-1">Porções</label>
+            <input type="text" maxlength="100" class="form-control @error('fotos') is-invalid @enderror" name="porcoes" placeholder="Porções" value="{{ $receita->porcoes }}" required>
+            @error('porcoes')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="small mb-1">Tempo de preparo</label>
+            <input type="text" maxlength="60" class="form-control @error('fotos') is-invalid @enderror" name="tempoPreparo" placeholder="Tempo de preparo. Ex: 40m, 1h e 30m" value="{{ $receita->tempoPreparo }}" required>
+            @error('tempoPreparo')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
             <label class="small mb-1">Modo de preparo</label>
             <textarea class="form-control ckeditor" name="modoPreparo" placeholder="Modo de preparo" required>{{ old('modoPreparo', $receita->modoPreparo) }}</textarea>
             @error('modoPreparo')

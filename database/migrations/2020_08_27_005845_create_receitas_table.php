@@ -21,7 +21,9 @@ class CreateReceitasTable extends Migration {
 			$table->foreignId('usuarios_id');
 			$table->string('nome');
 			$table->string('tipo');
+			$table->string('porcoes', 100);
 			$table->text('modoPreparo');
+			$table->string('tempoPreparo', 60);
 			$table->text('observacao')->nullable();
 			$table->text('fotos');
 

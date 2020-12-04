@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Receita extends Model
 {
@@ -37,9 +38,15 @@ class Receita extends Model
     public function ingredientes()
 	{
 		return $this->belongsToMany(Ingrediente::class, 'receitas_ingredientes', 'receitas_id', 'ingredientes_id');
-	}
+    }
     
-    /*public function quantidade(){
-        return $this->belongsToMany(Planta::class)->withPivot('quantidade');;
-    }*/
+    public static function getPorUsuario($usuario)
+    { //pegar todas as plantas do usuário
+        if ($usuario) {
+            return DB::table('receitas')
+                ->distinct()
+                ->where('receitas.usuarios_id', '=', $usuario->id)
+                ->get();
+        }
+    }
 }

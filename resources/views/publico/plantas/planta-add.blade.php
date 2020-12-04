@@ -83,7 +83,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label>Caracteristícas</label>
+                <label>Caracteristícas</label><small style="color:green"> (flores, raízes, sementes, origem e entre outros)</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" name="caracteristicas">{{old('caracteristicas')}}</textarea>
             </div>
             <!-- Classificação -->
@@ -151,6 +151,16 @@
                 <input type="text" class="form-control @error('fotos') is-invalid @enderror" placeholder="Url da foto" name="fotos" value="{{old('fotos')}}" required>
                 @error('fotos')
                 <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label>Referências</label>
+                <textarea class="form-control ckeditor" placeholder="Coloque aqui as referências dos sites, artigos e qualquer material pesquisado. De preferência nas normas ABNT" name="referencia" required>{{old('referencia')}}</textarea>
+                @error('referencia')
+                <div class="alert alert-danger">
                     {{ $message }}
                 </div>
                 @enderror

@@ -16,24 +16,24 @@ class UserSeeder extends Seeder
     {
         //ADMINISTRADOR
         DB::table('users')->insert([
-            'name' => 'thiago',
-            'email' => 'thiago@gmail.com',
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
             'role' => '3',
             'password' => Hash::make('123456'),
         ]);
 
         //COMITÊ
         DB::table('users')->insert([
-            'name' => 'harry',
-            'email' => 'harry@gmail.com',
+            'name' => 'comite',
+            'email' => 'comite@gmail.com',
             'role' => '2',
             'password' => Hash::make('123456'),
         ]);
 
         //USUÁRIO COMUM
         DB::table('users')->insert([
-            'name' => 'niall',
-            'email' => 'niall@gmail.com',
+            'name' => 'usuario',
+            'email' => 'usuario@gmail.com',
             'role' => '1',
             'password' => Hash::make('123456'),
         ]);
