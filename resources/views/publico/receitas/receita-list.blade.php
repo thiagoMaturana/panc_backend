@@ -22,83 +22,86 @@
       </div>
 
       <div class="form-check form-check-inline">
-        @if($tipo[1] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[1]" value="Doces e Bolos" checked>
+        @if(!empty($tipo[0]) && $tipo[0] == 'Doces e Bolos' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Doces e Bolos" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[1]" value="Doces e Bolos">
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Doces e Bolos">
         @endif
         <label class="form-check-label">Doces e Bolos</label>
       </div>
       <div class="form-check form-check-inline">
-        @if($tipo[2] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[2]" value="Carnes" checked>
+        @if(!empty($tipo[1]) && $tipo[1] == 'Carnes' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Carnes" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[2]" value="Carnes">
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Carnes">
         @endif
         <label class="form-check-label">Carnes</label>
       </div>
       <div class="form-check form-check-inline">
-        @if($tipo[3] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[3]" value="Frutos do Mar" checked>
+        @if(!empty($tipo[2]) && $tipo[2] == 'Saladas, Molhos e Acompanhamentos' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Saladas, Molhos e Acompanhamentos" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[3]" value="Frutos do Mar">
-        @endif
-        <label class="form-check-label">Frutos do Mar</label>
-      </div>
-      <div class="form-check form-check-inline">
-        @if($tipo[4] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[4]" value="Saladas, Molhos e Acompanhamentos" checked>
-        @else
-        <input class="form-check-input" type="checkbox" name="tipo[4]" value="Saladas, Molhos e Acompanhamentos">
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Saladas, Molhos e Acompanhamentos">
         @endif
         <label class="form-check-label">Saladas, Molhos e Acompanhamentos</label>
       </div>
       <div class="form-check form-check-inline">
-        @if($tipo[5] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[5]" value="Sopas" checked>
+        @if(!empty($tipo[3]) && $tipo[3] == 'Sopas' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Sopas" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[5]" value="Sopas">
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Sopas">
         @endif
         <label class="form-check-label">Sopas</label>
       </div>
       <div class="form-check form-check-inline">
-        @if($tipo[6] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[6]" value="Massas" checked>
+        @if(!empty($tipo[4]) && $tipo[4] == 'Massas' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Massas" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[6]" value="Massas">
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Massas">
         @endif
         <label class="form-check-label">Massas</label>
       </div>
       <div class="form-check form-check-inline">
-        @if($tipo[7] ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[7]" value="Bebidas" checked>
+        @if(!empty($tipo[5]) && $tipo[5] == 'Bebidas' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Bebidas" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[7]" value="Bebidas">
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Bebidas">
         @endif
         <label class="form-check-label">Bebidas</label>
       </div>
+      <div class="form-check form-check-inline">
+        @if(!empty($tipo[6]) && $tipo[6] == 'Prato principal' ?? '')
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Prato principal" checked>
+        @else
+        <input class="form-check-input" type="checkbox" name="tipo[]" value="Prato principal">
+        @endif
+        <label class="form-check-label">Prato principal</label>
+      </div>
     </form>
+    @endif
+
+
+    @if($error)
+    <div class="alert alert-primary text-center" role="alert">
+      {{$error}}
+    </div>
     @endif
 
     <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
 
       @foreach ($receitas as $receita)
-      @if($tipoPg == 'minhasReceitas')
-      <a href="{{ route('publico.receita.showReceitaMinhaReceita', ['receita' => $receita->id]) }}">
-        @else
-        <a href="{{ route('publico.receita.show', ['receita' => $receita->id]) }}">
-          @endif
-          <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
-            <div class="portfolio-wrap">
-              <div class="card" style="max-width: 50vw">
-                <img class="card-img-top img-fluid" src="{{ $receita->fotos }}">
-                <div class="card-body">
-                  <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
-                  <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
-                </div>
+      <a href="{{ route('receita.show', ['receita' => $receita->id]) }}">
+        <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+          <div class="portfolio-wrap">
+            <div class="card" style="max-width: 50vw">
+              <img class="card-img-top img-fluid" src="{{ $receita->fotos }}">
+              <div class="card-body">
+                <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
+                <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
               </div>
             </div>
-        </a>
+          </div>
+      </a>
     </div>
     @endforeach
   </div>

@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="container p-5">
-    <form action="{{ route('publico.receita.store') }}" method="POST">
+    <form action="{{ route('receita.store') }}" method="POST">
         @csrf
 
         <div class="form-row">
             <div class="form-group col-md-8">
-                <label class="small mb-1 ">Nome</label>
+                <label class="small mb-1 ">Nome</label><small style="color:red"> *</small>
                 <input type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" placeholder="Nome" value="{{ old('nome') }}" minlength="3" required>
                 @error('nome')
                 <div class="invalid-feedback">
@@ -16,12 +16,12 @@
                 @enderror
             </div>
             <div class="form-group col-md-4">
-                <label class="small mb-1 ">Tipo</label>
+                <label class="small mb-1 ">Tipo</label><small style="color:red"> *</small>
                 <select name="tipo" class="form-control" required>
                     <option name="tipo" value="Doces e Bolos"> Doces e Bolos </option>
                     <option name="tipo" value="Carnes"> Carnes </option>
-                    <option name="tipo" value="Frutos do Mar"> Frutos do Mar </option>
                     <option name="tipo" value="Saladas, Molhos e Acompanhamentos"> Saladas, Molhos e Acompanhamentos </option>
+                    <option name="tipo" value="Prato principal"> Saladas, Molhos e Acompanhamentos </option>
                     <option name="tipo" value="Sopas"> Sopas </option>
                     <option name="tipo" value="Massas"> Massas </option>
                     <option name="tipo" value="Bebidas"> Bebidas </option>
@@ -35,7 +35,7 @@
         </div>
         @endif
 
-        <label class="small mb-1">Ingredientes</label>
+        <label class="small mb-1">Ingredientes</label><small style="color:red"> *</small>
         <table>
             <div id="dynamicTable">
                 <div class="form-row">
@@ -66,7 +66,7 @@
             <button type="button" class="btn btn-outline-success add" id="add">Adicionar ingrediente</button>
         </div>
 
-        <label class="small mb-1">Plantas</label>
+        <label class="small mb-1">Plantas</label><small style="color:red"> *</small>
         <table>
             <div id="tablePlantas">
                 <div class="form-row">
@@ -99,7 +99,7 @@
         </div>
 
         <div class="form-group">
-            <label class="small mb-1">Porções</label>
+            <label class="small mb-1">Porções</label><small style="color:red"> *</small>
             <input type="text" maxlength="100" class="form-control @error('porcoes') is-invalid @enderror" name="porcoes" placeholder="Porções" required>
             @error('porcoes')
             <div class="invalid-feedback">
@@ -109,7 +109,7 @@
         </div>
 
         <div class="form-group">
-            <label class="small mb-1">Tempo de preparo</label>
+            <label class="small mb-1">Tempo de preparo</label><small style="color:red"> *</small>
             <input type="text" maxlength="60" class="form-control @error('tempoPreparo') is-invalid @enderror" name="tempoPreparo" placeholder="Tempo de preparo. Ex: 40m, 1h e 30m" required>
             @error('tempoPreparo')
             <div class="invalid-feedback">
@@ -119,7 +119,7 @@
         </div>
 
         <div class="form-group">
-            <label class="small mb-1">Modo de preparo</label>
+            <label class="small mb-1">Modo de preparo</label><small style="color:red"> *</small>
             <textarea class="form-control ckeditor" name="modoPreparo" placeholder="Modo de preparo" required>{{ old('modoPreparo') }}</textarea>
             @error('modoPreparo')
             <div class="alert alert-danger">
@@ -132,7 +132,7 @@
             <textarea class="form-control ckeditor" name="observacao" placeholder="Observação" rows="3">{{ old('observacao') }}</textarea>
         </div>
         <div class="form-group">
-            <label class="small mb-1 ">Foto</label>
+            <label class="small mb-1 ">Foto</label><small style="color:red"> *</small>
             <input type="text" class="form-control @error('fotos') is-invalid @enderror" name="fotos" placeholder="Foto" value="{{ old('fotos') }}" required>
             @error('fotos')
             <div class="invalid-feedback">

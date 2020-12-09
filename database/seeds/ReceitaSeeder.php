@@ -110,7 +110,7 @@ class ReceitaSeeder extends Seeder
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
             'nome' => 'Beldroega com ovo',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
+            'tipo' => 'Prato principal',
             'porcoes' => 'Serve 5 pessoas',
             'tempoPreparo' => '10 m',
             'modoPreparo' => 'Coloque o óleo para esquentar e acrescente a planta com o ovo e tempere a gosto',
@@ -182,7 +182,7 @@ class ReceitaSeeder extends Seeder
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
             'nome' => 'Ensopado de Jacatupé',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
+            'tipo' => 'Sopas',
             'porcoes' => 'Serve 5 pessoas',
             'tempoPreparo' => '40m',
             'modoPreparo' => 'Corte os temperos a sua preferencia e refolgue, em seguida coloque o jacatupé e a água até cobrir e coloque na pressão por 30m',
@@ -250,77 +250,152 @@ class ReceitaSeeder extends Seeder
             'ingredientes_id' => 14
         ]);
 
-        /*$id = DB::table('receitas')->insert([
+
+        $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
-            'nome' => '',
+            'nome' => 'Patê de Serralha',
             'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
+            'porcoes' => '10 pessoas',
+            'tempoPreparo' => '5 minutos ',
+            'modoPreparo' => 'Comece picando a cebola, o alho e as folhas de serralha.
+            Coloque todos os ingredientes no liquidificador e bata tudo muito bem.
+            Adicione os temperos a gosto (cebolinha, pimenta, chimichurri) e acerte o sal.
+            Veja se a consistência está boa: se desejar mais líquido, adicione mais azeite!',
+            'fotos' => 'https://img.itdg.com.br/tdg/images/recipes/000/021/040/173171/173171_original.jpg?mode=crop&width=710&height=400'
         ]);
         DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'plantas_id' => (int)Planta::where('nome', '=', 'Serralha')->first()->id,
+            'receitas_id' => 8,
+            'quantidade' => '1 xícara'
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'requeijão',
+            'quantidade'=> '2 potes'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
+            'receitas_id' => 8,
+            'ingredientes_id' => 15
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'alho',
+            'quantidade'=> '2 dentes'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 8,
+            'ingredientes_id' => 16
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'cebola',
+            'quantidade'=> '1/2 cebola'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 8,
+            'ingredientes_id' => 17
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Azeite',
+            'quantidade'=> '4 colheres'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 8,
+            'ingredientes_id' => 18
         ]);
 
 
 
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
-            'nome' => '',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
+            'nome' => 'Refrigerante de Picão-preto',
+            'tipo' => 'Bebidas',
+            'porcoes' => '15 pessoas',
+            'tempoPreparo' => '1 semana e 1 dia',
+            'modoPreparo' => 'Ferver a água com o picão por 15 minutos.
+            Deixar esfriar e acrescentar o açúcar e o suco de limão.
+            Misturar bem. Deixar descansar por 24hrs. Coar e envazar em garrafa pet. (Não encha totalmente mas retire o ar apertando a garrafa até o líquido chegar à borda.) Feche a garrafa e deixe descansando por uma semana.',
+            'observacao' => 'Apenas para ressaltar: refrigerante contém açúcar, que deve ser consumido com moderação. Pessoas alérgicas a cafeína não devem consumir o refrigerante. O refrigerante não deve ser consumido por pessoas que estejam fazendo uso de medicamentos diluidores de sangue.',
+            'fotos' => 'https://biowit.files.wordpress.com/2014/07/picc3a3o.jpg?w=300&h=225'
         ]);
         DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'plantas_id' => (int)Planta::where('nome', '=', 'Picão-preto')->first()->id,
+            'receitas_id' => 9,
+            'quantidade' => '250 g (toda planta, exceto a raiz)'
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'Água',
+            'quantidade'=> '10 litros'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
+            'receitas_id' => 9,
+            'ingredientes_id' => 19
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Açúcar',
+            'quantidade'=> '1 quilo'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 9,
+            'ingredientes_id' => 20
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Suco de limão',
+            'quantidade'=> '1/2 copo'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 9,
+            'ingredientes_id' => 21
         ]);
 
 
 
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
-            'nome' => '',
+            'nome' => 'Peixinho da horta empanado',
             'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
+            'porcoes' => '3 pessoas',
+            'tempoPreparo' => '15 minutos',
+            'modoPreparo' => 'Em uma tigela, misture a farinha, a água e um pouquinho de sal até obter uma mistura homogênea;
+            Em outra tigela, coloque a farinha panko ou a de rosca;
+            Empane as folhas do peixinho: primeiro na mistura de farinha com água e depois na farinha para deixar crocante;
+            Leve para fritar em óleo quente até ficarem douradinhas;
+            Sirva com limão e aproveite!',
+            'fotos' => 'https://www.receiteria.com.br/wp-content/uploads/receitas-de-peixinhos-da-horta-1.jpg'
         ]);
         DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'plantas_id' => (int)Planta::where('nome', '=', 'Peixinho da horta')->first()->id,
+            'receitas_id' => 10,
+            'quantidade' => '6 folhas'
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'Água',
+            'quantidade'=> '1 xícara de chá'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
+            'receitas_id' => 10,
+            'ingredientes_id' => 22
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Farinha de trigo',
+            'quantidade'=> '1 xícara de chá'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 10,
+            'ingredientes_id' => 23
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Farinha de rosca ou panko',
+            'quantidade'=> '1 xícara'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 10,
+            'ingredientes_id' => 24
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Limão',
+            'quantidade'=> 'A gosto'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 10,
+            'ingredientes_id' => 25
         ]);
 
 
@@ -328,100 +403,150 @@ class ReceitaSeeder extends Seeder
 
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
-            'nome' => '',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
+            'nome' => 'Chá de Caruru',
+            'tipo' => 'Bebidas',
+            'porcoes' => '4 pessoas',
+            'tempoPreparo' => '20 minutos',
+            'modoPreparo' => 'Coloque a planta na água fervendo por 2 minutos, depois desligue a abafe por 18 minutos. Sirva quente.',
+            'fotos' => 'https://conteudo.imguol.com.br/c/entretenimento/02/2017/08/03/cha-verde-1501773798026_v2_1920x1280.jpg'
         ]);
         DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'plantas_id' => (int)Planta::where('nome', '=', 'Caruru')->first()->id,
+            'receitas_id' => 11,
+            'quantidade' => '100 gramas (folhas e sementes)'
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'Água',
+            'quantidade'=> '1 litro'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
+            'receitas_id' => 11,
+            'ingredientes_id' => 26
         ]);
 
 
 
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
-            'nome' => '',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
+            'nome' => 'Risoto de tanchagem com cenoura',
+            'tipo' => 'Prato principal',
+            'porcoes' => '2 pessoas',
+            'tempoPreparo' => '30 minutos',
+            'observacao' => '1. procure usar as folhas mais novas, menores, porque elas são mais macias e saborosas; 2. as fibras longitudinais parecem que vão incomodar enquanto você está picando, mas acredite: não vão. Não se preocupe em tirar essas fibras, que o resultado das folhas cozidas é muito parecido com ao que acontece com as fibras da acelga (que nem se nota); 3. procure usar a folha inteira, fica mais saborosa que picada (e com mais gosto de cogumelo, mas não sei o motivo).',
+            'modoPreparo' => 'Comece aquecendo um caneco com água em uma das bocas do fogão. Se você tiver algumas folhas de alho poró (a parte de cima do bulbo, que geralmente descartamos), ou caldo de legumes caseiro coloque nesta água. Caso não tenha, não se preocupe, a água sozinha é suficiente pra fazer o prato. A água precisa estar fervendo para colocarmos no risoto;
+            Em outra panela, refogue a cebola na manteiga em fogo baixo até que o fundo da panela comece a ficar com um agarradinho escuro;
+            Coloque o arroz, deixe torrar por 1 minuto enquanto mexe, e jogue o vinho branco para soltar o fundo da panela;
+            Assim que o vinho secar, coloque as cenouras e comece a colocar sobre o arroz a água que você deixou ferver. Não despeje tudo. Coloque um pouco até o arroz ficar envolto em água, mexa, cozinhe por mais alguns minutos esperando que ela evapore, e em seguida coloque mais um pouquinho. Essa operação vai precisar ser repetida de 3 a 4 vezes até que o risoto fique pronto;
+            Depois de colocar a terceira água, ou quando o arroz estiver mudando de cor de translúcido pra branco e quase ficando al dente, coloque as folhas de tansagem;
+            Acerte o sal e desligue o fogo. É desejável que não se seque muito o risoto, e que ele fique bem molhadinho.',
+            'fotos' => 'https://carlasoaresblog.files.wordpress.com/2018/06/dsc0105.jpg'
         ]);
         DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'plantas_id' => (int)Planta::where('nome', '=', 'Tanchagem')->first()->id,
+            'receitas_id' => 12,
+            'quantidade' => '2-3 pés'
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'Cebola',
+            'quantidade'=> '1 unidade média'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
+            'receitas_id' => 12,
+            'ingredientes_id' => 27
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Arroz de risoto (arbóreo)',
+            'quantidade'=> '1/2 xícara'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 12,
+            'ingredientes_id' => 28
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Manteiga',
+            'quantidade'=> '1 colher'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 12,
+            'ingredientes_id' => 29
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Vinho branco seco',
+            'quantidade'=> '1/3 xícara'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 12,
+            'ingredientes_id' => 30
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Cenoura',
+            'quantidade'=> '1-2 unidades'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 12,
+            'ingredientes_id' => 31
         ]);
 
 
 
         $id = DB::table('receitas')->insert([
             'usuarios_id' => '1',
-            'nome' => '',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
+            'nome' => 'Bolo de Araruta',
+            'tipo' => 'Doces e Bolos',
+            'porcoes' => 'Serve 6 pessoas',
+            'tempoPreparo' => '40 minutos',
+            'modoPreparo' => 'Bata as gemas e o açúcar na batedeira.
+            Coloque o restante dos ingredientes, exceto as claras, e continue batendo até ficar bem homogêneo.
+            Em seguida adicione as claras em ponto de neve, misturando sem bater.
+            Despeje em uma fôrma de buraco no meio, 24cm, untada e enfarinhada.
+            Leve para assar em forno médio, preaquecido, por cerca de 30 minutos
+            Retire do forno e desenforme.',
+            'fotos' => 'https://comidinhasdochef.com/wp-content/uploads/2017/12/Bolo-de-Araruta.jpg'
         ]);
         DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'plantas_id' => (int)Planta::where('nome', '=', 'Araruta')->first()->id,
+            'receitas_id' => 13,
+            'quantidade' => '250 g (farinha)'
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'Açúcar',
+            'quantidade'=> '1 xícara'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
-        ]);
-
-
-
-        $id = DB::table('receitas')->insert([
-            'usuarios_id' => '1',
-            'nome' => '',
-            'tipo' => 'Saladas, Molhos e Acompanhamentos',
-            'porcoes' => '',
-            'tempoPreparo' => '',
-            'modoPreparo' => '',
-            'fotos' => ''
-        ]);
-        DB::table('plantas_receitas')->insert([
-            'plantas_id' => (int)Planta::where('nome', '=', '')->first()->id,
-            'receitas_id' => $id,
-            'quantidade' => ''
+            'receitas_id' => 13,
+            'ingredientes_id' => 32
         ]);
         $idIngrediente = DB::table('ingredientes')->insert([
-            'nome' => '',
-            'quantidade'=> ''
+            'nome' => 'Ovos (gemas e claras separadas)',
+            'quantidade'=> '4 unidades'
         ]);
         DB::table('receitas_ingredientes')->insert([
-            'receitas_id' => $id,
-            'ingredientes_id' => $idIngrediente
-        ]);*/
+            'receitas_id' => 13,
+            'ingredientes_id' => 33
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Limão (raspa da casca)',
+            'quantidade'=> '1 unidade'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 13,
+            'ingredientes_id' => 34
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Fermento em pó',
+            'quantidade'=> '1 colher'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 13,
+            'ingredientes_id' => 35
+        ]);
+        $idIngrediente = DB::table('ingredientes')->insert([
+            'nome' => 'Margarina e trigo',
+            'quantidade'=> 'Para untar'
+        ]);
+        DB::table('receitas_ingredientes')->insert([
+            'receitas_id' => 13,
+            'ingredientes_id' => 36
+        ]);
     }
 }

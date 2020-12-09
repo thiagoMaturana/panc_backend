@@ -47,15 +47,14 @@
     </div>
     @endif
 
-
     <div class="portfolio-container" id="dynamicDiv" data-aos="fade-up" data-aos-delay="100">
 
       @foreach ($plantas as $planta)
 
       @if(Auth:: user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && $tipo == 'paraAnalise')
-      <a href="{{ route('publico.planta.showParaAnalise', ['planta' => $planta->id]) }}">
+      <a href="{{ route('planta.showParaAnalise', ['planta' => $planta->id]) }}">
         @else
-        <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
+        <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
           @endif
           <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
             <div class="portfolio-wrap">
@@ -84,7 +83,7 @@
                   </p>
 
                   @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && !($tipo == 'paraAnalise'))
-                  <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+                  <form class="py-1 text-center" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                     <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                   </form>
                   @endif
@@ -104,7 +103,7 @@
     document.getElementById("dynamicDiv").innerHTML = "";
     $("#dynamicDiv").append(`
         @foreach ($plantas as $planta)
-            <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
+            <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
                         <div class="card" style="max-width: 80vw">
@@ -134,7 +133,7 @@
                                 </p>
 
                                 @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && !($tipo == 'paraAnalise'))
-                                <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+                                <form class="py-1 text-center" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
                               @endif
@@ -151,7 +150,7 @@
     $("#dynamicDiv").append(`
         @foreach ($plantas as $planta)
             @if($planta->status == 'cadastrada')
-            <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
+            <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
                         <div class="card" style="max-width: 80vw">
@@ -166,7 +165,7 @@
                                 </p>
 
                                 @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && !($tipo == 'paraAnalise'))
-                                <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+                                <form class="py-1 text-center" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
                                 @endif
@@ -184,7 +183,7 @@
     $("#dynamicDiv").append(`
         @foreach ($plantas as $planta)
             @if($planta->status == 'submetida')
-            <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
+            <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
                         <div class="card" style="max-width: 80vw">
@@ -199,7 +198,7 @@
                                 </p>
 
                                 @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && !($tipo == 'paraAnalise'))
-                                <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+                                <form class="py-1 text-center" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
                                 @endif
@@ -217,7 +216,7 @@
     $("#dynamicDiv").append(`
         @foreach ($plantas as $planta)
             @if($planta->status == 'aprovada')
-            <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
+            <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
                         <div class="card" style="max-width: 80vw">
@@ -232,7 +231,7 @@
                                 </p>
 
                                 @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && !($tipo == 'paraAnalise'))
-                                <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+                                <form class="py-1 text-center" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
                                 @endif
@@ -250,7 +249,7 @@
     $("#dynamicDiv").append(`
         @foreach ($plantas as $planta)
             @if($planta->status == 'rejeitada')
-            <a href="{{ route('publico.planta.show', ['planta' => $planta->id]) }}">
+            <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
                         <div class="card" style="max-width: 80vw">
@@ -265,7 +264,7 @@
                                 </p>
 
                                 @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && !($tipo == 'paraAnalise'))
-                                <form class="py-1 text-center" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+                                <form class="py-1 text-center" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                                   <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
                                 </form>
                                 @endif

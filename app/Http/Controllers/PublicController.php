@@ -141,16 +141,19 @@ class PublicController extends Controller
         $plantas = Planta::getAprovadas($nome);
 
         return view('publico.plantas.planta-list', [
-            'plantas' => $plantas
+            'plantas' => $plantas,
+            'tipo' => 'todasAsPlantas',
+            'error' => ''
         ]);
     }
 
     public function aprovarPlanta(Planta $planta)
     {
         $planta->status = 'aprovada';
+        $planta->parecer = NULL;
         $planta->save();
 
-        return $this->indexParaAnalise();
+        return redirect()->route('publico.planta.indexParaAnalise');
     }
 
     public function rejeitarPlanta(Planta $planta)
@@ -158,7 +161,7 @@ class PublicController extends Controller
         $planta->status = 'rejeitada';
         $planta->save();
 
-        return $this->indexParaAnalise();
+        return redirect()->route('publico.planta.indexParaAnalise');
     }
 
     public function submeterPlanta(Planta $planta)
@@ -166,9 +169,8 @@ class PublicController extends Controller
         $planta->status = 'submetida';
         $planta->save();
 
-        return $this->indexMinhasPlantas();
+        return redirect()->route('publico.planta.indexParaAnalise');
     }
-
     /*+++++++++++++++++++++++++++++++++++RECEITAS METÓDOS++++++++++++++++++++++++++++++++++++++++*/
 
 
@@ -257,8 +259,7 @@ class PublicController extends Controller
     }
 
 
-    public function showReceita(Receita $receita)
-    {
+    public function showReceita(Receita $receita){
         $ingredientes = $receita->ingredientes;
 
         $user = User::where('id', $receita->usuarios_id)->first();
@@ -323,14 +324,15 @@ class PublicController extends Controller
 
         if ($tipos) {
             foreach ($tipos as $tipo) {
-                $receitas = DB::table('receitas')->where('tipo', 'LIKE', '%' . $tipo . '%')->get();
+                $receitas = DB::table('receitas')->where('receitas.tipo', 'LIKE', '%' . $tipo . '%')->get();
             }
         }
 
         return view('publico.receitas.receita-list', [
             'receitas' => $receitas,
             'nome' => $nome,
-            'tipo' => $tipos
+            'tipo' => $tipos,
+            'tipoPg' => 'todasReceitas'
         ]);
     }
 }

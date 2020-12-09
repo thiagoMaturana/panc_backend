@@ -11,29 +11,47 @@ use Illuminate\Support\Facades\DB;
 
 class PlantaController extends Controller
 {
-    public function index() //index
-    {
-        $user = Auth::user();
+    public function index(){
         $plantas = Planta::getAprovadas();
 
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
-            $plantas = Planta::all();
-            return view('admin.tables.plantas', [
-                'plantas' => $plantas
+        return view('publico.plantas.planta-list', [
+            'plantas' => $plantas,'tipo' => 'todasAsPlantas', 'error' => ''
+        ]);
+    }
+    public function indexMinhasPlantas(){
+        $user = Auth::user();
+        $plantas = Planta::getPorUsuario($user);
+        $error = (count($plantas) > 0)  ? '' : 'Não há plantas cadastradas';
+
+        return view('publico.plantas.planta-list', [
+            'plantas' => $plantas,
+            'error' => $error,
+            'tipo' => 'minhasPlantas'
+        ]);
+    }
+    public function indexParaAnalise(){
+        $user = Auth::user();
+        $plantas = Planta::getParaAnalise();
+        $error = (count($plantas) > 0)  ? '' : 'Não há plantas para análise';
+
+        if ($user->isComite() || $user->isAdministrador()){
+            return view('publico.plantas.planta-list', [
+                'plantas' => $plantas,
+                'error' => $error,
+                'tipo' => 'paraAnalise'
             ]);
         }
-        return redirect()->route('publico.planta.index');
+        return redirect()->route('planta.index');
     }
 
-    public function create()
-    {
+    public function create(){
+        return view('publico.plantas.planta-add', ['erroEx' => '']);
     }
 
-    public function store(PlantaRequest $request)
-    {
+    public function store(PlantaRequest $request){
         $user = Auth::user();
 
-        if ($user) {
+        if ($user && Auth::check()) {
             $planta = new Planta();
             $planta->nome = $request->nome;
             $planta->nomeCientifico = $request->nomeCientifico;
@@ -56,6 +74,12 @@ class PlantaController extends Controller
 
             if ($request->nomesPopulares) {
                 $planta->save();
+                NomePopular::where('plantas_id', $planta->id)->delete();
+            } else {
+                $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+                return view('publico.plantas.planta-add',[
+                    'erroEx' => 'Campo nomes populares é obrigatório'
+                ]);
             }
 
             foreach ($request->nomesPopulares as $key => $nomePopularRequest) {
@@ -65,30 +89,26 @@ class PlantaController extends Controller
 
                 $nomePopular->save();
             }
-
-            return redirect()->route('planta.index');
+            return redirect()->route('planta.show', ['planta' => $planta->id]);
         }
-        return redirect()->route('planta.index')->withErrors(['Você precisa ser do comite ou um administrador para cadastrar plantas']);
+        return redirect()->route('planta.index');
     }
 
-    public function edit(Planta $planta)
-    {
+    public function edit(Planta $planta){
         $user = Auth::user();
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
 
-        if ($user && ($user->isAdministrador() || $user->isComite())) {
-            $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
-
-            return view('admin.forms.planta_edit', [
+        if (($user->id && $user->id == $planta->usuarios_id) || ($user->isComite || $user->isAdministrador) ) {
+            return view('publico.plantas.planta-edit', [
                 'planta' => $planta,
                 'nomesPopulares' => $nomesPopulares,
                 'erroEx' => ''
             ]);
         }
-        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para editar plantas']);
+        return redirect()->route('planta.index');
     }
 
-    public function update(Planta $planta, PlantaRequest $request)
-    {
+    public function update(Planta $planta, PlantaRequest $request){
         $user = Auth::user();
 
         if (($user->id == $planta->usuarios_id && ($planta->status=="cadastrada" || $planta->status =='rejeitada') ) || ($user->isAdministrador() || $user->isComite())) {
@@ -106,17 +126,21 @@ class PlantaController extends Controller
             $planta->avisos = $request->avisos;
             $planta->cultivo = $request->cultivo;
             $planta->fotos = $request->fotos;
-            if ($user->isComite() && $user->id != $planta->usuarios_id && $planta->status != 'submetida'){
+            $planta->referencia = $request->referencia;
+
+            if($user->isComite() && $planta->status == 'aprovada'){
+                $planta->status = 'submetida';
+            }
+            if($user->isAdministrador() && $planta->status == 'aprovada'){
                 $planta->status = 'aprovada';
             }
-            $planta->referencia = $request->referencia;
 
             if ($request->nomesPopulares) {
                 $planta->save();
                 NomePopular::where('plantas_id', $planta->id)->delete();
             } else {
                 $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
-                return view('admin.forms.planta_edit', [
+                return view('publico.plantas.planta-edit', [
                     'planta' => $planta,
                     'nomesPopulares' => $nomesPopulares,
                     'erroEx' => 'Campo nomes populares é obrigatório'
@@ -130,21 +154,71 @@ class PlantaController extends Controller
                 $nomePopular->save();
             }
 
-            return redirect()->route('planta.index');
+            if ($user->isComite() && $planta->status == 'submetida'){
+                return redirect()->route('planta.showParaAnalise', ['planta' => $planta->id]);
+            } 
+            return redirect()->route('planta.show', ['planta' => $planta->id]);
         }
-        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para cadastrar plantas']);
+        return redirect()->route('planta.index');
     }
 
-    public function destroy(Planta $planta)
-    {
+    public function destroy(Planta $planta){
         $user = Auth::user();
 
-        if (($user->id == $planta->usuarios_id && ($planta->status=="cadastrada" || $planta->status =='rejeitada') ) || ($user->isAdministrador() || $user->isComite())) {
-            
+        if ($user->id == $planta->usuarios_id && ($planta->status=="cadastrada" || $planta->status =='rejeitada')) {
             $planta->delete();
-
-            return redirect()->route('planta.index');
+            return redirect()->route('planta.minhasPlantas');
         }
-        return redirect()->route('planta.index')->withErrors(['Voce precisa ser do comite ou um administrador para deletar plantas']);
+        return redirect()->route('planta.minhasPlantas');
     }
+
+    public function show(Planta $planta){
+        $user = Auth::user();
+        $tipo = ($planta->usuarios_id == $user->id) ? 'verPlantaCadastradaDoUsuario' : 'verPlanta';
+
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+        return view('publico.plantas.planta-detail', [
+            'planta' => $planta, 'nomesPopulares' => $nomesPopulares, 'tipo' => $tipo
+        ]);
+    }
+    public function showParaAnalise(Planta $planta){
+        $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+        return view('publico.plantas.planta-detail', [
+            'planta' => $planta, 'nomesPopulares' => $nomesPopulares,'tipo' => 'verPlantaParaAnalise'
+        ]);
+    }
+
+    
+    public function search(Request $request){
+        $nome = $request->search;
+        $plantas = Planta::getAprovadas($nome);
+        $error = (count($plantas) > 0)  ? '' : 'Não foi encontrada nenhuma planta com nome, nome científico e nomes populares cadastradas';
+        
+        return view('publico.plantas.planta-list', [
+            'plantas' => $plantas, 'tipo' => 'todasAsPlantas', 'error' => $error
+            ]);
+    }
+
+    
+    public function aprovar(Planta $planta){
+        $planta->status = 'aprovada';
+        $planta->parecer = NULL;
+        $planta->save();
+        
+        return redirect()->route('planta.paraAnalise');
+    }
+    public function parecer(Request $request, Planta $planta){ 
+        $planta->parecer = $request->parecer;
+        $planta->status = 'rejeitada';
+        $planta->save();
+
+        return redirect()->route('planta.index');
+    }
+    public function submeter(Planta $planta){
+        $planta->status = 'submetida';
+        $planta->save();
+
+        return redirect()->route('planta.indexParaAnalise');
+    }
+
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container p-5">
-    <form action="{{ route('publico.receita.update', ['receita' => $receita->id]) }}" method="POST">
+    <form action="{{ route('receita.update', ['receita' => $receita->id]) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -31,10 +31,10 @@
                     <option name="tipo" value="Carnes"> Carnes </option>
                     @endif
 
-                    @if($receita->tipo == 'Frutos do Mar')
-                    <option name="tipo" value="Frutos do Mar" selected> Frutos do Mar </option>
+                    @if($receita->tipo == 'Prato principal')
+                    <option name="tipo" value="Prato principal" selected> Prato principal </option>
                     @else
-                    <option name="tipo" value="Frutos do Mar"> Frutos do Mar </option>
+                    <option name="tipo" value="Prato principal"> Prato principal </option>
                     @endif
 
                     @if($receita->tipo == 'Saladas, Molhos e Acompanhamentos')

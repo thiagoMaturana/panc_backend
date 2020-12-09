@@ -6,13 +6,13 @@
 <section id="portfolio" class="portfolio section-bg">
     <div class="container">
 
-        <form action="{{ route('publico.planta.store') }}" method="POST">
+        <form action="{{ route('planta.store') }}" method="POST">
             @csrf
 
             <!-- Nomes -->
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label>Nome</label>
+                    <label>Nome</label><small style="color:red"> *</small>
                     <input type="text" minlength="3" maxlength="60" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome" name="nome" value="{{old('nome')}}" required>
                     @error('nome')
                     <div class="invalid-feedback">
@@ -21,7 +21,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Nome Científico</label>
+                    <label>Nome Científico</label><small style="color:red"> *</small>
                     <input type="text" minlength="3" maxlength="100" class="form-control @error('nomeCientifico') is-invalid @enderror" placeholder="Nome Científico" name="nomeCientifico" value="{{old('nomeCientifico')}}" required>
                     @error('nomeCientifico')
                     <div class="invalid-feedback">
@@ -37,7 +37,7 @@
             </div>
             @endif
 
-            <label>Nomes populares</label>
+            <label>Nomes populares</label><small style="color:red"> *</small>
             <table>
                 <div id="dynamicTable">
                     <div class="form-row">
@@ -61,7 +61,7 @@
 
             <!-- Caracteristicas -->
             <div class="form-group">
-                <label>Tamanho</label>
+                <label>Tamanho</label><small style="color:red"> *</small>
                 <input type="text" class="form-control @error('tamanho') is-invalid @enderror" placeholder="Tamanho" name="tamanho" value="{{old('tamanho')}}" required>
                 @error('tamanho')
                 <div class="invalid-feedback">
@@ -74,7 +74,7 @@
                 <textarea class="form-control ckeditor" placeholder="Descreva o Fruto da planta, caso haja" name="fruto">{{old('fruto')}}</textarea>
             </div>
             <div class="form-group">
-                <label>Folha</label>
+                <label>Folha</label><small style="color:red"> *</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva a Folha da planta" name="folha" required>{{old('folha')}}</textarea>
                 @error('folha')
                 <div class="alert alert-danger">
@@ -83,13 +83,13 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label>Caracteristícas</label><small style="color:green"> (flores, raízes, sementes, origem e entre outros)</small>
+                <label>Caracteristícas</label><small style="color:red"> *</small><small style="color:green"> (flores, raízes, sementes, origem e entre outros)</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva a planta fisicamente e/ou fisiológicamente" name="caracteristicas">{{old('caracteristicas')}}</textarea>
             </div>
             <!-- Classificação -->
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label>Familia</label>
+                    <label>Familia</label><small style="color:red"> *</small>
                     <input type="text" minlength="3" maxlength="45" class="form-control @error('familia') is-invalid @enderror" placeholder="Familia da planta" value="{{old('familia')}}" name="familia" required>
                     @error('familia')
                     <div class="invalid-feedback">
@@ -98,7 +98,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Genero</label>
+                    <label>Genero</label><small style="color:red"> *</small>
                     <input type="text" minlength="3" maxlength="45" class="form-control @error('genero') is-invalid @enderror" value="{{old('genero')}}" placeholder="Genero da planta" name="genero" required>
                     @error('genero')
                     <div class="invalid-feedback">
@@ -107,7 +107,7 @@
                     @enderror
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Especie</label>
+                    <label>Especie</label><small style="color:red"> *</small>
                     <input type="text" minlength="3" maxlength="45" class="form-control @error('especie') is-invalid @enderror" placeholder="Especie da planta" name="especie" value="{{old('especie')}}" required>
                     @error('especie')
                     <div class="invalid-feedback">
@@ -118,7 +118,7 @@
             </div>
             <!-- Propriedades -->
             <div class="form-group">
-                <label>Propriedades Medicinais</label>
+                <label>Propriedades Medicinais</label><small style="color:red"> *</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva as propriedades medicinais da planta" name="propriedadesMedicinais" required>{{old('propriedadesMedicinais')}}</textarea>
                 @error('propriedadesMedicinais')
                 <div class="alert alert-danger">
@@ -127,7 +127,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label>Propriedades Gastronômicas</label>
+                <label>Propriedades Gastronômicas</label><small style="color:red"> *</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva as propriedades gastronômicas da planta" name="propriedadesCulinarias" required>{{old('propriedadesCulinarias')}}</textarea>
                 @error('propriedadesCulinarias')
                 <div class="alert alert-danger">
@@ -147,7 +147,7 @@
             </div>
             <!-- Foto -->
             <div class="form-group">
-                <label>Foto</label>
+                <label>Foto</label><small style="color:red"> *</small>
                 <input type="text" class="form-control @error('fotos') is-invalid @enderror" placeholder="Url da foto" name="fotos" value="{{old('fotos')}}" required>
                 @error('fotos')
                 <div class="invalid-feedback">
@@ -157,7 +157,7 @@
             </div>
 
             <div class="form-group">
-                <label>Referências</label>
+                <label>Referências</label><small style="color:red"> *</small>
                 <textarea class="form-control ckeditor" placeholder="Coloque aqui as referências dos sites, artigos e qualquer material pesquisado. De preferência nas normas ABNT" name="referencia" required>{{old('referencia')}}</textarea>
                 @error('referencia')
                 <div class="alert alert-danger">

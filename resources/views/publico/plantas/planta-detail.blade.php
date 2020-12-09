@@ -27,7 +27,7 @@
                     <a class="nav-link addCul" id="addCul" href="#">Cultivo</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link addRec" href="{{ route('publico.receita.indexPorPlanta', ['planta' => $planta->id]) }}">Receitas</a>
+                    <a class="nav-link addRec" href="{{ route('receita.porPlanta', ['planta' => $planta->id]) }}">Receitas</a>
                 </li>
             </ul>
         </nav>
@@ -43,24 +43,46 @@
             <p><b>- Genêro: </b>{{ $planta->genero }}</p>
             <p><b>- Espécie: </b>{{ $planta->especie }}</p>
             <p><b>Avisos: </b> {!!$planta->avisos!!}</p>
-            <p><b>Referências: </b> {!!$planta->referencia!!}</p>
+            <p><b>Referências: </b> {!!$planta->referencia!!}</p><br><br><br>
+
+            @if($tipo == 'verPlantaCadastradaDoUsuario' && $planta->status == 'rejeitada')
+            <p><b>Justificativa da rejeição: </b>{!!$planta->parecer!!}</p>
+            @endif
         </div>
+
+
+        @if($tipo == 'verPlantaParaAnalise')
+        <form class="px-1" action="{{ route('planta.parecer', ['planta' => $planta->id]) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label>Justificativa</label>
+                <textarea class="form-control ckeditor" name="parecer" required>{{$planta->parecer ?? old('parecer')}}</textarea>
+                @error('parecer')
+                <div class="alert alert-danger">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <input type="submit" class="btn btn-outline-danger" value="Rejeitar">
+        </form>
+        @endif
 
         <div class="row float-right">
             @if(($tipo == 'verPlantaCadastradaDoUsuario' && ($planta->status == 'cadastrada' || $planta->status == 'rejeitada'))|| $tipo == 'verPlantaParaAnalise')
 
-            <form class="px-1" action="{{ route('publico.planta.edit', ['planta' => $planta->id]) }}" method="GET">
+            <form class="px-1" action="{{ route('planta.edit', ['planta' => $planta->id]) }}" method="GET">
                 <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
             </form>
 
             @if($tipo == 'verPlantaCadastradaDoUsuario' && ($planta->status == 'cadastrada' || $planta->status == 'rejeitada'))
-            <form class="px-1" action="{{ route('publico.planta.destroy', ['planta' => $planta->id]) }}" method="POST">
+            <form class="px-1" action="{{ route('planta.destroy', ['planta' => $planta->id]) }}" method="POST">
                 @csrf
                 @method('delete')
                 <input type="hidden" name="user" value="">
                 <input type="submit" class="btn btn-outline-danger" value="Remover">
             </form>
-            <form class="px-1" action="{{ route('publico.planta.submeter', ['planta' => $planta->id]) }}" method="GET">
+            <form class="px-1" action="{{ route('planta.submeter', ['planta' => $planta->id]) }}" method="GET">
                 <input type="submit" class="btn btn-outline-secondary" value="Submeter para análise"></input>
             </form>
             @endif
@@ -68,18 +90,15 @@
             @endif
 
             @if($tipo == 'verPlantaParaAnalise')
-            <form class="px-1" action="{{ route('publico.planta.aprovar', ['planta' => $planta->id]) }}" method="GET">
+            <form class="px-1" action="{{ route('planta.aprovar', ['planta' => $planta->id]) }}" method="GET">
                 <input type="submit" class="btn btn-outline-success" value="Aprovar"></input>
-            </form>
-
-            <form class="px-1" action="{{ route('publico.planta.rejeitar', ['planta' => $planta->id]) }}" method="GET">
-                <input type="submit" class="btn btn-outline-danger" value="Rejeitar"></input>
             </form>
             @endif
         </div>
     </div>
 </section><!-- End Portfolio Details Section -->
 
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
     $("#addDes").click(function() {
         document.getElementById("dynamicDiv").innerHTML = "";
@@ -93,6 +112,10 @@
         document.getElementById("dynamicDiv").innerHTML = "";
         $("#dynamicDiv").append('<p><b>Cultivo: </b> {!!$planta->cultivo!!}</p>');
     })
+
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
+    });
 </script>
 
 @endsection

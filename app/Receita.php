@@ -49,4 +49,8 @@ class Receita extends Model
                 ->get();
         }
     }
+
+    public static function getTipos(){
+        return ['Doces e Bolos', 'Carnes', 'Saladas, Molhos e Acompanhamentos', 'Sopas', 'Massas', 'Bebidas', 'Prato principal'];
+    }
 }

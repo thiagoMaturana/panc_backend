@@ -67,7 +67,7 @@ class PlantaRequest extends FormRequest
             'propriedadesMedicinais.required' => 'Propriedades Medicinais é obrigatório',
             'propriedadesCulinarias.required' => 'Propriedades Culinarias é obrigatório',
             'fotos.required' => 'Foto é obrigatório',
-            'referencia.required' => 'Referências são obrigatórias',
+            'referencia.required' => 'Referências são obrigatórias'
         ];
     }
 }

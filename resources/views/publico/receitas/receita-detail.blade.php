@@ -39,12 +39,12 @@
             @endif
         </div>
 
-        @if($tipoPg == 'minhasReceitas')
+        @if($tipoPg == 'verReceitaDoUsuario')
         <div class="row float-right">
-            <form class="px-1" action="{{ route('publico.receita.edit', ['receita' => $receita->id]) }}" method="GET">
+            <form class="px-1" action="{{ route('receita.edit', ['receita' => $receita->id]) }}" method="GET">
                 <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
             </form>
-            <form class="px-1" action="{{ route('publico.receita.destroy', ['receita' => $receita->id]) }}" method="POST">
+            <form class="px-1" action="{{ route('receita.destroy', ['receita' => $receita->id]) }}" method="POST">
                 @csrf
                 @method('delete')
                 <input type="hidden" name="user" value="">

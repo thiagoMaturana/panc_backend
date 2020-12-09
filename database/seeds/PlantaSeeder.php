@@ -159,7 +159,7 @@ class PlantaSeeder extends Seeder
             'genero' => 'Pachyrhizus',
             'especie' => 'P. ahipa',
             'propriedadesMedicinais' => 'As raízes ricas em carboidratos podem ser comidas cruas e fornecer calorias e vitamina K e vitamina C , além de potássio. Normalmente, é consumido fresco, quase como uma fruta. Em alguns casos crus, também é preparado como suco. As raízes têm um sabor doce e são crocantes como uma maçã e são uma adição atraente para saladas verdes. Podem ser fervidos e mesmo depois de cozidos, mantêm a sua textura crocante. Os tubérculos de Ahipa são considerados como tendo um efeito de limpeza no corpo. É suposto curar infecções da garganta e da passagem do ar.  Sua matéria seca varia de 15-30%.',
-            'propriedadesCulinarias' => '',
+            'propriedadesCulinarias' => 'Do jacatupé, a parte comestível é a raiz. Com propriedade diurética e proteica – superior a 9% da matéria seca –, é consumida crua, ralada ou em pedaços em saladas. Pode-se ainda fazer dela farinha ou extrair polvilho para a fabricação de pães e biscoitos.',
             'fotos' => 'https://s2.glbimg.com/tVSDpdZGfLKtyWULsHrKtTrtnQI=/e.glbimg.com/og/ed/f/original/2018/04/01/c2.jpg',            
             'cultivo' => 'Antes da semeadura, o solo deve ser solto até uma profundidade de 15–25 cm. Além disso, o solo deve ser completamente limpo de ervas daninhas e pedras. Na Bolívia, P. ahipa é normalmente semeada entre agosto e outubro, dependendo da estação das chuvas. A taxa de semeadura está entre 40 e 65 kg / ha. Na determinação da taxa, as características preferidas, como o tamanho do tubérculo, desempenham um papel importante. Além disso, a fertilidade do solo e o peso da semente devem ser levados em consideração. A distância de plantio é de 20–60 cm entre linhas e 6–25 cm entre plantas na mesma linha. Portanto, cerca de seis a 83 plantas / m 2 são possíveis. É plantado em serras , quando é irrigado por inundação, o que ocorre principalmente na região andina.',
             'status' => 'aprovada',
@@ -274,7 +274,7 @@ class PlantaSeeder extends Seeder
             'nomeCientifico' => 'Amaranthus viridis',
             'tamanho' => '20 a 80 cm de altura',
             'folha' => 'Longas',
-            'caracteristicas' => '',
+            'caracteristicas' => 'O Amaranthus hybridus var. Paniculatus é uma planta anual, com caule ereto e pouco ramificada, com altura média aproximada variando de 0,5 – 1,0 m, apresenta caule e pecíolos com pigmentação roxa. Sua inflorescência é uma panícula que apresenta coloração roxa.',
             'familia' => 'Amaranthaceae',
             'genero' => 'Amaranthus',
             'especie' => 'viridis',
@@ -283,7 +283,7 @@ class PlantaSeeder extends Seeder
             'fotos' => 'https://miro.medium.com/max/700/1*3s9uC80rOEa4AqeLDUmzRA.jpeg',            
             'cultivo' => 'Basta colocar algumas sementes em um vaso ou no solo, regar e esperar. Ele cresce com facilidade e não precisa de nenhum cuidado além de uma rega de vez em quando. Inclusive, não se deve adubar o caruru, pois ele pode transformar o adubo em componentes tóxicos.',
             'status' => 'aprovada',
-            'referencia' => ''
+            'referencia' => '- https://maissoja.com.br/caruru-amaranthus-hybridus-caracteristicas-e-complexidade-de-manejo-2/#:~:text=patulus.-,O%20Amaranthus%20hybridus%20var.,pan%C3%ADcula%20que%20apresenta%20colora%C3%A7%C3%A3o%20roxa.'
         ]);
         DB::table('nomes_populares')->insert(['plantas_id' => 10,'nome' => 'bredo']);   
 
@@ -302,7 +302,7 @@ class PlantaSeeder extends Seeder
             'propriedadesMedicinais' => 'As propriedades da Tanchagem incluem sua ação antibacteriana, adstringente, desintoxicante, expectorante, analgésica, anti-inflamatória, diurética, antidiarreica, expectorante, hemostática e cicatrizante, sendo empregada contra infecções das vias respiratórias superiores (faringite, amigdalite, estomatite), bronquite crônica e como auxiliar no tratamento de úlceras pépticas',
             'propriedadesCulinarias' => 'Podem ser usados folhas e sementes.',
             'fotos' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Plantago_major_002.JPG/250px-Plantago_major_002.JPG',            
-            'cultivo' => '',
+            'cultivo' => 'Plantio Embora a semente da tansagem desenvolva-se em qualquer tipo de solo, ela prefere os úmidos e férteis. Para regiões de clima temperado, de setembro a dezembro é a época mais favorável para o plantio direto em canteiros. Em regiões quentes, a prática deve ser realizada no inverno e sob irrigação.',
             'status' => 'aprovada',
             'referencia' => '- https://pt.wikipedia.org/wiki/Plantago_major'
         ]);
@@ -323,11 +323,11 @@ class PlantaSeeder extends Seeder
             'genero' => 'Maranta',
             'especie' => 'M. arundinacea',
             'propriedadesMedicinais' => 'Contra as febres intermitentes, contra a dispepsia, sendo que seu suco acre serve contra a mordedura de cobra e picada de insetos e quando colocado sobre a língua aumenta a salivação.',
-            'propriedadesCulinarias' => 'Os rizomas podem ser lavados e triturados para a extração do polvilho de araruta. O amido de araruta tem alta digestibilidade e pode ser usado para o preparo de cremes, mingaus, pães, biscoitos, pão-de-queijo e para engrossar molhos.',
-            'fotos' => 'Contra as febres intermitentes, contra a dispepsia, sendo que seu suco acre serve contra a mordedura de cobra e picada de insetos e quando colocado sobre a língua aumenta a salivação.',            
+            'propriedadesCulinarias' => 'Os rizomas podem ser lavados e triturados para a extração do polvilho de araruta. O amido de araruta tem alta digestibilidade e pode ser usado para o preparo de cremes, mingaus, pães, biscoitos, pão-de-queijo e para engrossar molhos. Contra as febres intermitentes, contra a dispepsia, sendo que seu suco acre serve contra a mordedura de cobra e picada de insetos e quando colocado sobre a língua aumenta a salivação.',            
             'cultivo' => 'Para as culturas de ciclo longo, como é o caso da araruta, é muito importante se conhecer o tipo e o tamanho da muda, assim como a forma que deve ser plantada, e, portanto, há necessidade de estabelecer o mais rápido a população final desejada. Este trabalho teve como objetivo avaliar tipos de propágulos de araruta, provenientes do rizoma e haste pós-colheita, para produção de mudas.',
             'status' => 'aprovada',
-            'referencia' => '- https://hortodidatico.ufsc.br/araruta/ <br> -https://pt.wikipedia.org/wiki/Araruta'
+            'referencia' => '- https://hortodidatico.ufsc.br/araruta/ <br> -https://pt.wikipedia.org/wiki/Araruta',
+            'fotos' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Forra%C3%A7ao2.jpg/250px-Forra%C3%A7ao2.jpg'
         ]);
         DB::table('nomes_populares')->insert(['plantas_id' => 13,'nome' => 'maranta']);
         DB::table('nomes_populares')->insert(['plantas_id' => 13,'nome' => 'raruta']);
@@ -367,7 +367,7 @@ class PlantaSeeder extends Seeder
             'genero' => 'Tropaeolum',
             'especie' => 'T. majus L.',
             'propriedadesMedicinais' => 'Expectorante, antiescorbútica, diurética, tônica, depurativa, aperiente e para infecções do sistema respiratório e urinário. Também é usado como antimicótico, analgésico e contra queda de cabelos. Para dor de garganta costuma-se comer as flores frescas. Toda a planta é considerada comestível. Os frutos verdes são consumidos como substituto da alcaparra, quando maduros são usados como laxantes. ',
-            'propriedadesCulinarias' => '',
+            'propriedadesCulinarias' => 'As folhas jovens e as flores podem ser usadas em saladas cruas, salteadas, para fazer massas verdes, patês, panquecas, pizzas, pães, cozidas com carnes, para sopas, charutinhos, risotos, sanduíches (x-salada de capuchinha).',
             'fotos' => 'https://hortodidatico.ufsc.br/files/2020/01/CAPUCHINHA1.jpg',            
             'cultivo' => 'em ser muito exigente quanto ao solo, a capuchinha se dá melhor nos que se apresentam leves, ricos em matéria orgânica e com boa umidade. Na propagação por sementes, a semeadura pode ser no local definitivo, com cerca de 1 centímetro de profundidade, ou em sementeiras e bandejas.',
             'status' => 'aprovada',
