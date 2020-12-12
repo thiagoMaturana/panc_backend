@@ -18,10 +18,11 @@ class ReceitaController extends Controller
         $receitas = Receita::all();
 
         return view('publico.receitas.receita-list', [
-            'receitas' => $receitas, 'error' => '', 'tipoPg' => 'todasReceitas','tipo' => ''
+            'receitas' => $receitas, 'error' => '', 'tipoPg' => 'todasReceitas', 'tipo' => ''
         ]);
     }
-    public function minhasReceitas(){
+    public function minhasReceitas()
+    {
         $user = Auth::user();
         $receitas = Receita::getPorUsuario($user);
         $error = (count($receitas) > 0)  ? '' : 'Não há receitas cadastradas';
@@ -30,7 +31,8 @@ class ReceitaController extends Controller
             'receitas' => $receitas, 'error' => $error, 'tipoPg' => 'minhasReceitas'
         ]);
     }
-    public function receitaPorPlanta(Planta $planta){
+    public function receitaPorPlanta(Planta $planta)
+    {
         $receitas = $planta->receitas;
         $error = (count($receitas) > 0)  ? '' : 'Não há receitas cadastradas para essa planta';
 
@@ -60,6 +62,17 @@ class ReceitaController extends Controller
 
             $receita->usuarios_id = Auth::user()->id;
 
+            $nomesPlantas = $request->nomePlanta;
+            foreach ($nomesPlantas as $key => $nomePlanta) {
+                $plantaNome = Planta::where('nome', '=', $request->nomePlanta)->first();
+                if (empty($plantaNome)) {
+                    return view('publico.receitas.receita-add', [
+                        'erroEx' => 'Digite uma planta já cadastrada. 
+                        Para ver digite ao menos 3 palavras no campo Planta e veja as sugestões já cadastradas no nosso banco de dados.'
+                    ]);
+                }
+            }
+
             if ($request->nomePlanta && $request->ingredientes && $request->quantidade && $request->quantidadePlanta) {
                 $receita->save();
             } else {
@@ -68,11 +81,11 @@ class ReceitaController extends Controller
                 ]);
             }
 
-            $nomesPlantas = $request->nomePlanta;
             foreach ($nomesPlantas as $key => $nomePlanta) {
                 $planta = Planta::where('nome', $nomePlanta)->first();
                 $receita->plantas()->attach($planta, ['quantidade' => $request->quantidadePlanta[$key]]);
             }
+
             foreach ($request->ingredientes as $key => $ingredienteRequest) {
                 $ingrediente = new Ingrediente();
 
@@ -87,7 +100,8 @@ class ReceitaController extends Controller
         return redirect()->route('receita.index');
     }
 
-    public function edit(Receita $receita){
+    public function edit(Receita $receita)
+    {
         $ingredientes = $receita->ingredientes;
 
         if (Auth::user()) {
@@ -110,7 +124,19 @@ class ReceitaController extends Controller
             $receita->porcoes = $request->porcoes;
             $receita->tempoPreparo = $request->tempoPreparo;
 
-            $receita->usuarios_id = Auth::user()->id;
+            $nomesPlantas = $request->nomePlanta;
+
+            foreach ($nomesPlantas as $key => $nomePlanta) {
+                $plantaNome = Planta::where('nome', '=', $request->nomePlanta)->first();
+                if (empty($plantaNome)) {
+                    return view('publico.receitas.receita-edit', [
+                        'receita' => $receita,
+                        'ingredientes' => $receita->ingredientes,
+                        'erroEx' => 'Digite uma planta já cadastrada. 
+                        Para ver digite ao menos 3 palavras no campo Planta e veja as sugestões já cadastradas no nosso banco de dados.'
+                    ]);
+                }
+            }
 
             if ($request->nomePlanta && $request->ingredientes && $request->quantidade && $request->quantidadePlanta) {
                 $receita->save();
@@ -157,14 +183,15 @@ class ReceitaController extends Controller
         return redirect()->route('receita.index');
     }
 
-    public function show(Receita $receita){
+    public function show(Receita $receita)
+    {
         $ingredientes = $receita->ingredientes;
         $user = Auth::user();
         $tipo = 'verReceita';
         $usuario = User::where('id', $receita->usuarios_id)->first();
 
-        if ($user){
-            if(isset($user) && ($user->id == $receita->usuarios_id) || ($user->isComite() || $user->isAdministrador())){
+        if ($user) {
+            if (isset($user) && ($user->id == $receita->usuarios_id) || ($user->isComite() || $user->isAdministrador())) {
                 $tipo = 'verReceitaDoUsuario';
             }
         }
@@ -185,7 +212,8 @@ class ReceitaController extends Controller
         ]);
     }
 
-    function fetchPlanta(Request $request){
+    function fetchPlanta(Request $request)
+    {
         $nome = $request->get('query');
         $planta = Planta::where('nome', 'LIKE', "%{$nome}%")->get();
         return $planta;
@@ -198,7 +226,7 @@ class ReceitaController extends Controller
         $tipo = [];
 
         $tipos = (count($tipos) > 0) ? $tipos : Receita::getTipos();
-        
+
         $receitas = DB::table('receitas')
             ->leftJoin('plantas_receitas', 'receitas.id', '=', 'plantas_receitas.receitas_id')
             ->leftJoin('plantas', 'plantas_receitas.plantas_id', '=', 'plantas.id')
@@ -207,35 +235,35 @@ class ReceitaController extends Controller
             ->distinct()
             ->where('receitas.nome', 'LIKE', '%' . $nome . '%')
             ->whereIn('receitas.tipo', $tipos)
-            ->orWhere(function($query) use($nome, $tipos){
+            ->orWhere(function ($query) use ($nome, $tipos) {
                 $query->where('plantas.nome', 'LIKE', '%' . $nome . '%')
-                      ->whereIn('receitas.tipo', $tipos);
+                    ->whereIn('receitas.tipo', $tipos);
             })
-            ->orWhere(function($query) use($nome, $tipos){
+            ->orWhere(function ($query) use ($nome, $tipos) {
                 $query->where('nomes_populares.nome', 'LIKE', '%' . $nome . '%')
-                      ->whereIn('receitas.tipo', $tipos);
+                    ->whereIn('receitas.tipo', $tipos);
             })
             ->get();
 
         $error = (count($receitas) > 0)  ? '' : 'Não foi encontrada nenhuma receita que tenha esse nome ou uma planta com seus nomes populares que tenha receita';
-        
-        if (count($tipos) == 7){
+
+        if (count($tipos) == 7) {
             $tipo = [];
         } else {
-            foreach($tipos as $tipe){
-                if ($tipe == 'Doces e Bolos'){
+            foreach ($tipos as $tipe) {
+                if ($tipe == 'Doces e Bolos') {
                     $tipo[0] = 'Doces e Bolos';
-                } else if ($tipe == 'Carnes'){
+                } else if ($tipe == 'Carnes') {
                     $tipo[1] = 'Carnes';
-                } else if ($tipe == 'Saladas, Molhos e Acompanhamentos'){
+                } else if ($tipe == 'Saladas, Molhos e Acompanhamentos') {
                     $tipo[2] = 'Saladas, Molhos e Acompanhamentos';
-                } else if ($tipe == 'Sopas'){
+                } else if ($tipe == 'Sopas') {
                     $tipo[3] = 'Sopas';
-                } else if ($tipe == 'Massas'){
+                } else if ($tipe == 'Massas') {
                     $tipo[4] = 'Massas';
-                } else if ($tipe == 'Bebidas'){
+                } else if ($tipe == 'Bebidas') {
                     $tipo[5] = 'Bebidas';
-                } else if ($tipe == 'Prato principal'){
+                } else if ($tipe == 'Prato principal') {
                     $tipo[6] = 'Prato principal';
                 }
             }

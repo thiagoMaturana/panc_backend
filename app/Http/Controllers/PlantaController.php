@@ -130,8 +130,7 @@ class PlantaController extends Controller
 
             if($user->isComite() && $planta->status == 'aprovada'){
                 $planta->status = 'submetida';
-            }
-            if($user->isAdministrador() && $planta->status == 'aprovada'){
+            }else if($user->isAdministrador() && $planta->status == 'aprovada'){
                 $planta->status = 'aprovada';
             }
 
