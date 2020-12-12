@@ -4,80 +4,101 @@
 
 <section id="portfolio-details" class="portfolio-details">
     <div class="container">
+        <h2 class="display-5 text-center">{{ $receita->nome }}</h2> <br>
 
-        <div class="portfolio-details-container">
-            <div class="portfolio-description">
-                <h2>{{ $receita->nome }}</h2>
+        <div class="owl-carousel portfolio-details-carousel">
+            <img src=" {{ $receita->fotos }}" class="img-fluid" alt="">
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12 info">
+                <div class="recipe-data clearfix recipe-info-box row">
+                    <div class="serve block col">
+                        <div class="ico-svg ico-orange svg-small">
+                            <i style="font-size: 1.5em;" class='bx bx-food-menu'></i>
+                        </div>
+                        <span class="num preptime">
+                            <time class="dt-duration">
+                                {{ $receita->tipo }}
+                            </time>
+                        </span>
+                    </div>
+                    <div class="clock block col">
+                        <div class="ico-svg ico-orange svg-small">
+                            <i style="font-size: 1.5em;" class='bx bx-time-five'></i>
+                        </div>
+                        <span class="label">
+                            Preparo
+                        </span>
+                        <span class="num preptime">
+                            <time class="dt-duration">
+                                {{ $receita->tempoPreparo }}
+                            </time>
+                        </span>
+                    </div>
+                    <div class="serve block col">
+                        <div class="ico-svg ico-orange svg-small">
+                            <i style="font-size: 1.5em;" class='bx bx-dish'></i>
+                        </div>
+                        <span class="label">
+                            Rendimento
+                        </span>
+                        <data class="p-yield num yield">
+                            {{ $receita->porcoes }}
+                        </data>
+                    </div>
+                    <div class="serve block col">
+                        <div class="ico-svg ico-orange svg-small">
+                            <i style="font-size: 1.5em;" class='bx bx-user'></i>
+                        </div>
+                        <span class="label">
+                            {{$usuario->name}}
+                        </span>
+                    </div>
+                </div>
             </div>
-
-            <div class="owl-carousel portfolio-details-carousel">
-                <img src=" {{ $receita->fotos }}" class="img-fluid" alt="">
-            </div>
-
         </div>
-
-        <nav class="navbar navbar-expand-sm col-lg-12 d-flex justify-content-center ">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link addDes" id="addDes" href="#">Descrição</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link addIng" id="addIng" href="#">Ingredientes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link addPre" id="addPre" href="#">Modo de preparo</a>
-                </li>
-            </ul>
-        </nav>
-
-        <div id="dynamicDiv">
-            <p><b>Tipo: </b>{{ $receita->tipo }}</p>
-            <p><b>Tempo de preparo: </b>{{ $receita->tempoPreparo }}</p>
-            <p><b>Porções: </b>{{ $receita->porcoes }}</p>
-            @if($receita->observacao)
-            <p><b>Observação: </b>{!!$receita->observacao!!}</p>
-            @endif
-        </div>
-
-        @if($tipoPg == 'verReceitaDoUsuario')
-        <div class="row float-right">
-            <form class="px-1" action="{{ route('receita.edit', ['receita' => $receita->id]) }}" method="GET">
-                <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
-            </form>
-            <form class="px-1" action="{{ route('receita.destroy', ['receita' => $receita->id]) }}" method="POST">
-                @csrf
-                @method('delete')
-                <input type="hidden" name="user" value="">
-                <input type="submit" class="btn btn-outline-danger" value="Remover">
-            </form>
-        </div>
-        @endif
-        <br><br>
-        <p><i>Receita criada por <b>{{$usuario->name}}</b></i></p>
     </div>
-</section><!-- End Portfolio Details Section -->
 
-<script type="text/javascript">
-    $("#addDes").click(function() {
-        document.getElementById("dynamicDiv").innerHTML = "";
-        $("#dynamicDiv").append('<p><b>Tipo: </b>{{ $receita->tipo }}</p><p><b>Observação: </b>{!! $receita->observacao!!}</p>');
-    })
-    $("#addIng").click(function() {
-        document.getElementById("dynamicDiv").innerHTML = "";
-        $("#dynamicDiv").append(`
-        <p><b>Plantas usadas:</b></p>
-        @foreach ($nomePlantas as $nomePlanta)
-        <p>{{$loop->index+1}}. {{$nomePlanta->nome}} - {{$quantidade}} </p>
-        @endforeach 
-        <p><b>Ingredientes:</b></p>
-        @foreach($ingredientes as $ingrediente)
-        <p>{{$loop->index+1}}. {{ $ingrediente->nome }} - {{$ingrediente->quantidade}}</p>
-        @endforeach`);
-    })
-    $("#addPre").click(function() {
-        document.getElementById("dynamicDiv").innerHTML = "";
-        $("#dynamicDiv").append('<p><b>Modo de preparo: </b>{!!$receita->modoPreparo!!}</p>');
-    })
-</script>
+    <div id="dynamicDiv" class="px-3">
+
+        <div class="section-title">
+            <h2>Ingredientes</h2>
+
+            <p class="title"><b>Plantas usadas:</b></p>
+
+            @foreach ($nomePlantas as $nomePlanta)
+            <p class="text" style="margin: 5px;">{{$loop->index+1}}. {{$nomePlanta->nome}} - {{$quantidade}} </p>
+            @endforeach
+
+            <p class="title"><b>Ingredientes:</b></p>
+
+            @foreach($ingredientes as $ingrediente)
+            <p class="text" style="margin: 5px;">{{$loop->index+1}}. {{ $ingrediente->nome }} - {{$ingrediente->quantidade}}</p>
+            @endforeach
+        </div>
+
+        <div class="section-title">
+            <h2>Modo de Preparo</h2>
+            <p class="text">{!!$receita->modoPreparo!!}</p>
+        </div>
+    </div>
+
+    @if(Auth::user() && $tipoPg == 'verReceitaDoUsuario')
+    <div class="row float-right px-4">
+        <form class="px-1" action="{{ route('receita.edit', ['receita' => $receita->id]) }}" method="GET">
+            <input type="submit" class="btn btn-outline-primary" value="Editar"></input>
+        </form>
+        <form class="px-1" action="{{ route('receita.destroy', ['receita' => $receita->id]) }}" method="POST">
+            @csrf
+            @method('delete')
+            <input type="hidden" name="user" value="">
+            <input type="submit" class="btn btn-outline-danger" value="Remover">
+        </form>
+    </div>
+    @endif
+</section>
 
 @endsection

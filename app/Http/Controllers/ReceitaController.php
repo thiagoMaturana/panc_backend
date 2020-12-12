@@ -159,8 +159,15 @@ class ReceitaController extends Controller
 
     public function show(Receita $receita){
         $ingredientes = $receita->ingredientes;
-        $user = User::where('id', $receita->usuarios_id)->first();
-        $tipo = ($receita->usuarios_id == $user->id) ? 'verReceitaDoUsuario' : 'verReceita';
+        $user = Auth::user();
+        $tipo = 'verReceita';
+        $usuario = User::where('id', $receita->usuarios_id)->first();
+
+        if ($user){
+            if(isset($user) && ($user->id == $receita->usuarios_id) || ($user->isComite() || $user->isAdministrador())){
+                $tipo = 'verReceitaDoUsuario';
+            }
+        }
 
         foreach ($receita->plantas as $planta) {
             $quantidadePlanta = $planta->pivot->quantidade;
@@ -172,7 +179,7 @@ class ReceitaController extends Controller
             ->where('receitas.id', 'LIKE', $receita->id)->get();
 
         return view('publico.receitas.receita-detail', [
-            'receita' => $receita, 'usuario' => $user,
+            'receita' => $receita, 'usuario' => $usuario,
             'ingredientes' => $ingredientes, 'quantidade' => $quantidadePlanta,
             'nomePlantas' => $nomePlanta, 'tipoPg' => $tipo
         ]);

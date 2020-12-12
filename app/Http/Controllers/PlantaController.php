@@ -98,7 +98,7 @@ class PlantaController extends Controller
         $user = Auth::user();
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
 
-        if (($user->id && $user->id == $planta->usuarios_id) || ($user->isComite || $user->isAdministrador) ) {
+        if (($user->id && $user->id == $planta->usuarios_id) || ($user->isComite() || $user->isAdministrador()) ) {
             return view('publico.plantas.planta-edit', [
                 'planta' => $planta,
                 'nomesPopulares' => $nomesPopulares,
@@ -174,7 +174,11 @@ class PlantaController extends Controller
 
     public function show(Planta $planta){
         $user = Auth::user();
-        $tipo = ($planta->usuarios_id == $user->id) ? 'verPlantaCadastradaDoUsuario' : 'verPlanta';
+        if($user){
+            $tipo = ($planta->usuarios_id == $user->id) ? 'verPlantaCadastradaDoUsuario' : 'verPlanta';
+        } else {
+            $tipo = 'verPlanta';
+        }
 
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
         return view('publico.plantas.planta-detail', [
@@ -196,7 +200,7 @@ class PlantaController extends Controller
         
         return view('publico.plantas.planta-list', [
             'plantas' => $plantas, 'tipo' => 'todasAsPlantas', 'error' => $error
-            ]);
+        ]);
     }
 
     
@@ -218,7 +222,7 @@ class PlantaController extends Controller
         $planta->status = 'submetida';
         $planta->save();
 
-        return redirect()->route('planta.indexParaAnalise');
+        return redirect()->route('planta.paraAnalise');
     }
 
 }
