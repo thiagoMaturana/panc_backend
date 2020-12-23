@@ -56,7 +56,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-2">
-                        <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
+                        <button type="button" style="padding-right: 40px; padding-left: 40px;" class="btn btn-outline-danger remove-tr">Remover</button>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-2">
-                        <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                        <button type="button" style="padding-right: 40px; padding-left: 40px;" class="btn btn-outline-danger remove-tr-planta">Remover</button>
                     </div>
                 </div>
                 <datalist id="plantaList"></datalist>
@@ -238,7 +238,7 @@
 
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('.ckeditor').ckeditor();
     });
 </script>

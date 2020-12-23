@@ -6,6 +6,9 @@
     <div class="container">
         <div class="portfolio-description">
             <h2>{{ $planta->nome }}</h2>
+            @if ($planta->status == "cadastrada")
+            <p style="color:red">Salva como rascunho, clique em "Submeter para análise" para enviar a planta para análise, podendo ser aprovada ou rejeitada</p>
+            @endif
         </div>
 
         <div class="owl-carousel portfolio-details-carousel">
@@ -31,12 +34,12 @@
                     <p class="title"><b>Caracteristicas</b></p>
                     <p class="text">{!!$planta->caracteristicas!!}</p>
                 </div>
+                @if($planta->fruto)
                 <div>
-                    @if($planta->fruto)
                     <p class="title"><b>Fruto</b></p>
                     <p class="text">{!!$planta->fruto!!}</p>
-                    @endif
                 </div>
+                @endif
                 <div>
                     <p class="title"><b>Folha</b></p>
                     <p class="text">{!!$planta->folha!!}</p>
@@ -60,15 +63,26 @@
                 <p class="text">{!!$planta->cultivo!!}</p>
             </div>
 
+            @if ($planta->avisos)
             <div class="section-title">
                 <h2>Avisos</h2>
                 <p class="text">{!!$planta->avisos!!}</p>
             </div>
+            @endif
 
             <div class="section-title">
                 <h2>Referências</h2>
                 <p class="text">{!!$planta->referencia!!}</p>
             </div>
+
+            @if(empty($receitas))
+            <div class="section-title">
+                <h2>Receitas</h2>
+                @foreach($receitas as $receita)
+                <a href="{{ route('receita.show', ['receita' => $receita->id]) }}" style="margin: 2px"> - {{ $receita->nome }}</a>
+                @endforeach
+            </div>
+            @endif
 
             @if($tipo == 'verPlantaCadastradaDoUsuario' && $planta->status == 'rejeitada')
             <p><b>Justificativa da rejeição: </b>{!!$planta->parecer!!}</p>

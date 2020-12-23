@@ -51,6 +51,7 @@ class PlantaController extends Controller
     public function store(PlantaRequest $request){
         $user = Auth::user();
 
+        dd($request);
         if ($user && Auth::check()) {
             $planta = new Planta();
             $planta->nome = $request->nome;
@@ -67,7 +68,11 @@ class PlantaController extends Controller
             $planta->avisos = $request->avisos;
             $planta->cultivo = $request->cultivo;
             $planta->fotos = $request->fotos;
-            $planta->status = 'cadastrada';
+            if ($submeter == 1){
+                $planta->status = 'submetida';
+            } else {
+                $planta->status = 'submetida';
+            }
             $planta->referencia = $request->referencia;
 
             $planta->usuarios_id = Auth::user()->id;
@@ -173,6 +178,8 @@ class PlantaController extends Controller
 
     public function show(Planta $planta){
         $user = Auth::user();
+        $receitas = $planta->receitas;
+
         if($user){
             $tipo = ($planta->usuarios_id == $user->id) ? 'verPlantaCadastradaDoUsuario' : 'verPlanta';
         } else {
@@ -181,13 +188,17 @@ class PlantaController extends Controller
 
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
         return view('publico.plantas.planta-detail', [
-            'planta' => $planta, 'nomesPopulares' => $nomesPopulares, 'tipo' => $tipo
+            'planta' => $planta, 'nomesPopulares' => $nomesPopulares, 'tipo' => $tipo,
+            'receitas' => $receitas
         ]);
     }
     public function showParaAnalise(Planta $planta){
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+        $receitas = $planta->receitas;
+
         return view('publico.plantas.planta-detail', [
-            'planta' => $planta, 'nomesPopulares' => $nomesPopulares,'tipo' => 'verPlantaParaAnalise'
+            'planta' => $planta, 'nomesPopulares' => $nomesPopulares,'tipo' => 'verPlantaParaAnalise',
+            'receitas' => $receitas
         ]);
     }
 

@@ -31,15 +31,6 @@ class ReceitaController extends Controller
             'receitas' => $receitas, 'error' => $error, 'tipoPg' => 'minhasReceitas'
         ]);
     }
-    public function receitaPorPlanta(Planta $planta)
-    {
-        $receitas = $planta->receitas;
-        $error = (count($receitas) > 0)  ? '' : 'Não há receitas cadastradas para essa planta';
-
-        return view('publico.receitas.receita-list', [
-            'receitas' => $receitas, 'tipoPg' => 'todasReceitas', 'error' => $error
-        ]);
-    }
 
     public function create()
     {
@@ -190,6 +181,8 @@ class ReceitaController extends Controller
         $tipo = 'verReceita';
         $usuario = User::where('id', $receita->usuarios_id)->first();
 
+        $plantas = $receita->plantas;
+
         if ($user) {
             if (isset($user) && ($user->id == $receita->usuarios_id) || ($user->isComite() || $user->isAdministrador())) {
                 $tipo = 'verReceitaDoUsuario';
@@ -199,16 +192,11 @@ class ReceitaController extends Controller
         foreach ($receita->plantas as $planta) {
             $quantidadePlanta = $planta->pivot->quantidade;
         }
-        $nomePlanta = DB::table('receitas')
-            ->leftJoin('plantas_receitas', 'receitas.id', '=', 'plantas_receitas.receitas_id')
-            ->leftJoin('plantas', 'plantas_receitas.plantas_id', '=', 'plantas.id')
-            ->select('plantas.nome')
-            ->where('receitas.id', 'LIKE', $receita->id)->get();
 
         return view('publico.receitas.receita-detail', [
             'receita' => $receita, 'usuario' => $usuario,
             'ingredientes' => $ingredientes, 'quantidade' => $quantidadePlanta,
-            'nomePlantas' => $nomePlanta, 'tipoPg' => $tipo
+            'tipoPg' => $tipo, 'plantas' => $plantas
         ]);
     }
 

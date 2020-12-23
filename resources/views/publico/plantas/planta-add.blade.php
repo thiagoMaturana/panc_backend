@@ -165,8 +165,8 @@
                 </div>
                 @enderror
             </div>
-
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            
+            <button type="submit" class="btn btn-primary">Salvar como rascunho</button>
         </form>
 
     </div>
@@ -191,7 +191,7 @@
 
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('.ckeditor').ckeditor();
     });
 </script>

@@ -83,7 +83,7 @@
                         <input type="text" maxlength="60" class="form-control" placeholder="Ingrediente" name="ingredientes[ {{ $loop->index }} ]" value="{{ $ingrediente->nome }}" required>
                     </div>
                     <div class="form-group col-md-2">
-                        <button type="button" class="btn btn-outline-danger remove-tr">Remover</button>
+                        <button type="button" style="padding-right: 40px; padding-left: 40px;" class="btn btn-outline-danger remove-tr">Remover</button>
                     </div>
                 </div>
                 @endforeach
@@ -117,7 +117,7 @@
 
                     </div>
                     <div class="form-group col-md-2">
-                        <button type="button" class="btn btn-outline-danger remove-tr-planta">Remover</button>
+                        <button type="button" style="padding-right: 40px; padding-left: 40px;" class="btn btn-outline-danger remove-tr-planta">Remover</button>
                     </div>
                 </div>
                 @endforeach
@@ -172,7 +172,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Editar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 </div>
 

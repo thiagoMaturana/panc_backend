@@ -165,7 +165,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Editar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
 </div>
 
