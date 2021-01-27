@@ -2,7 +2,6 @@
 
 @section('content')
 
-<!-- ======= Portfolio Section ======= -->
 <section id="portfolio" class="portfolio section-bg">
   <div class="container">
 
@@ -90,11 +89,11 @@
     <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
 
       @foreach ($receitas as $receita)
-      <a href="{{ route('receita.show', ['receita' => $receita->id]) }}">
-        <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
-          <div class="portfolio-wrap">
-            <div class="card" style="max-width: 50vw">
-              <img class="card-img-top img-fluid" src="{{ $receita->fotos }}">
+      <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+        <div class="portfolio-wrap">
+          <div class="card d-flex align-items-center">
+              <a href="{{ route('receita.show', ['receita' => $receita->id]) }}">
+              <img class="card-img-top p-3" src="{{ $receita->fotos }}">
               <div class="card-body">
                 <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
                 <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>

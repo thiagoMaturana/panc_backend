@@ -42,7 +42,6 @@ Route::delete('/receitas/{receita}', 'ReceitaController@destroy')->name('receita
 
 Route::get('/minhasReceitas', 'ReceitaController@minhasReceitas')->name('receita.minhasReceitas');
 Route::post('/receita/fetch', 'ReceitaController@fetchPlanta')->name('receita.fetchPlanta');
-Route::get('/planta/{planta}/receitas', 'ReceitaController@receitaPorPlanta')->name('receita.porPlanta');
 Route::get('/searchReceita', 'ReceitaController@search')->name('receita.search');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin',], function(){

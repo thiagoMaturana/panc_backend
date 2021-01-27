@@ -444,7 +444,7 @@ section {
   .breadcrumbs ol {
     display: block;
   }
-  
+
   .breadcrumbs ol li {
     display: inline-block;
   }
@@ -532,7 +532,7 @@ section {
   .portfolio-details .portfolio-description h2 {
     width: 100%;
   }
-  
+
   .portfolio-details .portfolio-info {
     position: static;
     margin-top: 30px;
@@ -584,7 +584,7 @@ p {
 a:hover {
   color: #6aa176;
 }
-  
+
 .block {
   display: flex;
   align-items: center;
@@ -613,7 +613,7 @@ a:hover {
   justify-content: center;
 }
 
-.text{
+.text {
   padding-left: 17px;
   padding-right: 30px;
   text-align: justify;
@@ -621,8 +621,28 @@ a:hover {
   font-size: 18px;
 }
 
-.title{
+.title {
   font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
   margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 992px) {
+  .card-img-top {
+    width: 70%;
+    height: 450px;
+    object-fit: cover;
+  }
+
+  .card {
+    max-width: 800px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .card-img-top {
+    width: 700px;
+    height: 450px;
+    object-fit: cover;
+  }
 }

@@ -10,7 +10,7 @@
     <form class="text-center" action="{{ route('planta.search') }}" method="GET">
       <div class="form-row">
         <div class="form-group col-md-10">
-          <input type="search" class="form-control" name="search" placeholder="Procure por nome, nome cientifíco ou por nomes populares...">
+          <input type="search" class="form-control" name="search" placeholder="Procure por nome, nome cientifíco ou por nomes populares..." value="{{request()->search}}">
         </div>
         <div class="form-group col-md-2">
           <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>
@@ -51,15 +51,15 @@
 
       @foreach ($plantas as $planta)
 
-      @if(Auth:: user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && $tipo == 'paraAnalise')
-      <a href="{{ route('planta.showParaAnalise', ['planta' => $planta->id]) }}">
-        @else
-        <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
-          @endif
-          <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
-            <div class="portfolio-wrap">
-              <div class="card" style="max-width: 80vw">
-                <img class="card-img-top" src="{{ $planta->fotos }}">
+      <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+        <div class="portfolio-wrap">
+          @if(Auth:: user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()) && $tipo == 'paraAnalise')
+          <a href="{{ route('planta.showParaAnalise', ['planta' => $planta->id]) }}">
+            @else
+            <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
+              @endif
+              <div class="card d-flex align-items-center">
+                <img class="card-img-top p-3" src="{{ $planta->fotos }}">
                 <div class="card-body">
                   @if($tipo == 'minhasPlantas')
                   <h3 class="card-title text-center" style="padding: 0 0 0 5px; color:black">{{ $planta->nome }}
@@ -89,10 +89,10 @@
                   @endif
                 </div>
               </div>
-            </div>
-          </div>
-        </a>
-        @endforeach
+        </div>
+      </div>
+      </a>
+      @endforeach
     </div>
 
   </div>
@@ -106,9 +106,9 @@
             <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
-                        <div class="card" style="max-width: 80vw">
-                            <img class="card-img-top" src="{{ $planta->fotos }}">
-                            <div class="card-body">
+                      <div class="card d-flex align-items-center">
+                        <img class="card-img-top p-3" src="{{ $planta->fotos }}">
+                          <div class="card-body">
                             @if($tipo == 'minhasPlantas')
                                 @if($planta->status == 'cadastrada')
                                 <h3 class="card-title text-center" style="padding: 0 0 0 5px; color:black">{{ $planta->nome }} <span class="badge badge-primary">Cadastrada</span></h3>
@@ -153,9 +153,9 @@
             <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
                 <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
-                        <div class="card" style="max-width: 80vw">
-                            <img class="card-img-top" src="{{ $planta->fotos }}">
-                            <div class="card-body">
+                      <div class="card d-flex align-items-center">
+                        <img class="card-img-top p-3" src="{{ $planta->fotos }}">
+                          <div class="card-body">
                                 <h3 class="card-title text-center" style="padding: 0 0 0 5px; color:black">{{ $planta->nome }}<span class="badge badge-primary">Cadastrada</span></h3>
                                 <p class="card-title text-center" style="color:gray">
                                     <i>{{ $planta->nomeCientifico }}</i>
@@ -184,10 +184,10 @@
         @foreach ($plantas as $planta)
             @if($planta->status == 'submetida')
             <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
-                <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
-                    <div class="portfolio-wrap">
-                        <div class="card" style="max-width: 80vw">
-                            <img class="card-img-top" src="{{ $planta->fotos }}">
+              <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+                      <div class="portfolio-wrap">
+                        <div class="card d-flex align-items-center">
+                          <img class="card-img-top p-3" src="{{ $planta->fotos }}">
                             <div class="card-body">
                                 <h3 class="card-title text-center" style="padding: 0 0 0 5px; color:black">{{ $planta->nome }} <span class="badge badge-dark">Em análise</span></h3>
                                 <p class="card-title text-center" style="color:gray">
@@ -217,11 +217,11 @@
         @foreach ($plantas as $planta)
             @if($planta->status == 'aprovada')
             <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
-                <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+              <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
-                        <div class="card" style="max-width: 80vw">
-                            <img class="card-img-top" src="{{ $planta->fotos }}">
-                            <div class="card-body">
+                      <div class="card d-flex align-items-center">
+                        <img class="card-img-top p-3" src="{{ $planta->fotos }}">
+                          <div class="card-body">
                                 <h3 class="card-title text-center" style="padding: 0 0 0 5px; color:black">{{ $planta->nome }} <span class="badge badge-pill badge-success">Aprovada</span></h3>
                                 <p class="card-title text-center" style="color:gray">
                                     <i>{{ $planta->nomeCientifico }}</i>
@@ -250,11 +250,11 @@
         @foreach ($plantas as $planta)
             @if($planta->status == 'rejeitada')
             <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">
-                <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+            <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
                     <div class="portfolio-wrap">
-                        <div class="card" style="max-width: 80vw">
-                            <img class="card-img-top" src="{{ $planta->fotos }}">
-                            <div class="card-body">
+                      <div class="card d-flex align-items-center">
+                        <img class="card-img-top p-3" src="{{ $planta->fotos }}">
+                          <div class="card-body">
                                 <h3 class="card-title text-center" style="padding: 0 0 0 5px; color:black">{{ $planta->nome }} <span class="badge badge-pill badge-danger">Rejeitada</span></h3>
                                 <p class="card-title text-center" style="color:gray">
                                     <i>{{ $planta->nomeCientifico }}</i>

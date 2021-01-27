@@ -24,17 +24,24 @@ class ReceitaController extends Controller
     public function minhasReceitas()
     {
         $user = Auth::user();
-        $receitas = Receita::getPorUsuario($user);
-        $error = (count($receitas) > 0)  ? '' : 'Não há receitas cadastradas';
-
-        return view('publico.receitas.receita-list', [
-            'receitas' => $receitas, 'error' => $error, 'tipoPg' => 'minhasReceitas'
-        ]);
+        if($user){
+            $receitas = Receita::getPorUsuario($user);
+            $error = (count($receitas) > 0)  ? '' : 'Não há receitas cadastradas';
+    
+            return view('publico.receitas.receita-list', [
+                'receitas' => $receitas, 'error' => $error, 'tipoPg' => 'minhasReceitas'
+            ]);
+        }
+        return redirect()->route('receita.index');
     }
 
     public function create()
     {
-        return view('publico.receitas.receita-add', ['erroEx' => '']);
+        $user = Auth::user();
+        if ($user && Auth::check()) {
+            return view('publico.receitas.receita-add', ['erroEx' => '']);
+        } 
+        return redirect()->route('receita.index');
     }
 
     public function store(ReceitaRequest $request)
@@ -100,6 +107,7 @@ class ReceitaController extends Controller
                 'receita' => $receita, 'ingredientes' => $ingredientes, 'erroEx' => ''
             ]);
         }
+        return redirect()->route('receita.index');
     }
 
     public function update(Receita $receita, ReceitaRequest $request)
