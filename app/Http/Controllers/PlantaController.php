@@ -203,8 +203,9 @@ class PlantaController extends Controller
             } else if ($planta->status == 'aprovada') {
                 $tipo =  'verPlanta';
             }
+        } else {
+            return redirect()->route('planta.index');
         }
-        return redirect()->route('planta.index');
 
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
         return view('publico.plantas.planta-detail', [
