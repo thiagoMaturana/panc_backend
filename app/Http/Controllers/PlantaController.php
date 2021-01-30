@@ -96,6 +96,29 @@ class PlantaController extends Controller
                 ]);
             }
 
+            $plantasAprovadas = Planta::getAprovadas($planta->nome)->first();
+            if ($plantasAprovadas) {
+                if (strtoupper($planta->nome) == strtoupper($plantasAprovadas->nome)) {
+                    return view('publico.plantas.planta-add', [
+                        'erroEx' => 'Esta planta já existe no repositório global'
+                    ]);
+                }
+            } else {
+                $plantasParaAnalise = Planta::getParaAnalise();
+                if ($plantasParaAnalise) {
+                    foreach ($plantasParaAnalise as $key => $plantasParaAnaliseCada) {
+                        if (
+                            strtoupper($planta->nome)
+                            == strtoupper($plantasParaAnaliseCada->nome)
+                        ) {
+                            return view('publico.plantas.planta-add', [
+                                'erroEx' => 'Esta planta já existe, porém não foi avaliada ainda'
+                            ]);
+                        }
+                    }
+                }
+            }
+
             foreach ($request->nomesPopulares as $key => $nomePopularRequest) {
                 $nomePopular = new NomePopular();
                 $nomePopular->nome = $nomePopularRequest;
@@ -152,11 +175,38 @@ class PlantaController extends Controller
                 $planta->status = 'aprovada';
             }
 
+            $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+            $plantasAprovadas = Planta::getAprovadas($planta->nome)->first();
+            if ($plantasAprovadas) {
+                if (strtoupper($planta->nome) == strtoupper($plantasAprovadas->nome)) {
+                    return view('publico.plantas.planta-edit', [
+                        'planta' => $planta,
+                        'nomesPopulares' => $nomesPopulares,
+                        'erroEx' => 'Esta planta já existe no repositório global'
+                    ]);
+                }
+            } else {
+                $plantasParaAnalise = Planta::getParaAnalise();
+                if ($plantasParaAnalise) {
+                    foreach ($plantasParaAnalise as $key => $plantasParaAnaliseCada) {
+                        if (
+                            strtoupper($planta->nome)
+                            == strtoupper($plantasParaAnaliseCada->nome)
+                        ) {
+                            return view('publico.plantas.planta-edit', [
+                                'planta' => $planta,
+                                'nomesPopulares' => $nomesPopulares,
+                                'erroEx' => 'Esta planta já existe, porém não foi avaliada ainda'
+                            ]);
+                        }
+                    }
+                }
+            }
+
             if ($request->nomesPopulares) {
                 $planta->save();
                 NomePopular::where('plantas_id', $planta->id)->delete();
             } else {
-                $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
                 return view('publico.plantas.planta-edit', [
                     'planta' => $planta,
                     'nomesPopulares' => $nomesPopulares,

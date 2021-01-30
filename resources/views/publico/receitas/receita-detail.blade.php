@@ -70,7 +70,7 @@
             <p class="title"><b>Plantas usadas:</b></p>
 
             @foreach ($plantas as $planta) 
-            <p class="text" style="margin: 5px;">{{$loop->index+1}}. <a href="{{ route('planta.show', ['planta' => $planta->id]) }}">{{$planta->nome}}</a> - {{$quantidade}} </p>
+            <p class="text" style="margin: 5px;">{{$loop->index+1}}. <a style="color: darkgreen;" href="{{ route('planta.show', ['planta' => $planta->id]) }}">{{$planta->nome}}</a> - {{$quantidade}} </p>
             @endforeach
 
             <p class="title"><b>Ingredientes:</b></p>

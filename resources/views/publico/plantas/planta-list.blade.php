@@ -9,11 +9,11 @@
     @if($tipo == 'todasAsPlantas')
     <form class="text-center" action="{{ route('planta.search') }}" method="GET">
       <div class="form-row">
-        <div class="form-group col-md-10">
+        <div class="form-group col-md-11">
           <input type="search" class="form-control" name="search" placeholder="Procure por nome, nome cientifíco ou por nomes populares..." value="{{request()->search}}">
         </div>
-        <div class="form-group col-md-2">
-          <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>
+        <div class="form-group col-md-1">
+          <button type="submit" class="btn btn-outline-primary form-control"><i class='bx bx-search-alt bx-sm'></i></button>
         </div>
       </div>
     </form>

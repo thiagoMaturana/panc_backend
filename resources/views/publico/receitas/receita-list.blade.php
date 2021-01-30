@@ -1,32 +1,29 @@
 @extends('publico.layout')
 
 @section('content')
-
-<section id="portfolio" class="portfolio section-bg">
-  <div class="container">
-
-    @if($tipoPg == 'todasReceitas')
-    <form class="text-center py-3" action="{{ route('receita.search') }}" method="GET">
-      <div class="form-row">
-        <div class="form-group col-md-10">
-          @if($nome ?? '')
-          <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta" value="{{$nome}}">
-          @else
-          <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta">
-          @endif
-        </div>
-        <div class="form-group col-md-2">
-          <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light section-bg sticky-top justify-content-center">
+  @if($tipoPg == 'todasReceitas')
+  <form class="text-center py-3" action="{{ route('receita.search') }}" method="GET">
+    <div class="form-row">
+      <div class="form-group col-md-10">
+        @if($nome ?? '')
+        <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta" value="{{$nome}}">
+        @else
+        <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta">
+        @endif
       </div>
-
+      <div class="form-group col-md-2">
+        <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>
+      </div>
+    </div>
+    <div class="form-row pl-2">
       <div class="form-check form-check-inline">
         @if(!empty($tipo[0]) && $tipo[0] == 'Doces e Bolos' ?? '')
-        <input class="form-check-input" type="checkbox" name="tipo[]" value="Doces e Bolos" checked>
+        <input class="form-check-input" id="chk-doce" type="checkbox" name="tipo[]" value="Doces e Bolos" checked>
         @else
-        <input class="form-check-input" type="checkbox" name="tipo[]" value="Doces e Bolos">
+        <input class="form-check-input" id="chk-doce" type="checkbox" name="tipo[]" value="Doces e Bolos">
         @endif
-        <label class="form-check-label">Doces e Bolos</label>
+        <label class="form-check-label" for="chk-doce">Doces e Bolos</label>
       </div>
       <div class="form-check form-check-inline">
         @if(!empty($tipo[1]) && $tipo[1] == 'Carnes' ?? '')
@@ -76,30 +73,32 @@
         @endif
         <label class="form-check-label">Prato principal</label>
       </div>
-    </form>
-    @endif
-
-
-    @if($error)
-    <div class="alert alert-primary text-center" role="alert">
-      {{$error}}
     </div>
-    @endif
+  </form>
+  @endif
+</nav>
 
-    <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
+<section id="portfolio" class="portfolio section-bg p-0 m-0">
+  @if($error)
+  <div class="alert alert-primary text-center" role="alert">
+    {{$error}}
+  </div>
+  @endif
 
-      @foreach ($receitas as $receita)
-      <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
-        <div class="portfolio-wrap">
-          <div class="card d-flex align-items-center">
-              <a href="{{ route('receita.show', ['receita' => $receita->id]) }}">
-              <img class="card-img-top p-3" src="{{ $receita->fotos }}">
-              <div class="card-body">
-                <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
-                <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
-              </div>
+  <div class="portfolio-container" data-aos="fade-up" data-aos-delay="100">
+
+    @foreach ($receitas as $receita)
+    <div class="portfolio-item col-lg-12 d-flex justify-content-center align-items-stretch">
+      <div class="portfolio-wrap">
+        <div class="card d-flex align-items-center">
+          <a href="{{ route('receita.show', ['receita' => $receita->id]) }}">
+            <img class="card-img-top p-3" src="{{ $receita->fotos }}">
+            <div class="card-body">
+              <h5 class="card-title text-center" style="padding: 0 0 0 10px; color:gray">{{ $receita->tipo }}</h5>
+              <h3 class="card-title text-center" style="padding: 5px;">{{ $receita->nome }}</h3>
             </div>
-          </div>
+        </div>
+      </div>
       </a>
     </div>
     @endforeach

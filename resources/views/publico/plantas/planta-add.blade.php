@@ -13,7 +13,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>Nome</label><small style="color:red"> *</small>
-                    <input type="text" minlength="3" maxlength="60" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome" name="nome" value="{{old('nome')}}" required>
+                    <input type="text" minlength="3" maxlength="60" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome principal" name="nome" value="{{old('nome')}}" required>
                     @error('nome')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -62,7 +62,7 @@
             <!-- Caracteristicas -->
             <div class="form-group">
                 <label>Tamanho</label><small style="color:red"> *</small>
-                <input type="text" class="form-control @error('tamanho') is-invalid @enderror" placeholder="Tamanho" name="tamanho" value="{{old('tamanho')}}" required>
+                <input type="text" class="form-control @error('tamanho') is-invalid @enderror" placeholder="Tamanho. Ex: 1m ou 30cm" name="tamanho" value="{{old('tamanho')}}" required>
                 @error('tamanho')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -70,11 +70,11 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label>Fruto</label>
+                <label>Fruto</label><small style="color:green"> (tempo de maturação, coloração, formato, classificação como seco ou carnoso, baga ou drupa e entre outras)</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva o Fruto da planta, caso haja" name="fruto">{{old('fruto')}}</textarea>
             </div>
             <div class="form-group">
-                <label>Folha</label><small style="color:red"> *</small>
+                <label>Folha</label><small style="color:red"> *</small><small style="color:green"> (classificação pelo limbo e o seu formato, posição do pecíolo, nervuras, superfície e folíolos)</small>
                 <textarea class="form-control ckeditor" placeholder="Descreva a Folha da planta" name="folha" required>{{old('folha')}}</textarea>
                 @error('folha')
                 <div class="alert alert-danger">
@@ -119,7 +119,7 @@
             <!-- Propriedades -->
             <div class="form-group">
                 <label>Propriedades Medicinais</label><small style="color:red"> *</small>
-                <textarea class="form-control ckeditor" placeholder="Descreva as propriedades medicinais da planta" name="propriedadesMedicinais" required>{{old('propriedadesMedicinais')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva as propriedades medicinais da planta" name="propriedadesMedicinais" required>{{old('propriedadesMedicinais') ?? 'Sem propriedades medicinais conhecidas'}}</textarea>
                 @error('propriedadesMedicinais')
                 <div class="alert alert-danger">
                     {{$message }}
@@ -128,7 +128,7 @@
             </div>
             <div class="form-group">
                 <label>Propriedades Gastronômicas</label><small style="color:red"> *</small>
-                <textarea class="form-control ckeditor" placeholder="Descreva as propriedades gastronômicas da planta" name="propriedadesCulinarias" required>{{old('propriedadesCulinarias')}}</textarea>
+                <textarea class="form-control ckeditor" placeholder="Descreva as propriedades gastronômicas da planta" name="propriedadesCulinarias" required>{{old('propriedadesCulinarias')?? 'Sem propriedades gastronômicas conhecidas'}}</textarea>
                 @error('propriedadesCulinarias')
                 <div class="alert alert-danger">
                     {{ $message }}
