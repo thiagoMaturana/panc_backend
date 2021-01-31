@@ -63,27 +63,30 @@
 
       <nav class="nav-menu">
         <ul>
+          @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
+          <li><a href="{{ route('planta.paraAnalise') }}"><i class="bx bx-collection"> </i>Plantas para análise</a></li>
+          @endif
           <li><a href="{{ route('planta.index') }}"><i class="bx bx-donate-blood"></i> <span>Plantas</span></a></li>
-          <li><a href="{{ route('receita.index') }}"><i class="bx bx-donate-blood"></i> <span>Receitas</span></a></li>
 
           @if(Auth::user())
-          <li><a href="{{ route('receita.create') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
-          
-          <li><a href="{{ route('planta.create') }}"><i class="bx bx-add-to-queue"> </i> <span>Submeter planta</span></a></li>
-
           <li><a href="{{ route('planta.minhasPlantas') }}"><i class="bx bx-collection"> </i> 
           <span>Minhas plantas</span></a></li>
           
+          <li><a href="{{ route('planta.create') }}"><i class="bx bx-add-to-queue"> </i> <span>Submeter planta</span></a></li>
+          @endif
+
+          <li><a href="{{ route('receita.index') }}"><i class="bx bx-donate-blood"></i> <span>Receitas</span></a></li>
+
+          @if(Auth::user())
           <li><a href="{{ route('receita.minhasReceitas') }}"><i class="bx bx-collection"> </i> <span>Minhas receitas</span></a></li>
+
+          <li><a href="{{ route('receita.create') }}"><i class="bx bx-add-to-queue"> </i> Cadastrar receita</a></li>
           @endif
           
           @if(Auth::user() && Auth::user()->isAdministrador())
           <li><a href="{{ route('user.index') }}"><i class="bx bx-lock"> </i> Painel Administrativo</a></li>
           @endif
 
-          @if(Auth::user() && (Auth::user()->isAdministrador() || Auth::user()->isComite()))
-          <li><a href="{{ route('planta.paraAnalise') }}"><i class="bx bx-collection"> </i>Plantas para análise</a></li>
-          @endif
 
           <li>
             @guest

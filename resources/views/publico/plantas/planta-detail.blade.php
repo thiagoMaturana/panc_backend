@@ -21,32 +21,32 @@
                 <div class="nomesPopulares">
                     <p class="title" style="margin: 4px;"><b>Nomes populares</b></p>
                     @foreach($nomesPopulares as $nomePopular)
-                    <p class="text" style="margin: 2px;"> - {{ $nomePopular->nome }};</p>
+                    <p style="margin: 2px;"> - {{ $nomePopular->nome }};</p>
                     @endforeach
                 </div>
                 <div style="margin-top: 15px;">
                     <p class="title"><b>Classificação</b></p>
-                    <p class="text" style="margin: 2px;"><b>Família: </b>{{ $planta->familia }}</p>
-                    <p class="text" style="margin: 2px;"><b>Genêro: </b>{{ $planta->genero }}</p>
-                    <p class="text" style="margin: 2px;"><b>Espécie: </b>{{ $planta->especie }}</p>
+                    <p style="margin: 2px;">Família: <em>{{ $planta->familia }}</em></p>
+                    <p style="margin: 2px;">Genêro: <em>{{ $planta->genero }}</em></p>
+                    <p style="margin: 2px;">Espécie: <em>{{ $planta->especie }}</em></p>
                 </div>
                 <div style="margin-top: 15px;">
                     <p class="title"><b>Caracteristicas</b></p>
-                    <p class="text">{!!$planta->caracteristicas!!}</p>
+                    <p style="color: yellow;">{!!$planta->caracteristicas!!}</p>
                 </div>
                 @if($planta->fruto)
                 <div>
                     <p class="title"><b>Fruto</b></p>
-                    <p class="text">{!!$planta->fruto!!}</p>
+                    <p>{!!$planta->fruto!!}</p>
                 </div>
                 @endif
                 <div>
                     <p class="title"><b>Folha</b></p>
-                    <p class="text">{!!$planta->folha!!}</p>
+                    <p>{!!$planta->folha!!}</p>
                 </div>
                 <div>
                     <p class="title"><b>Tamanho</b></p>
-                    <p class="text">{!!$planta->tamanho!!}</>
+                    <p>{!!$planta->tamanho!!}</>
                 </div>
             </div>
             <div class="section-title">
@@ -60,19 +60,19 @@
 
             <div class="section-title">
                 <h2 id="cultivo">Cultivo</h2>
-                <p class="text">{!!$planta->cultivo!!}</p>
+                <p>{!!$planta->cultivo!!}</p>
             </div>
 
             @if ($planta->avisos)
             <div class="section-title">
                 <h2>Avisos</h2>
-                <p class="text">{!!$planta->avisos!!}</p>
+                <p>{!!$planta->avisos!!}</p=>
             </div>
             @endif
 
             <div class="section-title">
                 <h2>Referências</h2>
-                <p class="text">{!!$planta->referencia!!}</p>
+                <p>{!!$planta->referencia!!}</plass=>
             </div>
 
             @if(empty($receitas))

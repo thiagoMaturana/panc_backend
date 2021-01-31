@@ -77,7 +77,7 @@
                                 </div>
                                 
                                 <div class="card-footer text-center">
-                                        <div class="small"><a href="{{ route('login') }}">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="{{ route('login') }}">Já tem conta? Faça login</a></div>
                                     </div>
                             </div>
                         </div>

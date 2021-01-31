@@ -250,11 +250,11 @@ class PlantaController extends Controller
         if ($user) {
             if ($planta->usuarios_id == $user->id) {
                 $tipo =  'verPlantaCadastradaDoUsuario';
-            } else if ($planta->status == 'aprovada') {
+            } else {
                 $tipo =  'verPlanta';
             }
         } else {
-            return redirect()->route('planta.index');
+            $tipo =  'verPlanta';
         }
 
         $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
