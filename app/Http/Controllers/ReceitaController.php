@@ -174,7 +174,7 @@ class ReceitaController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->id == $receita->usuarios_id) {
+        if ($user->id == $receita->usuarios_id || ($user->isAdministrador() || $user->isComite())) {
             $receita->delete();
             return redirect()->route('receita.index');
         }

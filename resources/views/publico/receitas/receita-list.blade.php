@@ -5,15 +5,15 @@
   @if($tipoPg == 'todasReceitas')
   <form class="text-center py-3" action="{{ route('receita.search') }}" method="GET">
     <div class="form-row">
-      <div class="form-group col-md-10">
+      <div class="form-group col-md-11">
         @if($nome ?? '')
         <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta" value="{{$nome}}">
         @else
         <input type="search" class="form-control" name="search" placeholder="Procure por nome ou nome da planta">
         @endif
       </div>
-      <div class="form-group col-md-2">
-        <button type="submit" class="btn btn-outline-primary form-control">Procurar</button>
+      <div class="form-group col-md-1">
+        <button type="submit" class="btn btn-outline-primary form-control"><i class='bx bx-search-alt bx-sm'></i></button>
       </div>
     </div>
     <div class="form-row pl-2">
