@@ -187,12 +187,9 @@ class PlantaController extends Controller
                 }
             } else {
                 $plantasParaAnalise = Planta::getParaAnalise();
-                if ($plantasParaAnalise) {
+                if ($plantasParaAnalise && !($user->isAdministrador() || $user->isComite())) {
                     foreach ($plantasParaAnalise as $key => $plantasParaAnaliseCada) {
-                        if (
-                            strtoupper($planta->nome)
-                            == strtoupper($plantasParaAnaliseCada->nome)
-                        ) {
+                        if (strtoupper($planta->nome) == strtoupper($plantasParaAnaliseCada->nome)) {
                             return view('publico.plantas.planta-edit', [
                                 'planta' => $planta,
                                 'nomesPopulares' => $nomesPopulares,
