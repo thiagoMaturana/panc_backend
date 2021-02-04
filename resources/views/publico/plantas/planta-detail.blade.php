@@ -32,7 +32,7 @@
                 </div>
                 <div style="margin-top: 15px;">
                     <p class="title"><b>Caracteristicas</b></p>
-                    <p style="color: yellow;">{!!$planta->caracteristicas!!}</p>
+                    <p>{!!$planta->caracteristicas!!}</p>
                 </div>
                 @if($planta->fruto)
                 <div>
