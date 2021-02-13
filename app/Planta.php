@@ -52,6 +52,10 @@ class Planta extends Model
                 $query->where('nomes_populares.nome', 'LIKE', '%' . $nome . '%')
                     ->where('plantas.status', '=', 'aprovada');
             })
+            ->orWhere(function ($query) use ($nome){
+                $query->where('nomeCientifico', 'LIKE', '%' . $nome . '%')
+                    ->where('plantas.status', '=', 'aprovada');
+            })
             ->get();
     }
 
@@ -64,7 +68,7 @@ class Planta extends Model
                 ->get();
         }
     }
-    
+
     public static function getParaAnalise()
     { //pegar todas as plantas para análise do comite
         return DB::table('plantas')

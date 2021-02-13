@@ -239,6 +239,10 @@ class ReceitaController extends Controller
                 $query->where('nomes_populares.nome', 'LIKE', '%' . $nome . '%')
                     ->whereIn('receitas.tipo', $tipos);
             })
+            ->orWhere(function ($query) use ($nome){
+                $query->where('nomeCientifico', 'LIKE', '%' . $nome . '%')
+                    ->where('plantas.status', '=', 'aprovada');
+            })
             ->get();
 
         $error = (count($receitas) > 0)  ? '' : 'Não foi encontrada nenhuma receita que tenha esse nome ou uma planta com seus nomes populares que tenha receita';

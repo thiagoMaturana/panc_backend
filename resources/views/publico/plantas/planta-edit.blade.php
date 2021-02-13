@@ -9,7 +9,7 @@
         <!-- Nomes -->
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label>Nome</label><small style="color:red"> *</small>
+                <label>Nome popular principal</label><small style="color:red"> *</small>
                 <input type="text" minlength="3" maxlength="60" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome principal" name="nome" value="{{ $planta->nome }}" required>
                 @error('nome')
                 <div class="invalid-feedback">
@@ -34,7 +34,7 @@
         </div>
         @endif
 
-        <label>Nomes populares</label><small style="color:red"> *</small>
+        <label>Outros nomes populares</label><small style="color:red"> *</small>
         <table>
             <div id="dynamicTable">
                 @foreach($nomesPopulares as $nomePopular)

@@ -12,7 +12,7 @@
             <!-- Nomes -->
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label>Nome</label><small style="color:red"> *</small>
+                    <label>Nome popular principal</label><small style="color:red"> *</small>
                     <input type="text" minlength="3" maxlength="60" class="form-control @error('nome') is-invalid @enderror" placeholder="Nome principal" name="nome" value="{{old('nome')}}" required>
                     @error('nome')
                     <div class="invalid-feedback">
@@ -37,7 +37,7 @@
             </div>
             @endif
 
-            <label>Nomes populares</label><small style="color:red"> *</small>
+            <label>Outros nomes populares</label><small style="color:red"> *</small>
             <table>
                 <div id="dynamicTable">
                     <div class="form-row">
@@ -148,7 +148,7 @@
             <!-- Foto -->
             <div class="form-group">
                 <label>Foto</label><small style="color:red"> *</small>
-                <input type="text" class="form-control @error('fotos') is-invalid @enderror" placeholder="Url da foto" name="fotos" value="{{old('fotos')}}" required>
+                <input type="text" class="form-control @error('fotos') is-invalid @enderror" placeholder="Url ou link da foto" name="fotos" value="{{old('fotos')}}" required>
                 @error('fotos')
                 <div class="invalid-feedback">
                     {{ $message }}

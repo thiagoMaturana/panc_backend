@@ -175,29 +175,16 @@ class PlantaController extends Controller
                 $planta->status = 'aprovada';
             }
 
-            $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
-            $plantasAprovadas = Planta::getAprovadas($planta->nome)->first();
-            if ($plantasAprovadas) {
-                if (strtoupper($planta->nome) == strtoupper($plantasAprovadas->nome)) {
-                    return view('publico.plantas.planta-edit', [
-                        'planta' => $planta,
-                        'nomesPopulares' => $nomesPopulares,
-                        'erroEx' => 'Esta planta já existe no repositório global'
-                    ]);
-                }
+            if ($request->nomesPopulares) {
+                $planta->save();
+                NomePopular::where('plantas_id', $planta->id)->delete();
             } else {
-                $plantasParaAnalise = Planta::getParaAnalise();
-                if ($plantasParaAnalise && !($user->isAdministrador() || $user->isComite())) {
-                    foreach ($plantasParaAnalise as $key => $plantasParaAnaliseCada) {
-                        if (strtoupper($planta->nome) == strtoupper($plantasParaAnaliseCada->nome)) {
-                            return view('publico.plantas.planta-edit', [
-                                'planta' => $planta,
-                                'nomesPopulares' => $nomesPopulares,
-                                'erroEx' => 'Esta planta já existe, porém não foi avaliada ainda'
-                            ]);
-                        }
-                    }
-                }
+                $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+                return view('publico.plantas.planta-edit', [
+                    'planta' => $planta,
+                    'nomesPopulares' => $nomesPopulares,
+                    'erroEx' => 'Campo nomes populares é obrigatório'
+                ]);
             }
 
             if ($request->nomesPopulares) {
