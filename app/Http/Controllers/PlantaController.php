@@ -175,16 +175,29 @@ class PlantaController extends Controller
                 $planta->status = 'aprovada';
             }
 
-            if ($request->nomesPopulares) {
-                $planta->save();
-                NomePopular::where('plantas_id', $planta->id)->delete();
+            $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
+            $plantasAprovadas = Planta::getAprovadas($planta->nome)->first();
+            if ($plantasAprovadas && !($user->isAdministrador() || $user->isComite())) {
+                if (strtoupper($planta->nome) == strtoupper($plantasAprovadas->nome)) {
+                    return view('publico.plantas.planta-edit', [
+                        'planta' => $planta,
+                        'nomesPopulares' => $nomesPopulares,
+                        'erroEx' => 'Esta planta já existe no repositório global'
+                    ]);
+                }
             } else {
-                $nomesPopulares = NomePopular::where('plantas_id', $planta->id)->get();
-                return view('publico.plantas.planta-edit', [
-                    'planta' => $planta,
-                    'nomesPopulares' => $nomesPopulares,
-                    'erroEx' => 'Campo nomes populares é obrigatório'
-                ]);
+                $plantasParaAnalise = Planta::getParaAnalise();
+                if ($plantasParaAnalise && !($user->isAdministrador() || $user->isComite())) {
+                    foreach ($plantasParaAnalise as $key => $plantasParaAnaliseCada) {
+                        if (strtoupper($planta->nome) == strtoupper($plantasParaAnaliseCada->nome)) {
+                            return view('publico.plantas.planta-edit', [
+                                'planta' => $planta,
+                                'nomesPopulares' => $nomesPopulares,
+                                'erroEx' => 'Esta planta já existe, porém não foi avaliada ainda'
+                            ]);
+                        }
+                    }
+                }
             }
 
             if ($request->nomesPopulares) {
